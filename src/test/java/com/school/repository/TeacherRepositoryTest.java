@@ -15,14 +15,16 @@ import java.util.Date;
 import java.util.List;
 
 import static org.junit.Assert.*;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class TeacherRepositoryTest {
-@Autowired
+    @Autowired
     private TeacherRepository repository;
-@Test
+
+    @Test
     public void create() throws ParseException {
-        Teacher teacher=new Teacher();
+        Teacher teacher = new Teacher();
         teacher.setTeacherAddr("23423");
         teacher.setAinfoId("1234");
         teacher.setTeacherAge(12);
@@ -38,17 +40,18 @@ public class TeacherRepositoryTest {
         teacher.setTeacherPosition("8908");
         teacher.setTeacherStatus(0);
         teacher.setTeacherTel("89890");
-        Teacher result=repository.save(teacher);
+        Teacher result = repository.save(teacher);
         Assert.assertNotNull(result);
-
     }
+
     @Test
-    public void delete(){
+    public void delete() {
         repository.deleteById("234234");
     }
-   @Test
-    public void findByTeacherName(){
-        Teacher result=repository.findById("234234").orElse(null);
+
+    @Test
+    public void findByTeacherName() {
+        Teacher result = repository.findById("234234").orElse(null);
         Assert.assertNotNull(result);
         System.out.print(result);
     }
