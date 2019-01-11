@@ -1,7 +1,7 @@
 package com.school.repository;
 
 import com.school.dtoObject.Teacher;
-import com.school.utils.DateFormatUtil;
+import com.school.utils.DateFormatUtils;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,16 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import javax.print.attribute.standard.MediaSize;
 import java.text.ParseException;
-import java.util.Date;
-import java.util.List;
-
-import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class TeacherRepositoryTest {
+
     @Autowired
     private TeacherRepository repository;
 
@@ -29,7 +25,7 @@ public class TeacherRepositoryTest {
         teacher.setAinfoId("1234");
         teacher.setTeacherAge(12);
         teacher.setTeacherAvater("12332131");
-        teacher.setTeacherBorndate(DateFormatUtil.dateConverter("1997-09-09"));
+        teacher.setTeacherBorndate(DateFormatUtils.dateConverter("1997-09-09"));
         teacher.setTeacherCareer("dfds");
         teacher.setTeacherDescription("1212");
         teacher.setTeacherIcard("11131");
