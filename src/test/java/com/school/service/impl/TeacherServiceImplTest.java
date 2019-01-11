@@ -1,6 +1,8 @@
 package com.school.service.impl;
+
 import com.school.dtoObject.Teacher;
 import com.school.service.TeacherService;
+import com.school.utils.DateFormatUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
 import org.junit.Test;
@@ -27,7 +29,7 @@ public class TeacherServiceImplTest {
         teacher.setAinfoId("1040501");
         teacher.setTeacherAge(45);
         teacher.setTeacherAvater("null");
-        teacher.setTeacherBorndate(DateFormatUtil.dateConverter("1974-01-11"));
+        teacher.setTeacherBorndate(DateFormatUtils.dateConverter("1974-01-11"));
         teacher.setTeacherCareer("职业记录良好");
         teacher.setTeacherDescription("null");
         teacher.setTeacherIcard("360502197401110932");
