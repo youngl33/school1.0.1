@@ -1,14 +1,12 @@
 package com.school.repository;
 
-import com.school.dtoObject.Universityadmin;
+import com.school.dtoObject.UniversityAdmin;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -19,13 +17,13 @@ public class UniversityAdminRepositoryTest {
 
     @Test
     public void add(){
-        Universityadmin universityadmin = new Universityadmin();
+        UniversityAdmin universityadmin = new UniversityAdmin();
         //universityadmin.setUAdmId(4);
-        universityadmin.setUAdmName("管理员");
-        universityadmin.setUAdmPassword("123456");
-        universityadmin.setUAdmAvater("youngsdf");
-        universityadmin.setUAdmUsername("admin2");
-        Universityadmin result = repository.save(universityadmin);
+        universityadmin.setUadmName("管理员");
+        universityadmin.setUadmPassword("123456");
+        universityadmin.setUadmAvater("youngsdf");
+        universityadmin.setUadmUsername("admin2");
+        UniversityAdmin result = repository.save(universityadmin);
         Assert.assertNotNull(result);
     }
 }

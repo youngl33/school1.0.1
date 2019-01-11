@@ -4,6 +4,7 @@ package com.school.dtoObject;
 import lombok.Data;
 import org.hibernate.annotations.DynamicUpdate;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.sql.Timestamp;
@@ -13,18 +14,18 @@ import java.sql.Timestamp;
 @Data
 @Entity
 
-public class Academyinfo {
+public class AcademyInfo {
 
     @Id
-    private String AInfoId;
+    private String ainfoId;
     /** 学院名字1 */
-    private String AInfoName;
+    private String ainfoName;
     /** 学院描述信息 */
-    private String AInfoDescription;
+    private String ainfoDescription;
     /** 创建时间 */
-    private Timestamp CreateTime;
+    private Timestamp createTime;
     /** 更新时间 */
-    private Timestamp UpdateTime;
+    private Timestamp updateTime;
 
 
 }
