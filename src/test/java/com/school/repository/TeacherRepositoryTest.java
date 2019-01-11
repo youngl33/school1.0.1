@@ -30,8 +30,8 @@ public class TeacherRepositoryTest {
         teacher.setTeacherBorndate(DateFormatUtil.dateConverter("1997-09-09"));
         teacher.setTeacherCareer("dfds");
         teacher.setTeacherDescription("1212");
-        teacher.setTeacherIcard("12311231");
-        teacher.setTeacherId("234234");
+        teacher.setTeacherIcard("11131");
+        teacher.setTeacherId("11111");
         teacher.setTeacherGender("男");
         teacher.setTeacherName("huh");
         teacher.setTeacherPassword("9878789");

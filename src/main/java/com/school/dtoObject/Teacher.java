@@ -10,36 +10,40 @@ import java.util.Date;
 @DynamicUpdate
 public class Teacher {
     @Id
-    private String TeacherId;
     /** 教师登录id     */
-    private String TeacherPassword;
+    private String teacherId;
     /** 教师登录密码    */
-    private String TeacherName;
+    private String teacherPassword;
     /** 教师姓名     */
-    private Integer TeacherAge;
+    private String teacherName;
     /** 教师年龄     */
-    private String TeacherAvater;
+    private Integer teacherAge;
     /** 教师头像     */
-    private String TeacherTel;
+    private String teacherAvater;
     /** 教师电话    */
-    private Data TeacherBorndate;
+    private String teacherTel;
     /** 教师生日    */
-    private String TeacherGender;
+    private Date teacherBorndate;
     /** 教师性别 */
-    private String TeacherIcard;
+    private String teacherGender;
     /** 教师身份证号  （唯一键） */
-    private String TeacherAddr;
+    private String teacherIcard;
     /** 教师家庭住址  */
-    private String TeacherPosition;
+    private String teacherAddr;
     /** 教师职位    */
-    private String TeacherCareer;
+    private String teacherPosition;
     /** 教师生涯    */
-    private String AInfoId;
+    private String teacherCareer;
     /** 教师所在学院id  （如果老师属于学院就有学院id，如果不属于就没有）  */
-    private Date CreateTime;
-    private Date UpdateTime;
-    private Integer TeacherStatus;
+    private String ainfoId;
     /** 教师状态  0：在职 1；辞职 2：退休    */
-    private String TeacherDescription;
+    private Integer teacherStatus;
     /** 教师描述    */
+    private String teacherDescription;
+    /** 创建时间   */
+    private Date createTime;
+    /** 更新时间   */
+    private Date updateTime;
+
+
 }
