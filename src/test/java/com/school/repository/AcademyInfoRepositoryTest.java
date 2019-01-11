@@ -1,6 +1,6 @@
 package com.school.repository;
 
-import com.school.dtoObject.Academyinfo;
+import com.school.dtoObject.AcademyInfo;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,11 +18,29 @@ public class AcademyInfoRepositoryTest {
 
     @Test
     public void create(){
-        Academyinfo academyinfo = new Academyinfo();
-        academyinfo.setAInfoId("1040501");
-        academyinfo.setAInfoName("软件学院");
-        academyinfo.setAInfoDescription("东华理工大学软件学院是为适应我国经济结构战略性调整以及软件产业发展对人才的迫切需要，实现我国软件人才培养的跨越式发展，于2002年创办的江西省第一批软件学院之一，在第二批本科批次招生，毕业生颁发东华理工大学毕业证书及学位证书，2018年在校本科生2400余人。 一直以来学院探索多途径合作办学的管理体制与运行机制，积极发展与国内外高校及知名企业的交流与合作，不断实现办学专业化。学院以坚持创新创业、面向需求、质量第一为根本宗旨，并实行“专业教育学分制、 素质教育学苑式、 产学研一体化”的办学模式。");
-        Academyinfo result = repository.save(academyinfo);
+        AcademyInfo academyInfo = new AcademyInfo();
+        academyInfo.setAinfoId("1040501");
+        academyInfo.setAinfoName("外国语学院");
+        academyInfo.setAinfoDescription("东华理工大学外国语学院成立于2005年，其前身为外语教研室，隶属于学校基础部，主要承担全校学生的大学外语教学。1999年成立外语系，开始招收本科生。2005年6月，在原外语系的基础上，正式组建成立外国语学院。");
+        AcademyInfo result = repository.save(academyInfo);
         Assert.assertNotNull(result);
+    }
+
+    @Test
+    public void find(){
+        AcademyInfo academyInfo = repository.findById("1040501").orElse(null);
+        Assert.assertNotNull(academyInfo);
+    }
+
+    @Test
+    public void update(){
+        AcademyInfo academyInfo = repository.findById("1040501").orElse(null);
+
+        repository.delete(academyInfo);
+    }
+    @Test
+    public void findByAInfoName(){
+        AcademyInfo academyInfo = repository.findByAinfoName("软件学院");
+        Assert.assertNotNull(academyInfo);
     }
 }

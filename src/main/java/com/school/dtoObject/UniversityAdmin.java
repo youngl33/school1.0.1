@@ -13,25 +13,25 @@ import java.util.Date;
 @Data
 @Entity
 @DynamicUpdate
-public class Universityadmin {
+public class UniversityAdmin {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    private Integer UAdmId;
+    private Integer uadmId;
     /** 管理员登录名     */
-    private String UAdmUsername;
+    private String uadmUsername;
     /** 管理员密码     */
-    private String UAdmPassword;
+    private String uadmPassword;
     /** 管理员名字     */
-    private String UAdmName;
+    private String uadmName;
     /** 管理员头像地址     */
-    private String UAdmAvater;
+    private String uadmAvater;
     /** 0表示学校管理员     */
-    private Integer Identity=0;
+    private Integer identity=0;
     /** 创建时间     */
-    private Date CreateTime;
+    private Date createTime;
     /** 更新信息时间     */
-    private Date UpdateTime;
+    private Date updateTime;
 
 
 }
