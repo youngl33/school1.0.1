@@ -18,8 +18,10 @@ public class UniversityAdmin {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Integer uadmId;
+
     /** 管理员登录名     */
     private String uadmUsername;
+
     /** 管理员密码     */
     private String uadmPassword;
     /** 管理员名字     */

@@ -48,7 +48,7 @@ public class Teacher {
     /** 教师生涯    */
     private String teacherCareer;
 
-    /** 教师所在学院id  （如果老师属于学院就有学院id，如果不属于就没有）  */
+    /** 教师所在学院id 如果老师属于学院就有学院id，如果不属于就没有）  */
     private String ainfoId;
 
     /** 教师状态  0：在职 1；辞职 2：退休    */
