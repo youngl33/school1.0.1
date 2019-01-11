@@ -33,6 +33,12 @@ public class AcademyInfoRepositoryTest {
     }
 
     @Test
+    public void update(){
+        AcademyInfo academyInfo = repository.findById("1040501").orElse(null);
+
+        repository.delete(academyInfo);
+    }
+    @Test
     public void findByAInfoName(){
         AcademyInfo academyInfo = repository.findByAinfoName("软件学院");
         Assert.assertNotNull(academyInfo);
