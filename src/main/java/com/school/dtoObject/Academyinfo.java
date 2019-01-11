@@ -17,7 +17,7 @@ public class Academyinfo {
 
     @Id
     private String AInfoId;
-    /** 学院名字 */
+    /** 学院名字1 */
     private String AInfoName;
     /** 学院描述信息 */
     private String AInfoDescription;
