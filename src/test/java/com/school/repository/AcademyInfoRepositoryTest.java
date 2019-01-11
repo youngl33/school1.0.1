@@ -1,5 +1,6 @@
 package com.school.repository;
 
+import com.school.dtoObject.Academyinfo;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
