@@ -6,3 +6,8 @@ spring:
     password:
   jpa:
     show-sql: true
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: html
+    cache: false
