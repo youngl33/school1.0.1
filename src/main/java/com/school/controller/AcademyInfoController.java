@@ -17,5 +17,6 @@ public class AcademyInfoController {
     @GetMapping("/list")
     public String findAll(){
         return "teacher/index";
+
     }
 }
