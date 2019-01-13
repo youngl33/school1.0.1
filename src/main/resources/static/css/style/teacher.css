@@ -1,0 +1,35 @@
+.content-info{
+	display:flex;
+	flex-wrap: wrap;
+	align-content:space-between;
+	height: 100%;
+	width: 100%;
+	margin-bottom: 30px;
+	padding-bottom: 45px;
+}
+.teacher-info{
+	border-radius: 3px;
+	width:270px;
+	height:353px;
+	border:1px solid #999;
+	font-size:1.4rem;
+	line-height:20px;
+	letter-spacing: 0.05rem;
+	margin-bottom:40px;
+}
+.teacher-info-personal{
+	width:100%;
+	margin:20px auto;
+	text-align: center;
+}
+
+.teacher-info-detail{
+	text-indent: 2.4rem;
+	height: 195px;
+	overflow: hidden; 
+	text-overflow: ellipsis; 	
+	padding:0 4px;
+}
+.teacher-info-detail span{
+	display: block;
+}
