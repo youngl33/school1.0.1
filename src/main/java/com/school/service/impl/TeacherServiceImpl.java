@@ -25,7 +25,25 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public Page findAll(Pageable pageable) {
+    public Page<Teacher> findAll(Pageable pageable) {
         return repository.findAll(pageable);
     }
+
+    @Override
+    public Page<Teacher> findByTeacherStatus(Pageable pageable, Integer teacherStatus) {
+        return repository.findByTeacherStatus(pageable, teacherStatus);
+    }
+
+    @Override
+    public Page<Teacher> findByAcademyIdAndTeacherStatus(Pageable pageable,String academyId,Integer teacherStatus){
+        return repository.findByAinfoIdAndTeacherStatus(pageable,academyId,teacherStatus);
+    }
+
+    @Override
+    public Page<Teacher> findByTeacherPosition(Pageable pageable, String teacherPosition) {
+        return repository.findByTeacherPosition(pageable,teacherPosition);
+    }
+
+    /*   @Override
+    public Page findByTeacherStatus(Pageable pageable,Integer teacherStatus)*/
 }

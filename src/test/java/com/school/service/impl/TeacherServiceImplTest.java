@@ -12,6 +12,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.thymeleaf.engine.TemplateHandlerAdapterMarkupHandler;
+
 import java.util.List;
 
 @RunWith(SpringRunner.class)
@@ -56,6 +58,20 @@ public class TeacherServiceImplTest {
         PageRequest request = new PageRequest(0,10);
         Page<Teacher> teacherPage=teacherService.findAll(request);
         log.info("【查找的数量】,Number={}",((Page) teacherPage).getTotalElements());
+        Assert.assertNotEquals(0,teacherPage.getTotalElements());
+    }
+
+    @Test
+    public void findByTeacherStatus(){
+        PageRequest request=new PageRequest(0,10);
+        Page<Teacher> teacherPage=teacherService.findByTeacherStatus(request,0);
+        Assert.assertNotEquals(0,teacherPage.getTotalElements());
+    }
+
+    @Test
+    public void findByTeacherPosition(){
+        PageRequest request= new PageRequest(0,10);
+        Page<Teacher> teacherPage=teacherService.findByTeacherPosition(request,"高校教授");
         Assert.assertNotEquals(0,teacherPage.getTotalElements());
     }
 

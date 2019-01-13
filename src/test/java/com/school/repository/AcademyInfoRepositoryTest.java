@@ -38,6 +38,7 @@ public class AcademyInfoRepositoryTest {
 
         repository.delete(academyInfo);
     }
+
     @Test
     public void findByAInfoName(){
         AcademyInfo academyInfo = repository.findByAinfoName("软件学院");

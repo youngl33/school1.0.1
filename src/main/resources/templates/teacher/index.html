@@ -6,7 +6,7 @@
 -->
 
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
 
 <head>
 
@@ -160,27 +160,27 @@
                             <img src="/img/536d8973e432e325.jpg!200x200.jpg" width="105px" height="123px" alt="...">
                     </div>
                     <div class="teacher-info-detail">
-                        <span>姓名：&nbsp;吴光明</span>
-                        <span>年龄：&nbsp;57</span>
-                        <span>性别：&nbsp;男</span>
-                        <span>TEL：&nbsp;12345678910</span>
+                        <span>姓名：吴光明</span>
+                        <span>年龄：57</span>
+                        <span>性别：男</span>
+                        <span>TEL：12345678910</span>
                         <span>出生日期：1997-09-09</span>
                         <span>职位：副教授</span>
                         <span title="软件学院东华理工大学">学院：软件学院东华理工大学</span>
                     </div>
                 </div>
-                <div class="col-md-offset-1 teacher-info">
+                <div class="col-md-offset-1 teacher-info" th:each="teacherDTO:${teacherDTOs}">
                         <div class="teacher-info-personal">
                                 <img src="/img/536d8973e432e325.jpg!200x200.jpg" width="105px" height="123px" alt="...">
                         </div>
-                        <div class="teacher-info-detail">
-                            <span>姓名：&nbsp;吴光明</span>
-                            <span>年龄：&nbsp;57</span>
-                            <span>性别：&nbsp;男</span>
-                            <span>TEL：&nbsp;12345678910</span>
-                            <span>出生日期：1997-09-09</span>
-                            <span>职位：副教授</span>
-                            <span title="软件学院东华理工大学">学院：软件学院东华理工大学</span>
+                        <div class="teacher-info-detail" >
+                            <span th:text="姓名：+${teacherDTO.teacherName}">吴光明</span>
+                            <span th:text="年龄：+${teacherDTO.teacherAge}">57</span>
+                            <span th:text="性别：+${teacherDTO.teacherGender}">男</span>
+                            <span th:text="TEL：+${teacherDTO.teacherTel}">12345678910</span>
+                            <span th:text="出生日期：+${teacherDTO.teacherBorndate}">1997-09-09</span>
+                            <span th:text="职位：+${teacherDTO.teacherPosition}">副教授</span>
+                            <span th:text="学院：+${teacherDTO.AinfoName}" title="软件学院东华理工大学">软件学院东华理工大学</span>
                         </div>
                     </div>
                     <div class="col-md-offset-1 teacher-info">
@@ -188,10 +188,10 @@
                                     <img src="/img/536d8973e432e325.jpg!200x200.jpg" width="105px" height="123px" alt="...">
                             </div>
                             <div class="teacher-info-detail">
-                                <span>姓名：&nbsp;吴光明</span>
-                                <span>年龄：&nbsp;57</span>
-                                <span>性别：&nbsp;男</span>
-                                <span>TEL：&nbsp;12345678910</span>
+                                <span>姓名：吴光明</span>
+                                <span>年龄：57</span>
+                                <span>性别：男</span>
+                                <span>TEL：12345678910</span>
                                 <span>出生日期：1997-09-09</span>
                                 <span>职位：副教授</span>
                                 <span title="软件学院东华理工大学">学院：软件学院东华理工大学</span>
@@ -202,10 +202,10 @@
                                 <img src="/img/536d8973e432e325.jpg!200x200.jpg" width="105px" height="123px" alt="...">
                         </div>
                         <div class="teacher-info-detail">
-                            <span>姓名：&nbsp;吴光明</span>
-                            <span>年龄：&nbsp;57</span>
-                            <span>性别：&nbsp;男</span>
-                            <span>TEL：&nbsp;12345678910</span>
+                            <span>姓名：吴光明</span>
+                            <span>年龄：57</span>
+                            <span>性别：男</span>
+                            <span>TEL：12345678910</span>
                             <span>出生日期：1997-09-09</span>
                             <span>职位：副教授</span>
                             <span title="软件学院东华理工大学">学院：软件学院东华理工大学</span>
