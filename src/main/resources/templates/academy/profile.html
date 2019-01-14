@@ -41,7 +41,7 @@
                                 <img alt="image" class="img-circle" width="55px" height="57px"
                                      src="/img/536d8973e432e325.jpg!200x200.jpg"/>
                             </span>
-                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="index.html#">
                                 <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">管理员</strong>
                                     </span> <span class="text-muted text-xs block">操作 <b class="caret"></b></span>
                                 </span> </a>
@@ -65,8 +65,7 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="blog.html#"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">学院管理</span><span
-                            class="fa arrow"></span></a>
+                    <a href="blog.html#"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">学院管理</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
                         <li><a href="/academy/list">学院信息</a></li>
                         <li><a href="/academy/add">添加学院</a></li>
@@ -82,7 +81,7 @@
         <div class="row border-bottom">
             <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
                 <div class="navbar-header">
-                    <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="index.html#"><i
+                    <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i
                             class="fa fa-bars"></i>
                     </a>
                     <form role="search" class="navbar-form-custom" action="search_results.html">
@@ -167,37 +166,49 @@
             </div>
         </div>
         <!-- content  -->
-        <div class="white-bg content-info">
-            <table class="table table-hover" vertical-align="middle" style="vertical-align:middle;color:#000">
-                <tr>
-                    <th>编号</th>
-                    <th>学院名称</th>
-                    <th width="500px;">描述信息</th>
-                    <th width="200px" style="text-align: center;">操作</th>
-                </tr>
-                <tr th:each="academy : ${academyInfos}">
-                    <td th:text="${academy.ainfoId}">1040501</td>
-                    <td th:text="${academy.ainfoName}"></td>
-                    <td width="500px;">
-                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#myAccordion"
-                           th:href="@{'#collapse'+${academy.ainfoId}}"
-                           contenteditable="true">
-                            详细信息
-                        </a>
-                        <div th:text="${academy.ainfoDescription}" th:id="collapse+${academy.ainfoId}"
-                             class="accordion-body collapse" style="text-indent:2.2rem;">
-                            东华理工大学软件学院是为适应我国经济结构战略性调整以及软件产业发展对人才的迫切需要，实现我国软件人才培养的跨越式发展，于2002年创办的江西省第一批软件学院之一，在第二批本科批次招生，毕业生颁发东华理工大学毕业证书及学位证书，2018年在校本科生2400余人。
-                            一直以来学院探索多途径合作办学的管理体制与运行机制，积极发展与国内外高校及知名企业的交流与合作，不断实现办学专业化。学院以坚持创新创业、面向需求、质量第一为根本宗旨，并实行“专业教育学分制、
-                            素质教育学苑式、 产学研一体化”的办学模式。
-                        </div>
-                    </td>
-                    <td style="text-align: center;">
-                        <a class="btn btn-success btn-sm" th:href="@{'/academy/profile?ainfoId='+${academy.ainfoId}}"
-                           role="button" style="margin-right:20px;">修改</a>
-                    </td>
-                </tr>
+        <div class="content white-bg" style="padding:40px 0;">
+            <form class="form-horizontal" action="profile/save" method="post">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">学院代号</label>
+                    <div class="col-sm-7">
+                        <input th:if="${academy?.ainfoId}" class="form-control" type="text" name="ainfoId" th:value="${academy?.ainfoId}" readonly>
+                        <input th:if="${academy?.ainfoId ==null}" class="form-control" type="text" name="ainfoId">
 
-            </table>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="ainfoName" class="col-sm-3 control-label">学院名称</label>
+                    <div class="col-sm-7">
+                        <input name="ainfoName" id="ainfoName" type="text" class="form-control" th:value="${academy?.ainfoName}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="ainfoDescription" class="col-sm-3 control-label">描述信息</label>
+                    <div class="col-sm-7">
+                        <textarea name="ainfoDescription" id="ainfoDescription" class="form-control" rows="5" th:text="${academy?.ainfoDescription}"></textarea>
+                    </div>
+                </div>
+                <code th:if="${academy?.ainfoId}">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">创建时间</label>
+                    <div class="col-sm-7">
+                        <input class="form-control" type="text" th:value="${academy?.createTime}" disabled>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">上次修改时间</label>
+                    <div class="col-sm-7">
+                        <input class="form-control" type="text" th:value="${academy?.updateTime}" disabled>
+                    </div>
+                </div>
+                </code>
+                <div class="form-group">
+                    <div class="col-sm-offset-3 col-sm-10">
+                        <button type="submit" class="btn btn-success">提交</button>
+                        <a href="/academy/list" class="btn btn-danger" style="margin-left:30px;">返回</a>
+                    </div>
+                </div>
+            </form>
         </div>
 
 
