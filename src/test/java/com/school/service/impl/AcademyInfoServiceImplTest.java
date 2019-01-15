@@ -12,6 +12,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.List;
+
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -49,10 +51,9 @@ public class AcademyInfoServiceImplTest {
 
     @Test
     public void findAll() {
-        PageRequest request = new PageRequest(0,10);
-        Page<AcademyInfo> academyInfoPage = academyInfoService.findAll(request);
-        log.info("【查找的数量】,Number={}",academyInfoPage.getTotalElements());
-        Assert.assertNotEquals(0,academyInfoPage.getTotalElements());
+        List<AcademyInfo> academyInfoList = academyInfoService.findAll();
+        log.info("【查找的数量】,Number={}",academyInfoList.size());
+        Assert.assertNotEquals(0,academyInfoList.size());
 
     }
 }
