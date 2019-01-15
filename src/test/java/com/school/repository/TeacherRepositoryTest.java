@@ -91,16 +91,14 @@ public class TeacherRepositoryTest {
         Page<Teacher> teacherPage= repository.findByTeacherPosition(request,"高校讲师");
         Assert.assertNotEquals(0,teacherPage.getTotalElements());
     }
-    //Todo
-/*
+
     @Test
     public void findByTeacherPositionAndTeacherStatus(){
         PageRequest request= new PageRequest(0,10);
-        Page<Teacher> teacherPositionPage=repository.findByTeacherPosition(request,"高校讲师");
-        Page<Teacher> teacherStatusPage
-        Page<Teacher> teacherPage=repository.findByTeacherPositionAndTeacherStatus()
-
-    }*/
+        Page<Teacher> teacherPage=repository.findByTeacherPositionAndTeacherStatus(request,"高校讲师",0);
+        log.info("【查找的数量】:Number={}",teacherPage.getTotalElements());
+        Assert.assertNotEquals(0,teacherPage.getTotalElements());
+    }
 /*    @Test
     public void findByTeacherAcademy(){
         PageRequest request=new PageRequest(0,10);

@@ -7,6 +7,7 @@ import com.school.enums.TeacherStatusEnum;
 import com.school.service.AcademyInfoService;
 import com.school.service.TeacherService;
 import com.school.utils.DateFormatUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -23,7 +24,7 @@ import java.util.List;
 
 @RequestMapping("/teacher")
 @Controller
-
+@Slf4j
 public class TeacherController{
 
     @Autowired
@@ -65,14 +66,14 @@ public class TeacherController{
         }
 
         model.addAttribute("teacherDTOs",teacherDTOList);
-        return "teacher/index";
+        return "teacher/profile";
     }
 
 
-    @GetMapping("/academynameandstatus")
+    @GetMapping("/academy")
     public String findByAcademyIdAndTeacherStatus(@RequestParam(value = "page",defaultValue="0") Integer page,
                                                   @RequestParam(value="academyName",defaultValue ="") String academyName,
-                                                  @RequestParam(value = "teacherStatus",defaultValue="") Integer teacherStatus,
+                                                  @RequestParam(value = "teacherStatus",defaultValue="0") Integer teacherStatus,
                                                   Model model){
         PageRequest request=new PageRequest(page,16);
         AcademyInfo academyInfo=academyInfoService.findByAinfoName(academyName);
@@ -95,7 +96,7 @@ public class TeacherController{
             teacherDTOList.add(teacherDTO);
         }
         model.addAttribute("teacherDTO",teacherDTOList);
-        return "teacher/index";
+        return "teacher/profile";
 
     }
 

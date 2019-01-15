@@ -75,5 +75,13 @@ public class TeacherServiceImplTest {
         Assert.assertNotEquals(0,teacherPage.getTotalElements());
     }
 
+    @Test
+    public void findByTeacherPositionAndTeacherStatus(){
+        PageRequest request=new PageRequest(0,10);
+        Page<Teacher> teacherPage=teacherService.findByTeacherPositionAndTeacherStatus(request,"高校教授",0);
+        log.info("【数量】:Number={}",teacherPage.getTotalElements());
+        Assert.assertNotEquals(0,teacherPage.getTotalElements());
+    }
+
 
 }

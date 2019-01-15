@@ -17,5 +17,5 @@ public interface TeacherRepository extends JpaRepository<Teacher, String> {
 
     public Page<Teacher> findByAinfoIdAndTeacherStatus(Pageable pageable, String ainfoName,Integer teacherStatus);
 
-    public Page<Teacher> findByTeacherPositionAndTeacherStatus(Pageable pageable,String TeacherPosition,String teacherStatus);
+    public Page<Teacher> findByTeacherPositionAndTeacherStatus(Pageable pageable,String TeacherPosition,Integer teacherStatus);
 }

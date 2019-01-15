@@ -25,6 +25,9 @@ public interface TeacherService {
 
     /** 通过教师职位查找教师信息*/
     public Page<Teacher> findByTeacherPosition(Pageable pageable,String teacherPosition);
+
+    /** 通过教师职位和状态查找教师信息*/
+    public Page<Teacher> findByTeacherPositionAndTeacherStatus(Pageable pageable,String teacherPositioin,Integer teacherStatus);
     /** 删除一个老师的信息*//*
     public void delete(String teacherId);*/
 }
