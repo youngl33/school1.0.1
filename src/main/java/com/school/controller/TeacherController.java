@@ -14,9 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -32,6 +30,8 @@ public class TeacherController{
 
     @Autowired
     private AcademyInfoService academyInfoService;
+
+
 
     @GetMapping("/status")
     public String findAll(@RequestParam(value = "page",defaultValue="0") Integer page, @RequestParam(value = "teacherStatus",defaultValue = "") Integer teacherStatus , Model model) throws ParseException {
@@ -66,7 +66,7 @@ public class TeacherController{
         }
 
         model.addAttribute("teacherDTOs",teacherDTOList);
-        return "teacher/profile";
+        return "teacher/index";
     }
 
 
@@ -96,7 +96,7 @@ public class TeacherController{
             teacherDTOList.add(teacherDTO);
         }
         model.addAttribute("teacherDTO",teacherDTOList);
-        return "teacher/profile";
+        return "pro";
 
     }
 
