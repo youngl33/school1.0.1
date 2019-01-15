@@ -8,6 +8,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class AcademyInfoServiceImpl implements AcademyInfoService {
 
@@ -29,8 +31,9 @@ public class AcademyInfoServiceImpl implements AcademyInfoService {
         return academyInfoRepository.findByAinfoName(ainfoName);
     }
 
+
     @Override
-    public Page<AcademyInfo> findAll(Pageable pageable) {
-        return academyInfoRepository.findAll(pageable);
+    public List<AcademyInfo> findAll() {
+        return academyInfoRepository.findAll();
     }
 }

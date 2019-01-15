@@ -28,11 +28,8 @@ public class AcademyInfoController {
     private AcademyInfoService academyInfoService;
 
     @GetMapping("/list")
-    public ModelAndView findAll(@RequestParam(value="page",defaultValue = "0")Integer page,
-                                Map<String,Object> map){
-        PageRequest request = new PageRequest(page,15);
-        Page<AcademyInfo> academyInfoPage = academyInfoService.findAll(request);
-        List<AcademyInfo> academyInfoList = academyInfoPage.getContent();
+    public ModelAndView findAll(Map<String,Object> map){
+        List<AcademyInfo> academyInfoList = academyInfoService.findAll();
         map.put("academyInfos",academyInfoList);
         return new ModelAndView("academy/index");
     }
