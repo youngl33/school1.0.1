@@ -8,4 +8,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface NoticeDetailRepository extends JpaRepository<NoticeDetail,String> {
 
     Page<NoticeDetail> findByNdtlTitleContaining(String ndtlTitle, Pageable pageable);
+
+    Page<NoticeDetail> findByNtypeId(Integer ntypeId, Pageable pageable);
+
+    Page<NoticeDetail> findByNdtlStatus(Integer ndtlStatus, Pageable pageable);
+
+
 }

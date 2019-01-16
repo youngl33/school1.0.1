@@ -19,13 +19,14 @@
     <link href="/css/bootstrap.min.css" rel="stylesheet">
     <link href="/font-awesome/css/font-awesome.css" rel="stylesheet">
 
+
     <!-- Gritter -->
     <link href="/js/plugins/gritter/jquery.gritter.css" rel="stylesheet">
 
     <link href="/css/animate.css" rel="stylesheet">
     <link href="/css/style.css" rel="stylesheet">
     <link href="/css/style/teacher.css" rel="stylesheet">
-
+    <link href="/css/style/notice_edit.css" rel="stylesheet">
 </head>
 
 <body>
@@ -38,7 +39,7 @@
                                 <img alt="image" class="img-circle" width="55px" height="57px"
                                      src="/img/536d8973e432e325.jpg!200x200.jpg"/>
                             </span>
-                        <a data-toggle="dropdown" class="dropdown-toggle" href="index.html#">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                                 <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">管理员</strong>
                                     </span> <span class="text-muted text-xs block">操作 <b class="caret"></b></span>
                                 </span> </a>
@@ -61,11 +62,22 @@
                         <li class="active"><a href="index.html">教师管理</a></li>
                     </ul>
                 </li>
-                <li class="active">
-                    <a href="blog.html#"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">学院管理</span><span class="fa arrow"></span></a>
+                <li>
+                    <a href="#"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">学院管理</span><span
+                            class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
                         <li><a href="/academy/list">学院信息</a></li>
                         <li><a href="/academy/add">添加学院</a></li>
+                    </ul>
+                </li>
+                <li class="active">
+                    <a href="#"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">资讯管理</span><span
+                            class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse">
+                        <li><a href="/notice/index">资讯通知</a></li>
+                        <li><a href="/notice/add">发布资讯</a></li>
+                        <li><a href="/academy/add">类别管理</a></li>
+                        <li><a href="/academy/add">类别添加</a></li>
                     </ul>
                 </li>
             </ul>
@@ -78,7 +90,7 @@
         <div class="row border-bottom">
             <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
                 <div class="navbar-header">
-                    <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i
+                    <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="index.html#"><i
                             class="fa fa-bars"></i>
                     </a>
                     <form role="search" class="navbar-form-custom" action="search_results.html">
@@ -145,16 +157,16 @@
         <!-- catelog -->
         <div class="row wrapper border-bottom white-bg page-heading">
             <div class="col-lg-10">
-                <h2>学院管理</h2>
+                <h2>资讯通知</h2>
                 <ol class="breadcrumb">
                     <li>
                         <a href="/index">主页</a>
                     </li>
                     <li>
-                        <a>学院管理</a>
+                        <a>资讯管理</a>
                     </li>
                     <li class="active">
-                        <strong>学院信息</strong>
+                        <strong>资讯通知</strong>
                     </li>
                 </ol>
             </div>
@@ -163,132 +175,72 @@
             </div>
         </div>
         <!-- content  -->
-        <div class="content white-bg" style="padding:40px 0;">
-            <form class="form-horizontal" action="profile/save" method="post">
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">学院代号</label>
-                    <div class="col-sm-7">
-                        <input th:if="${academy?.ainfoId}" class="form-control" type="text" name="ainfoId" th:value="${academy?.ainfoId}" readonly>
-                        <input th:if="${academy?.ainfoId ==null}" class="form-control" type="text" name="ainfoId">
+        <div class="content white-bg container-fluid">
+            <form method="post" action="save" onsubmit="return doSubmit()">
+                <input type="hidden" name="ndtlId" th:value="${NoticeDetail?.ndtlId}" />
+                <div class="input-group m-b">
+                    <div class="input-group-btn">
+                        <select id="typeId" class="btn btn-white cheditor-type" name="ntypeId">
+                            <option value="0">请选择</option>
+                            <option th:each="noticeType :${noticeTypes}" th:value="${noticeType?.ntypeId}" th:text="${noticeType?.ntypeName}"></option>
+                        </select>
+                    </div>
 
-                    </div>
+                    <input type="text" class="form-control ckeditor-titile" placeholder="请输入标题" name="ndtlTitle">
+                </div>
+                <div>
+                    <input type="textarea" id="editor">
                 </div>
                 <div class="form-group">
-                    <label for="ainfoName" class="col-sm-3 control-label">学院名称</label>
-                    <div class="col-sm-7">
-                        <input name="ainfoName" id="ainfoName" type="text" class="form-control" th:value="${academy?.ainfoName}">
-                    </div>
+                    <label>&nbsp;</label>
+                    <input type="text" id="author" name="ndtlAuthor" placeholder="请输入作者名" class="form-control">
                 </div>
-                <div class="form-group">
-                    <label for="ainfoDescription" class="col-sm-3 control-label">描述信息</label>
-                    <div class="col-sm-7">
-                        <textarea name="ainfoDescription" id="ainfoDescription" class="form-control" rows="5" th:text="${academy?.ainfoDescription}"></textarea>
-                    </div>
-                </div>
-                <code th:if="${academy?.ainfoId}">
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">创建时间</label>
-                    <div class="col-sm-7">
-                        <input class="form-control" type="text" name="createTime" th:value="${academy?.createTime}" readonly>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">上次修改时间</label>
-                    <div class="col-sm-7">
-                        <input class="form-control" type="text" th:value="${academy?.updateTime}" disabled>
-                    </div>
-                </div>
-                </code>
-                <div class="form-group">
-                    <div class="col-sm-offset-3 col-sm-10">
-                        <button type="submit" class="btn btn-success">提交</button>
-                        <a href="/academy/list" class="btn btn-danger" style="margin-left:30px;">返回</a>
-                    </div>
+                <div id="small-chat">
+                    <input type="submit" class="btn btn-danger" value="发表">
                 </div>
             </form>
         </div>
 
 
-        <!-- foot -->
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="footer">
-                    <div class="pull-right">
-                        10GB of <strong>250GB</strong> Free.
-                    </div>
-                    <div>
-                        <strong>Copyright</strong> Example Company &copy; 2014-2017
-                    </div>
-                </div>
-            </div>
-        </div>
 
-    </div>
-    <!-- small-chat -->
-    <div class="small-chat-box fadeInRight animated">
-        <div class="heading" draggable="true">
-            <small class="chat-date pull-right">
-                02.19.2015
-            </small>
-            Small chat
-        </div>
-    </div>
-    <div id="small-chat">
-        <span class="badge badge-warning pull-right">5</span>
-        <a class="open-small-chat">
-            <i class="fa fa-comments"></i>
+    <!-- Mainly scripts -->
+    <script src="/js/jquery-3.1.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
 
-        </a>
-    </div>
-    <!-- notes -->
-    <div id="right-sidebar" class="animated">
-        <div class="sidebar-container">
-            <div class="tab-content">
-                <div id="tab-1" class="tab-pane active">
-                    <div class="sidebar-title">
-                        <h3><i class="fa fa-comments-o"></i> Latest Notes</h3>
-                        <small><i class="fa fa-tim"></i> You have 10 new message.</small>
-                    </div>
-                    <div>
-                        <div class="sidebar-message">
-                            <a href="index.html#">
-                                <div class="pull-left text-center">
-                                    <img alt="image" class="img-circle message-avatar" src="img/a1.jpg">
+    <!-- Custom and plugin javascript -->
+    <script src="/js/inspinia.js"></script>
+    <script src="/js/plugins/pace/pace.min.js"></script>
 
-                                    <div class="m-t-xs">
-                                        <i class="fa fa-star text-warning"></i>
-                                        <i class="fa fa-star text-warning"></i>
-                                    </div>
-                                </div>
-                                <div class="media-body">
-
-                                    There are many variations of passages of Lorem Ipsum available.
-                                    <br>
-                                    <small class="text-muted">Today 4:21 pm</small>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<!-- Mainly scripts -->
-<script src="/js/jquery-3.1.1.min.js"></script>
-<script src="/js/bootstrap.min.js"></script>
-<script src="/js/plugins/metisMenu/jquery.metisMenu.js"></script>
-<script src="/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-
-<!-- Custom and plugin javascript -->
-<script src="/js/inspinia.js"></script>
-<script src="/js/plugins/pace/pace.min.js"></script>
-
-<!-- jQuery UI -->
-<script src="/js/plugins/jquery-ui/jquery-ui.min.js"></script>
-
+    <!-- jQuery UI -->
+    <script src="/js/plugins/jquery-ui/jquery-ui.min.js"></script>
+        <!-- ckeditor -->
+        <script src="/js/ckeditor5-build-classic/ckeditor.js"></script>
+        <script>
+            function doSubmit() {
+                var dom = document.getElementById("submitEassy")
+                var dom2 = document.getElementById("typeId");
+                var typeIndex = dom2.selectedIndex;
+                if(dom2.options[typeIndex].value != 0&&docment.getElementById("author").value!=""){
+                    dom.submit();
+                }
+                else{
+                    alert("请选择类别");
+                    return false;
+                }
+            };
+            ClassicEditor
+                .create(document.querySelector('#editor'), {
+                    // toolbar: [ 'heading', '|', 'bold', 'italic', 'link' ]
+                })
+                .then(editor => {
+                window.editor = editor;
+            })
+            .catch(err => {
+                console.error(err.stack);
+            });
+        </script>
 
 </body>
 

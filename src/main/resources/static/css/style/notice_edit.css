@@ -1,0 +1,24 @@
+.ck-editor {
+    min-width: 800px !important;
+    }
+.ck-content {
+        min-height: 400px;
+    }
+.ckeditor-titile{
+    margin:10px 0;
+    padding:10px 0;
+    text-align: center;
+    font-size:2.3rem;
+    height:40px;
+}
+
+.cheditor-type{
+    margin:10px 0;
+    padding:0 20px;
+    font-size:1.6rem;
+    height:40px;
+}
+.cheditor-type option{
+    margin:10px 0;
+}
+

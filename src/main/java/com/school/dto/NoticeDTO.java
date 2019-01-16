@@ -1,19 +1,19 @@
-package com.school.dtoObject;
+package com.school.dto;
 
 import lombok.Data;
 
-import javax.persistence.*;
 import java.util.Date;
 
 @Data
-@Entity
-public class NoticeDetail {
+public class NoticeDTO {
 
-    @Id
     private String ndtlId;
 
     /** 类别ID          */
     private Integer ntypeId;
+
+    /** 类别名称      */
+    private String ntypeName;
 
     /** 通知标题       */
     private String ndtlTitle;
@@ -24,17 +24,15 @@ public class NoticeDetail {
     /** 通知者Id           */
     private Integer noticeId;
 
-    /** 文章内容       */
+    /** 文字内容         */
     private String ndtlContent;
 
     /** 1:发送 2:删除   */
     private Integer ndtlStatus=1;
 
     /** 创建时间     */
-    private Date createTime;
+    private String createTime;
 
     /** 更新信息时间     */
-    private Date updateTime;
-
-
+    private String updateTime;
 }

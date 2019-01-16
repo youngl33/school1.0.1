@@ -1,6 +1,7 @@
 package com.school.repository;
 
 import com.school.dtoObject.NoticeType;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,6 +12,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@Slf4j
 public class NoticeTypeRepositoryTest {
 
     @Autowired
@@ -31,8 +33,9 @@ public class NoticeTypeRepositoryTest {
     }
 
     @Test
-    public void findByNtypeName(){
+    public void findNtypeName(){
         NoticeType result = repository.findByNtypeName("通知");
+        log.info("【通过通知名查找】，result={}",result);
         Assert.assertNotNull(result);
     }
 

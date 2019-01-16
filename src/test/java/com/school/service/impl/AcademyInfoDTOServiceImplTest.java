@@ -18,7 +18,7 @@ import java.util.List;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Slf4j
-public class AcademyInfoServiceImplTest {
+public class AcademyInfoDTOServiceImplTest {
 
     @Autowired
     private AcademyInfoService academyInfoService;
