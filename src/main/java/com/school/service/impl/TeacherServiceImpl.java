@@ -30,13 +30,13 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public Page<Teacher> findByTeacherStatus(Pageable pageable, Integer teacherStatus) {
+    public Page<Teacher> findByTeacherStatus(Pageable pageable, String  teacherStatus) {
         return repository.findByTeacherStatus(pageable, teacherStatus);
     }
 
     @Override
-    public Page<Teacher> findByAcademyIdAndTeacherStatus(Pageable pageable,String academyId,Integer teacherStatus){
-        return repository.findByAinfoIdAndTeacherStatus(pageable,academyId,teacherStatus);
+    public Page<Teacher> findByAcademyIdAndTeacherStatus(Pageable pageable,String ainfoId,String  teacherStatus){
+        return repository.findByAinfoIdAndTeacherStatus(pageable,ainfoId,teacherStatus);
     }
 
     @Override
@@ -45,7 +45,17 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public Page<Teacher> findByTeacherPositionAndTeacherStatus(Pageable pageable, String teacherPositioin, Integer teacherStatus) {
+    public Page<Teacher> findByTeacherPositionAndTeacherStatus(Pageable pageable, String teacherPositioin, String  teacherStatus) {
         return repository.findByTeacherPositionAndTeacherStatus(pageable,teacherPositioin,teacherStatus);
+    }
+
+    @Override
+    public Page<Teacher> findByAinfoIdAndTeacherPositionAndTeacherStatus(Pageable pageable, String ainfoId, String teacherPosition,String  teacherStatus) {
+        return repository.findByAinfoIdAndTeacherPositionAndTeacherStatus(pageable,ainfoId,teacherPosition,teacherStatus);
+    }
+
+    @Override
+    public Teacher findOne(String teacherId){
+        return repository.findById(teacherId).orElse(null);
     }
 }

@@ -44,7 +44,7 @@ public class TeacherRepositoryTest {
         teacher.setTeacherName("吴光明");
         teacher.setTeacherPassword("123456");
         teacher.setTeacherPosition("高校讲师");
-        teacher.setTeacherStatus(0);
+        teacher.setTeacherStatus("在职");
         teacher.setTeacherTel("13388907787");
         Teacher result = repository.save(teacher);
         Assert.assertNotNull(result);
@@ -73,15 +73,14 @@ public class TeacherRepositoryTest {
     @Test
     public void findByTeacherStatus(){
         PageRequest request=new PageRequest(0,10);
-        Page<Teacher> teacherPage=repository.findByTeacherStatus(request,0);
+        Page<Teacher> teacherPage=repository.findByTeacherStatus(request,"在职");
         Assert.assertNotEquals(0,teacherPage.getTotalElements());
     }
 
     @Test
     public void findByAcademyIdAndTeacherStatus(){
         PageRequest request= new PageRequest(0,10);
-        AcademyInfo academyInfo= academyInfoRepository.findByAinfoName("外国语学院");
-        Page<Teacher> teacherPage= repository.findByAinfoIdAndTeacherStatus(request,academyInfo.getAinfoId(),0);
+        Page<Teacher> teacherPage= repository.findByAinfoIdAndTeacherStatus(request,"1040501","在职");
         Assert.assertNotEquals(0,teacherPage.getTotalElements());
     }
 
@@ -95,16 +94,21 @@ public class TeacherRepositoryTest {
     @Test
     public void findByTeacherPositionAndTeacherStatus(){
         PageRequest request= new PageRequest(0,10);
-        Page<Teacher> teacherPage=repository.findByTeacherPositionAndTeacherStatus(request,"高校讲师",0);
+        Page<Teacher> teacherPage=repository.findByTeacherPositionAndTeacherStatus(request,"高校讲师","在职");
         log.info("【查找的数量】:Number={}",teacherPage.getTotalElements());
         Assert.assertNotEquals(0,teacherPage.getTotalElements());
     }
-/*    @Test
-    public void findByTeacherAcademy(){
-        PageRequest request=new PageRequest(0,10);
-        Page<Teacher> teacherPage=repository.findByTeacherAcademy(request,"外国语学院");
-        log.info("【查找的数量】,Number={}",((Page) teacherPage).getTotalElements());
-        Assert.assertNotEquals(0,teacherPage.getTotalElements());
 
-    }*/
+    @Test
+    public void findByAinfoIdAndTeacherPositionAndTeacherStatus(){
+        PageRequest request=new PageRequest(0,10);
+        Page<Teacher> teacherPage=repository.findByAinfoIdAndTeacherPositionAndTeacherStatus(request,"1040502","高校教授","在职");
+        Assert.assertNotEquals(0,teacherPage.getTotalElements());
+    }
+
+    @Test
+    public void findOne(){
+        Teacher teacher=repository.findById("200809002").orElse(null);
+        Assert.assertNotNull(teacher);
+    }
 }

@@ -28,19 +28,19 @@ public class TeacherServiceImplTest {
     public void create()throws Exception{
         Teacher teacher = new Teacher();
         teacher.setTeacherAddr("江西省南昌市经济技术开发区蓝天花园");
-        teacher.setAinfoId("1040501");
+        teacher.setAinfoId("1040503");
         teacher.setTeacherAge(45);
         teacher.setTeacherAvater("null");
         teacher.setTeacherBorndate(DateFormatUtils.dateConverter("1974-01-11"));
         teacher.setTeacherCareer("职业记录良好");
         teacher.setTeacherDescription("null");
         teacher.setTeacherIcard("360502197401110932");
-        teacher.setTeacherId("104050101");
+        teacher.setTeacherId("200709002");
         teacher.setTeacherGender("男");
         teacher.setTeacherName("廖小洋");
         teacher.setTeacherPassword("123456");
-        teacher.setTeacherPosition("搞笑讲师");
-        teacher.setTeacherStatus(0);
+        teacher.setTeacherPosition("高校讲师");
+        teacher.setTeacherStatus("在职");
         teacher.setTeacherTel("18979065210");
         Teacher result = teacherService.save(teacher);
         Assert.assertNotNull(result);
@@ -64,7 +64,7 @@ public class TeacherServiceImplTest {
     @Test
     public void findByTeacherStatus(){
         PageRequest request=new PageRequest(0,10);
-        Page<Teacher> teacherPage=teacherService.findByTeacherStatus(request,0);
+        Page<Teacher> teacherPage=teacherService.findByTeacherStatus(request,"在职");
         Assert.assertNotEquals(0,teacherPage.getTotalElements());
     }
 
@@ -78,10 +78,28 @@ public class TeacherServiceImplTest {
     @Test
     public void findByTeacherPositionAndTeacherStatus(){
         PageRequest request=new PageRequest(0,10);
-        Page<Teacher> teacherPage=teacherService.findByTeacherPositionAndTeacherStatus(request,"高校教授",0);
+        Page<Teacher> teacherPage=teacherService.findByTeacherPositionAndTeacherStatus(request,"高校教授","在职");
         log.info("【数量】:Number={}",teacherPage.getTotalElements());
         Assert.assertNotEquals(0,teacherPage.getTotalElements());
     }
 
+    @Test
+    public void findByAinfoIdAndTeacherStatus(){
+        PageRequest request=new PageRequest(0,10);
+        Page<Teacher> teacherPage=teacherService.findByAcademyIdAndTeacherStatus(request,"1040503","在职");
+        Assert.assertNotEquals(0,teacherPage.getTotalElements());
+    }
+    @Test
+    public  void findByAinfoIdAndTeacherPositionAndTeacherStatus(){
+        PageRequest request=new PageRequest(0,10);
+        Page<Teacher> teacherPage=teacherService.findByAinfoIdAndTeacherPositionAndTeacherStatus(request,"1040503","高校讲师","在职");
+        Assert.assertNotEquals(0,teacherPage.getTotalElements());
+    }
+
+    @Test
+    public void findOne(){
+        Teacher teacher=teacherService.findOne("200809002");
+        Assert.assertNotNull(teacher);
+    }
 
 }

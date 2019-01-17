@@ -167,43 +167,42 @@
             </div>
             <!-- type search-->
             <div class="white-bg">
-                <form class="form-horizontal" action="/teacher/status" >
+                <form class="form-horizontal" action="/teacher/find" >
                     <div class="form-group">
                         <label  class="col-sm-2 control-label">教师状态：</label>
                         <div class="col-sm-10">
                             <label class="radio-inline">
-                                <input type="radio" th:value="${teacherDTO?.teacherStatus}" id="inlineRadio1" value="0" checked="checked">在职
+                                <input type="radio" th:if="${teacherStatus!='在职'}" name="teacherStatus" value="在职" >
+                                <input type="radio" th:if="${teacherStatus=='在职'}" checked name="teacherStatus" value="在职" >在职
                             </label>
                             <label class="radio-inline">
-                                <input type="radio" th:value="${teacherDTO?.teacherStatus}" name="teacherStatus" id="inlineRadio2" value="1">离职
+                                <input type="radio" th:if="${teacherStatus!='离职'}" name="teacherStatus" value="离职">
+                                <input type="radio" th:if="${teacherStatus=='离职'}" checked name="teacherStatus" value="离职">离职
                             </label>
                             <label class="radio-inline">
-                                <input type="radio" th:value="${teacherDTO?.teacherStatus}" name="teacherStatus" id="inlineRadio3" value="2">退休
+                                <input type="radio"  th:if="${teacherStatus!='退休'}"  name="teacherStatus" value="退休">
+                                <input type="radio"  th:if="${teacherStatus=='退休'}" checked name="teacherStatus" value="退休">退休
                             </label>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" >
                         <label  class="col-sm-2 control-label">所在学院：</label>
                         <div class="col-sm-3">
                             <select class="form-control" name="ainfoId">
-                                <option>全部</option>
-                                <option <!--th:value="软件学院" th:text=""-->>软件学院</option>
-                                <option>外国语学院</option>
-                                <option>核科学与工程学院</option>
-                                <option>水资源与环境工程学院</option>
-                                <option>测绘学院</option>
+                                <option value="0">全部</option>
+                                <option th:each="academyInfo:${academyInfos}" th:value="${academyInfo?.ainfoId}" th:text="${academyInfo?.ainfoName}"></option>
                             </select>
                         </div>
                     </div>
                     <div class="form-group">
-                            <label for="inputPassword3" class="col-sm-2 control-label">职称：</label>
+                            <label  class="col-sm-2 control-label">职称：</label>
                             <div class="col-sm-3">
-                                <select class="form-control">
-                                    <option>全部</option>
-                                    <option>高校讲师</option>
-                                    <option>高校助教</option>
-                                    <option>高校教授</option>
-                                    <option>高校副教授</option>
+                                <select class="form-control" name="teacherPosition" >
+                                    <option value="0">全部</option>
+                                    <option th:value="高校讲师">高校讲师</option>
+                                    <option th:value="高校助教">高校助教</option>
+                                    <option th:value="高校教授">高校教授</option>
+                                    <option th:value="高校副教授">高校副教授</option>
                                 </select>
                             </div>
                         </div>

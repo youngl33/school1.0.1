@@ -15,7 +15,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.thymeleaf.util.StringUtils;
 
+import javax.validation.Valid;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +25,7 @@ import java.util.List;
 @RequestMapping("/teacher")
 @Controller
 @Slf4j
-public class TeacherController{
+public class TeacherController {
 
     @Autowired
     private TeacherService teacherService;
@@ -32,72 +34,284 @@ public class TeacherController{
     private AcademyInfoService academyInfoService;
 
 
-
-    @GetMapping("/status")
-    public String findAll(@RequestParam(value = "page",defaultValue="0") Integer page, @RequestParam(value = "teacherStatus",defaultValue = "") Integer teacherStatus , Model model) throws ParseException {
+    @GetMapping("/find")
+    public String findAll(@RequestParam(value = "page", defaultValue = "0") Integer page,
+                          @RequestParam(value = "teacherStatus", defaultValue = "在职") String teacherStatus,
+                          @RequestParam(value = "ainfoId",required = false) String ainfoId,
+                          @RequestParam(value = "teacherPosition",defaultValue = "0") String teacherPosition,
+                          Model model) throws ParseException {
         //通过状态显示老师信息
-        PageRequest request=new PageRequest(page,16);
-        Page<Teacher> teacherPage=teacherService.findByTeacherStatus(request,teacherStatus);
-        List<Teacher> teacherList= teacherPage.getContent();
-
-        //把信息复制到teacherDTO类里
+        PageRequest request = new PageRequest(page, 16);
+        Page<Teacher> teacherPage = teacherService.findByTeacherStatus(request, teacherStatus);
+        List<AcademyInfo> ainfo=academyInfoService.findAll();
+        List<AcademyInfo> academyInfoList=new ArrayList<AcademyInfo>();
+        for(AcademyInfo academyInfo:ainfo ){
+            academyInfoList.add(academyInfo);
+        }
+        List<Teacher> teacherList = teacherPage.getContent();
         List<TeacherDTO> teacherDTOList = new ArrayList<TeacherDTO>();
         for(Teacher teacher : teacherList){
-            TeacherDTO teacherDTO = new TeacherDTO();
-            BeanUtils.copyProperties(teacher,teacherDTO);
-            //若有学院id，则查找学院名
-            if(teacherDTO.getAinfoId()!=null||teacherDTO.getAinfoId()!=""){
-                AcademyInfo academyInfo=academyInfoService.findOne(teacherDTO.getAinfoId());
-                teacherDTO.setAinfoName(academyInfo.getAinfoName());
-            }else {
-                teacherDTO.setAinfoName("无");
+            boolean exist=true;
+            //判断是否有选择学院搜索
+            if(!StringUtils.isEmpty(ainfoId)&&!StringUtils.equals(ainfoId,"0")){
+                if(!StringUtils.equals(teacher.getAinfoId(),ainfoId)) {
+                    exist =false;
+                }
             }
-            //TODO
-            teacherDTO.setTeacherBorndate(DateFormatUtils.dateConverterFormat(teacherDTO.getTeacherBorndate()));
-            //若teacher_status：(0：在职； 1：辞职； 2：退休)
-            switch (teacherDTO.getTeacherStatus())
-            {
-                case 0: teacherDTO.setTeacherStatusWord(TeacherStatusEnum.WORKING.getMessage());break;
-                case 1: teacherDTO.setTeacherStatusWord(TeacherStatusEnum.RESIGNATION.getMessage()); break;
-                case 2: teacherDTO.setTeacherStatusWord(TeacherStatusEnum.RETIRE.getMessage()); break;
-                default: teacherDTO.setTeacherStatusWord("null"); break;
+            if(!StringUtils.isEmpty(teacherPosition)&&teacherPosition!=null&&!StringUtils.equals(teacherPosition,"0")){
+                if (!StringUtils.equals(teacher.getTeacherPosition(),teacherPosition)) {
+                    exist=false;
+                }
             }
-            teacherDTOList.add(teacherDTO);
+            if(exist) {
+                TeacherDTO teacherDTO = new TeacherDTO();
+                BeanUtils.copyProperties(teacher, teacherDTO);
+                //若有学院id，则查找学院名
+                if (teacherDTO.getAinfoId() != null || teacherDTO.getAinfoId() != "") {
+                    AcademyInfo ainfo1 = academyInfoService.findOne(teacherDTO.getAinfoId());
+                    teacherDTO.setAinfoName(ainfo1.getAinfoName());
+                } else {
+                    teacherDTO.setAinfoName("无");
+                }//TODO
+                teacherDTO.setTeacherBorndate(DateFormatUtils.dateConverterFormatString2(teacher.getTeacherBorndate()));
+                teacherDTOList.add(teacherDTO);
+            }
         }
+        model.addAttribute("teacherStatus", teacherStatus);
+        model.addAttribute("ainfoId", ainfoId);
+        model.addAttribute("teacherPosition", teacherPosition);
+        model.addAttribute("academyInfos",academyInfoList);
+        model.addAttribute("teacherDTOs", teacherDTOList);
 
-        model.addAttribute("teacherDTOs",teacherDTOList);
+        /*Page<Teacher> teacherPage2 = teacherService.findByAcademyIdAndTeacherStatus(request, ainfoId, teacherStatus);
+        Page<Teacher> teacherPage3 = teacherService.findByTeacherPositionAndTeacherStatus(request, teacherPosition, teacherStatus);
+        Page<Teacher> teacherPage4 = teacherService.findByAinfoIdAndTeacherPositionAndTeacherStatus(request, ainfoId, teacherPosition, teacherStatus);
+
+        if (ainfoId == "0" && teacherPosition == "全部") {
+            List<Teacher> teacherList = teacherPage1.getContent();
+            //把信息复制到teacherDTO类里
+            List<TeacherDTO> teacherDTOList = new ArrayList<TeacherDTO>();
+            for (Teacher teacher : teacherList) {
+                TeacherDTO teacherDTO = new TeacherDTO();
+                BeanUtils.copyProperties(teacher, teacherDTO);
+                //若有学院id，则查找学院名
+                if (teacherDTO.getAinfoId() != null || teacherDTO.getAinfoId() != "") {
+                    AcademyInfo academyInfo = academyInfoService.findOne(teacherDTO.getAinfoId());
+                    teacherDTO.setAinfoName(academyInfo.getAinfoName());
+                } else {
+                    teacherDTO.setAinfoName("无");
+                }
+                //TODO
+                teacherDTO.setTeacherBorndate(DateFormatUtils.dateConverterFormat(teacherDTO.getTeacherBorndate()));
+                //若teacher_status：(0：在职； 1：辞职； 2：退休)
+                switch (teacherDTO.getTeacherStatus()) {
+                    case 0:
+                        teacherDTO.setTeacherStatusWord(TeacherStatusEnum.WORKING.getMessage());
+                        break;
+                    case 1:
+                        teacherDTO.setTeacherStatusWord(TeacherStatusEnum.RESIGNATION.getMessage());
+                        break;
+                    case 2:
+                        teacherDTO.setTeacherStatusWord(TeacherStatusEnum.RETIRE.getMessage());
+                        break;
+                    default:
+                        teacherDTO.setTeacherStatusWord("null");
+                        break;
+                }
+                teacherDTOList.add(teacherDTO);
+            }
+
+            log.info("【result={}", teacherDTOList.size());
+            model.addAttribute("teacherStatus", teacherStatus);
+            model.addAttribute("ainfoId", ainfoId);
+            model.addAttribute("teacherDTOs", teacherDTOList);
+
+        }
+        if (ainfoId != "0" && teacherPosition == "全部") {
+            List<Teacher> teacherList = teacherPage2.getContent();
+            //把信息复制到teacherDTO类里
+            List<TeacherDTO> teacherDTOList = new ArrayList<TeacherDTO>();
+            for (Teacher teacher : teacherList) {
+                TeacherDTO teacherDTO = new TeacherDTO();
+                BeanUtils.copyProperties(teacher, teacherDTO);
+                //若有学院id，则查找学院名
+                if (teacherDTO.getAinfoId() != null || teacherDTO.getAinfoId() != "") {
+                    AcademyInfo academyInfo = academyInfoService.findOne(teacherDTO.getAinfoId());
+                    teacherDTO.setAinfoName(academyInfo.getAinfoName());
+                } else {
+                    teacherDTO.setAinfoName("无");
+                }
+                //TODO
+                teacherDTO.setTeacherBorndate(DateFormatUtils.dateConverterFormat(teacherDTO.getTeacherBorndate()));
+                //若teacher_status：(0：在职； 1：辞职； 2：退休)
+                switch (teacherDTO.getTeacherStatus()) {
+                    case 0:
+                        teacherDTO.setTeacherStatusWord(TeacherStatusEnum.WORKING.getMessage());
+                        break;
+                    case 1:
+                        teacherDTO.setTeacherStatusWord(TeacherStatusEnum.RESIGNATION.getMessage());
+                        break;
+                    case 2:
+                        teacherDTO.setTeacherStatusWord(TeacherStatusEnum.RETIRE.getMessage());
+                        break;
+                    default:
+                        teacherDTO.setTeacherStatusWord("null");
+                        break;
+                }
+                teacherDTOList.add(teacherDTO);
+            }
+
+            log.info("【result={}", teacherDTOList.size());
+            model.addAttribute("teacherStatus", teacherStatus);
+            model.addAttribute("ainfoId", ainfoId);
+            model.addAttribute("teacherDTOs", teacherDTOList);
+
+        }
+        if (ainfoId != "0" && teacherPosition != "全部") {
+            List<Teacher> teacherList = teacherPage4.getContent();
+            //把信息复制到teacherDTO类里
+            List<TeacherDTO> teacherDTOList = new ArrayList<TeacherDTO>();
+            for (Teacher teacher : teacherList) {
+                TeacherDTO teacherDTO = new TeacherDTO();
+                BeanUtils.copyProperties(teacher, teacherDTO);
+                //若有学院id，则查找学院名
+                if (teacherDTO.getAinfoId() != null || teacherDTO.getAinfoId() != "") {
+                    AcademyInfo academyInfo = academyInfoService.findOne(teacherDTO.getAinfoId());
+                    teacherDTO.setAinfoName(academyInfo.getAinfoName());
+                } else {
+                    teacherDTO.setAinfoName("无");
+                }
+                //TODO
+                teacherDTO.setTeacherBorndate(DateFormatUtils.dateConverterFormat(teacherDTO.getTeacherBorndate()));
+                //若teacher_status：(0：在职； 1：辞职； 2：退休)
+                switch (teacherDTO.getTeacherStatus()) {
+                    case 0:
+                        teacherDTO.setTeacherStatusWord(TeacherStatusEnum.WORKING.getMessage());
+                        break;
+                    case 1:
+                        teacherDTO.setTeacherStatusWord(TeacherStatusEnum.RESIGNATION.getMessage());
+                        break;
+                    case 2:
+                        teacherDTO.setTeacherStatusWord(TeacherStatusEnum.RETIRE.getMessage());
+                        break;
+                    default:
+                        teacherDTO.setTeacherStatusWord("null");
+                        break;
+                }
+                teacherDTOList.add(teacherDTO);
+            }
+
+            log.info("【result={}", teacherDTOList.size());
+            model.addAttribute("teacherStatus", teacherStatus);
+            model.addAttribute("ainfoId", ainfoId);
+            model.addAttribute("teacherDTOs", teacherDTOList);
+
+        }
+        if (ainfoId == "0" && teacherPosition == "全部") {
+            List<Teacher> teacherList = teacherPage1.getContent();
+            //把信息复制到teacherDTO类里
+            List<TeacherDTO> teacherDTOList = new ArrayList<TeacherDTO>();
+            for (Teacher teacher : teacherList) {
+                TeacherDTO teacherDTO = new TeacherDTO();
+                BeanUtils.copyProperties(teacher, teacherDTO);
+                //若有学院id，则查找学院名
+                if (teacherDTO.getAinfoId() != null || teacherDTO.getAinfoId() != "") {
+                    AcademyInfo academyInfo = academyInfoService.findOne(teacherDTO.getAinfoId());
+                    teacherDTO.setAinfoName(academyInfo.getAinfoName());
+                } else {
+                    teacherDTO.setAinfoName("无");
+                }
+                //TODO
+                teacherDTO.setTeacherBorndate(DateFormatUtils.dateConverterFormat(teacherDTO.getTeacherBorndate()));
+                //若teacher_status：(0：在职； 1：辞职； 2：退休)
+                switch (teacherDTO.getTeacherStatus()) {
+                    case 0:
+                        teacherDTO.setTeacherStatusWord(TeacherStatusEnum.WORKING.getMessage());
+                        break;
+                    case 1:
+                        teacherDTO.setTeacherStatusWord(TeacherStatusEnum.RESIGNATION.getMessage());
+                        break;
+                    case 2:
+                        teacherDTO.setTeacherStatusWord(TeacherStatusEnum.RETIRE.getMessage());
+                        break;
+                    default:
+                        teacherDTO.setTeacherStatusWord("null");
+                        break;
+                }
+                teacherDTOList.add(teacherDTO);
+            }
+
+            log.info("【result={}", teacherDTOList.size());
+            model.addAttribute("teacherStatus", teacherStatus);
+            model.addAttribute("ainfoId", ainfoId);
+            model.addAttribute("teacherDTOs", teacherDTOList);
+
+        }*/
+
         return "teacher/index";
     }
-
-
-    @GetMapping("/academy")
-    public String findByAcademyIdAndTeacherStatus(@RequestParam(value = "page",defaultValue="0") Integer page,
-                                                  @RequestParam(value="academyName",defaultValue ="") String academyName,
-                                                  @RequestParam(value = "teacherStatus",defaultValue="0") Integer teacherStatus,
-                                                  Model model){
-        PageRequest request=new PageRequest(page,16);
-        AcademyInfo academyInfo=academyInfoService.findByAinfoName(academyName);
-        Page<Teacher> teacherPage=teacherService.findByAcademyIdAndTeacherStatus(request,academyInfo.getAinfoId(),teacherStatus);
-        List<Teacher> teacherList=teacherPage.getContent();
-
-        List<TeacherDTO> teacherDTOList =new ArrayList<>();
-        for(Teacher teacher:teacherList){
-            TeacherDTO teacherDTO=new TeacherDTO();
-            BeanUtils.copyProperties(teacher,teacherDTO);
-            teacherDTO.setAinfoName(academyInfo.getAinfoId());
-            //若teacher_status：(0：在职； 1：辞职； 2：退休)
-            switch (teacherDTO.getTeacherStatus())
-            {
-                case 0: teacherDTO.setTeacherStatusWord(TeacherStatusEnum.WORKING.getMessage());break;
-                case 1: teacherDTO.setTeacherStatusWord(TeacherStatusEnum.RESIGNATION.getMessage()); break;
-                case 2: teacherDTO.setTeacherStatusWord(TeacherStatusEnum.RETIRE.getMessage()); break;
-                default: teacherDTO.setTeacherStatusWord("null"); break;
-            }
-            teacherDTOList.add(teacherDTO);
+//TODO
+    @GetMapping("/edit")
+    public String teacherEdit(@RequestParam("teacherId") String teacherId,
+                              Model model) throws ParseException {
+        Teacher teacher=teacherService.findOne(teacherId);
+        AcademyInfo academyInfo=academyInfoService.findOne(teacher.getAinfoId());
+        List<AcademyInfo> ainfos=academyInfoService.findAll();
+        List<AcademyInfo> academyInfoList=new ArrayList<AcademyInfo>();
+        for(AcademyInfo a:ainfos ){
+            academyInfoList.add(a);
         }
-        model.addAttribute("teacherDTO",teacherDTOList);
-        return "pro";
+        TeacherDTO teacherDTO=new TeacherDTO();
+        BeanUtils.copyProperties(teacher,teacherDTO);
+        teacherDTO.setTeacherBorndate(DateFormatUtils.dateConverterFormatString2(teacher.getTeacherBorndate()));
+        teacherDTO.setTeacherStatus(teacher.getTeacherStatus());
+
+        model.addAttribute("teacherDTO",teacherDTO);
+        model.addAttribute("academyInfo",academyInfoList);
+        model.addAttribute("teacher",teacher);
+        model.addAttribute("ainfo",academyInfo);
+        return "teacher/edit";
+    }
+
+    @PostMapping("edit/save")
+    public String teacherEditSave(@Valid TeacherDTO teacherDTO,
+                                  Model model) throws ParseException {
+        log.info("resutl={}",teacherDTO);
+        Teacher teacher = teacherService.findOne(teacherDTO.getTeacherId());
+        BeanUtils.copyProperties(teacherDTO,teacher);
+        teacher.setTeacherBorndate(DateFormatUtils.dateConverter(teacherDTO.getTeacherBorndate()));
+        teacherService.save(teacher);
+
+        model.addAttribute("msg","保存成功");
+        model.addAttribute("url","/teacher/profile");
+        return "common/success";
 
     }
+
+    @GetMapping("/add")
+    public String add(Model model){
+        List<AcademyInfo> ainfos=academyInfoService.findAll();
+        List<AcademyInfo> academyInfoList=new ArrayList<AcademyInfo>();
+        for(AcademyInfo a:ainfos ){
+            academyInfoList.add(a);
+        }
+        model.addAttribute("academyInfo",academyInfoList);
+        return "teacher/add";
+    }
+
+    @PostMapping("/add/save")
+    public String addSave(@Valid TeacherDTO teacherDTO,
+                          Model model) throws ParseException {
+        Teacher teacher=new Teacher();
+        BeanUtils.copyProperties(teacherDTO,teacher);
+        Teacher result=teacherService.findOne(teacher.getTeacherId());
+        log.info("【查找结果】:result={}",result);
+        teacher.setTeacherBorndate(DateFormatUtils.dateConverter(teacherDTO.getTeacherBorndate()));
+        teacherService.save(teacher);
+        model.addAttribute("msg","保存成功");
+        model.addAttribute("url","/teacher/profile");
+        return "common/success";
+    }
+
 
 }

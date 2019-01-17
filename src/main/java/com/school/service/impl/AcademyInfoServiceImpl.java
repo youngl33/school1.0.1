@@ -33,7 +33,7 @@ public class AcademyInfoServiceImpl implements AcademyInfoService {
 
 
     @Override
-    public List<AcademyInfo> findAll() {
+    public List<AcademyInfo > findAll() {
         return academyInfoRepository.findAll();
     }
 }

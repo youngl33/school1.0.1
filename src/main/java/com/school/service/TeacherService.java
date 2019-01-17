@@ -7,6 +7,8 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 public interface TeacherService {
+    /** 通过教师ID查找教师信息*/
+    public Teacher findOne(String teacherId);
 
     /** 保存一个老师的信息*/
     public Teacher save(Teacher teacher);
@@ -18,16 +20,18 @@ public interface TeacherService {
     public Page<Teacher> findAll(Pageable pageable);
 
     /** 通过状态查找教师信息*/
-    public Page<Teacher> findByTeacherStatus(Pageable pageable,Integer teacherStatus);
+    public Page<Teacher> findByTeacherStatus(Pageable pageable,String teacherStatus);
 
-    /** 通过学院名和教师状态查找教师信息*/
-    public Page<Teacher> findByAcademyIdAndTeacherStatus(Pageable pageable,String academyInfo,Integer teacherStatus);
+    /** 通过学院id和教师状态查找教师信息*/
+    public Page<Teacher> findByAcademyIdAndTeacherStatus(Pageable pageable,String ainfoId,String  teacherStatus);
 
     /** 通过教师职位查找教师信息*/
     public Page<Teacher> findByTeacherPosition(Pageable pageable,String teacherPosition);
 
     /** 通过教师职位和状态查找教师信息*/
-    public Page<Teacher> findByTeacherPositionAndTeacherStatus(Pageable pageable,String teacherPositioin,Integer teacherStatus);
-    /** 删除一个老师的信息*//*
-    public void delete(String teacherId);*/
+    public Page<Teacher> findByTeacherPositionAndTeacherStatus(Pageable pageable,String teacherPositioin,String teacherStatus);
+
+    /** 通过教师所在学院ID和教师职称和教师状态查找教师信息*/
+    public Page<Teacher> findByAinfoIdAndTeacherPositionAndTeacherStatus(Pageable pageable,String ainfoId,String teacherPosition,String teacherStatus);
+
 }

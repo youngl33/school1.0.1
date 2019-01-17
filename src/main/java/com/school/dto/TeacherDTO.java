@@ -25,7 +25,7 @@ public class TeacherDTO {
     private String teacherTel;
 
     /** 教师生日    */
-    private Date teacherBorndate;
+    private String teacherBorndate;
 
     /** 教师性别 */
     private String teacherGender;
@@ -48,13 +48,16 @@ public class TeacherDTO {
     /** 教师所在学院名字  （如果老师属于学院就有学院名字，如果不属于就没有）  */
     private String ainfoName;
 
-    /** 教师状态  0：在职 1；辞职 2：退休    */
-    private Integer teacherStatus;
-
-    /** 教师状态（文字）*/
-    private String teacherStatusWord;
+    /** 教师状态  在职 辞职 退休    */
+    private String teacherStatus;
 
     /** 教师描述    */
     private String teacherDescription;
+
+    /** 创建时间   */
+    private Date createTime;
+
+    /** 更新时间   */
+    private Date updateTime;
 
 }
