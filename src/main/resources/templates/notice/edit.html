@@ -25,7 +25,6 @@
 
     <link href="/css/animate.css" rel="stylesheet">
     <link href="/css/style.css" rel="stylesheet">
-    <link href="/css/style/teacher.css" rel="stylesheet">
     <link href="/css/style/notice_edit.css" rel="stylesheet">
 </head>
 
@@ -75,9 +74,9 @@
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
                         <li><a href="/notice/index">资讯通知</a></li>
-                        <li><a href="/notice/add">发布资讯</a></li>
-                        <li><a href="/academy/add">类别管理</a></li>
-                        <li><a href="/academy/add">类别添加</a></li>
+                        <li><a href="/notice/edit">发布资讯</a></li>
+                        <li><a href="/notice/recycle">回收站</a></li>
+                        <li><a href="/notice/type">类别管理</a></li>
                     </ul>
                 </li>
             </ul>
@@ -176,24 +175,24 @@
         </div>
         <!-- content  -->
         <div class="content white-bg container-fluid">
-            <form method="post" action="save" onsubmit="return doSubmit()">
+            <form method="post" action="edit/save" onsubmit="return doSubmit()" enctype="multipart/form-data">
                 <input type="hidden" name="ndtlId" th:value="${NoticeDetail?.ndtlId}" />
                 <div class="input-group m-b">
                     <div class="input-group-btn">
                         <select id="typeId" class="btn btn-white cheditor-type" name="ntypeId">
-                            <option value="0">请选择</option>
+                            <option th:if="${NoticeDetail?.ntypeId ==null}" value="0">请选择</option>
+                            <option th:if="${NoticeDetail?.ntypeId !=null}" th:value="${NoticeDetail?.ntypeId}" th:text="${ntypeName}" ></option>
                             <option th:each="noticeType :${noticeTypes}" th:value="${noticeType?.ntypeId}" th:text="${noticeType?.ntypeName}"></option>
                         </select>
                     </div>
-
-                    <input type="text" class="form-control ckeditor-titile" placeholder="请输入标题" name="ndtlTitle">
+                    <input type="text" th:value="${NoticeDetail?.ndtlTitle}" class="form-control ckeditor-titile" placeholder="请输入标题" id="ndtlTitle" name="ndtlTitle">
                 </div>
                 <div>
-                    <input type="textarea" id="editor">
+                    <textarea th:text="${NoticeDetail?.ndtlContent}" name="ndtlContent" id="editor"></textarea>
                 </div>
                 <div class="form-group">
                     <label>&nbsp;</label>
-                    <input type="text" id="author" name="ndtlAuthor" placeholder="请输入作者名" class="form-control">
+                    <input type="text" th:value="${NoticeDetail?.ndtlAuthor}" id="author" name="ndtlAuthor" placeholder="请输入作者名" class="form-control">
                 </div>
                 <div id="small-chat">
                     <input type="submit" class="btn btn-danger" value="发表">
@@ -216,31 +215,30 @@
     <!-- jQuery UI -->
     <script src="/js/plugins/jquery-ui/jquery-ui.min.js"></script>
         <!-- ckeditor -->
-        <script src="/js/ckeditor5-build-classic/ckeditor.js"></script>
-        <script>
-            function doSubmit() {
-                var dom = document.getElementById("submitEassy")
-                var dom2 = document.getElementById("typeId");
-                var typeIndex = dom2.selectedIndex;
-                if(dom2.options[typeIndex].value != 0&&docment.getElementById("author").value!=""){
-                    dom.submit();
-                }
-                else{
+    <script src="/js/ckeditor/ckeditor.js"></script>
+    <script>
+        function doSubmit() {
+            var dom2 = document.getElementById("typeId");
+            var typeIndex = dom2.selectedIndex;
+            if(dom2.options[typeIndex].value !=0&&document.getElementById("author").value!=""){
+                dom.submit();
+            }
+            else{
+                if(dom2.options[typeIndex].value == 0)
                     alert("请选择类别");
-                    return false;
-                }
-            };
-            ClassicEditor
-                .create(document.querySelector('#editor'), {
-                    // toolbar: [ 'heading', '|', 'bold', 'italic', 'link' ]
-                })
-                .then(editor => {
-                window.editor = editor;
-            })
-            .catch(err => {
-                console.error(err.stack);
-            });
-        </script>
+                if(document.getElementById("author").value=="")
+                    alert("请填写作者名");
+                if(document.getElementById("editor").value=="")
+                    alert("请填写内容");
+                if(document.getElementById("ndtlTitle").value=="")
+                    alert("请填写标题")
+                return false;
+            }
+
+        };
+
+        CKEDITOR.replace( 'editor' );
+    </script>
 
 </body>
 

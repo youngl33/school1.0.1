@@ -25,8 +25,6 @@
 
     <link href="/css/animate.css" rel="stylesheet">
     <link href="/css/style.css" rel="stylesheet">
-    <link href="/css/style/teacher.css" rel="stylesheet">
-
 </head>
 
 <body>
@@ -75,9 +73,9 @@
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
                         <li><a href="/notice/index">资讯通知</a></li>
-                        <li><a href="/notice/add">发布资讯</a></li>
-                        <li><a href="/academy/add">类别管理</a></li>
-                        <li><a href="/academy/add">类别添加</a></li>
+                        <li><a href="/notice/edit">发布资讯</a></li>
+                        <li><a href="/notice/recycle">回收站</a></li>
+                        <li><a href="/notice/type">类别管理</a></li>
                     </ul>
                 </li>
             </ul>
@@ -210,17 +208,10 @@
 
                                 <div class="pull-right">
                                     <div class="tooltip-demo">
-                                        <button class="btn btn-white btn-xs" data-toggle="tooltip" data-placement="left"
-                                                title="Plug this message"><i class="fa fa-plug"></i> Plug it
-                                        </button>
-                                        <button class="btn btn-white btn-xs" data-toggle="tooltip" data-placement="top"
-                                                title="Mark as read"><i class="fa fa-eye"></i></button>
-                                        <button class="btn btn-white btn-xs" data-toggle="tooltip" data-placement="top"
-                                                title="" data-original-title="Mark as important"><i
-                                                class="fa fa-exclamation"></i></button>
-                                        <button class="btn btn-white btn-xs" data-toggle="tooltip" data-placement="top"
-                                                title="" data-original-title="Move to trash"><i
-                                                class="fa fa-trash-o"></i></button>
+                                        <a class="btn btn-white btn-xs" th:href="@{'edit?ndtlId='+${noticeDTO?.ndtlId}}">
+                                            <i class="fa fa-pencil-square-o"></i></a>
+                                        <a class="btn btn-white btn-xs" th:href="@{'changeStatus?ndtlId='+${noticeDTO?.ndtlId}}">
+                                            <i class="fa fa-trash-o"></i></a>
 
                                     </div>
                                 </div>
@@ -232,7 +223,7 @@
                                     Their separate existence is a myth
                                 </h1>
 
-                                <p th:text="${noticeDTO?.ndtlContent}"></p>
+                                <p th:utext="${noticeDTO?.ndtlContent}"></p>
                                 <p class="small">
                                     <strong th:text="${noticeDTO?.ndtlAuthor}">Best regards, Anthony Smith </strong>
                                 </p>

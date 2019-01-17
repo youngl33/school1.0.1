@@ -6,7 +6,6 @@ import com.school.service.NoticeTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.validation.constraints.Null;
 import java.util.List;
 
 
@@ -35,4 +34,5 @@ public class NoticeTypeServiceImpl implements NoticeTypeService {
     public List<NoticeType> findAll() {
         return repository.findAll();
     }
+
 }

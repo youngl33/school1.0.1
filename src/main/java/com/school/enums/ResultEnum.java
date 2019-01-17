@@ -4,7 +4,8 @@ import lombok.Getter;
 
 @Getter
 public enum ResultEnum {
-    PARAM_ERROR(1,"参数错误");
+    PARAM_ERROR(1,"参数错误"),
+    IMG_ERROR(2,"图片错误")
     ;
 
 
