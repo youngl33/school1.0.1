@@ -1,10 +1,3 @@
-<!--
-*
-*  INSPINIA - Responsive Admin Theme
-*  version 2.7.1
-*
--->
-
 <!DOCTYPE html>
 <html>
 
@@ -25,11 +18,7 @@
 
     <link href="/css/animate.css" rel="stylesheet">
     <link href="/css/style.css" rel="stylesheet">
-    <style>
-        .notice-table th{
-            text-align: center;
-        }
-    </style>
+    <link href="/css/style/calendar.css" rel="stylesheet">
 
 </head>
 
@@ -63,7 +52,7 @@
                     <a href="#"><i class="fa fa-th-large"></i> <span class="nav-label">教师管理</span>
                         <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li class="active"><a href="index.html">教师管理</a></li>
+                        <li class="active"><a href="calendar.html">教师管理</a></li>
                     </ul>
                 </li>
                 <li>
@@ -74,7 +63,7 @@
                         <li><a href="/academy/add">添加学院</a></li>
                     </ul>
                 </li>
-                <li class="active">
+                <li>
                     <a href="#"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">资讯管理</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
@@ -82,6 +71,15 @@
                         <li><a href="/notice/edit">发布资讯</a></li>
                         <li><a href="/notice/recycle">回收站</a></li>
                         <li><a href="/notice/type">类别管理</a></li>
+                    </ul>
+                </li>
+                <li class="active">
+                    <a href="#"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">校历管理</span><span
+                            class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse">
+                        <li><a href="/schedule/index">校历</a></li>
+                        <li><a href="/schedule/list">校历列表</a></li>
+                        <li><a href="/schedule/import">校历导入</a></li>
                     </ul>
                 </li>
             </ul>
@@ -94,7 +92,7 @@
         <div class="row border-bottom">
             <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
                 <div class="navbar-header">
-                    <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="index.html#"><i
+                    <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="calendar.html#"><i
                             class="fa fa-bars"></i>
                     </a>
                     <form role="search" class="navbar-form-custom" action="search_results.html">
@@ -110,7 +108,7 @@
                         <span class="m-r-sm text-muted welcome-message">Welcome to INSPINIA+ Admin Theme.</span>
                     </li>
                     <li class="dropdown">
-                        <a class="dropdown-toggle count-info" data-toggle="dropdown" href="index.html#">
+                        <a class="dropdown-toggle count-info" data-toggle="dropdown" href="calendar.html#">
                             <i class="fa fa-envelope"></i> <span class="label label-warning">16</span>
                         </a>
                         <ul class="dropdown-menu dropdown-messages">
@@ -130,7 +128,7 @@
                         </ul>
                     </li>
                     <li class="dropdown">
-                        <a class="dropdown-toggle count-info" data-toggle="dropdown" href="index.html#">
+                        <a class="dropdown-toggle count-info" data-toggle="dropdown" href="calendar.html#">
                             <i class="fa fa-bell"></i> <span class="label label-primary">8</span>
                         </a>
                         <ul class="dropdown-menu dropdown-alerts">
@@ -161,16 +159,16 @@
         <!-- catelog -->
         <div class="row wrapper border-bottom white-bg page-heading">
             <div class="col-lg-10">
-                <h2>资讯通知</h2>
+                <h2>校历</h2>
                 <ol class="breadcrumb">
                     <li>
                         <a href="/index">主页</a>
                     </li>
                     <li>
-                        <a>资讯管理</a>
+                        <a>校历管理</a>
                     </li>
                     <li class="active">
-                        <strong>通知管理</strong>
+                        <strong>校历</strong>
                     </li>
                 </ol>
             </div>
@@ -178,61 +176,52 @@
 
             </div>
         </div>
+
         <!-- content  -->
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-title">
-                        <h5>Tooltips and Popovers</h5>
-
-                    </div>
-                    <div class="ibox-content text-center table-responsive">
-                        <table class="table table-bordered notice-table">
-                            <tr>
-                                <th>编号</th>
-                                <th>名称</th>
-                                <th>创建时间</th>
-                                <th>更新时间</th>
-                                <th>操作</th>
-                            </tr>
-                            <tr th:each="noticeType:${noticeTypes}">
-                                <form action="type/save" method="get">
-                                    <input type="hidden" name="ntypeId" th:value="${noticeType?.ntypeId}">
-                                    <td th:text="${noticeType?.ntypeId}">1</td>
-                                    <td><input type="text" name="ntypeName" th:value="${noticeType?.ntypeName}"></td>
-                                    <td th:text="${noticeType?.createTime}"></td>
-                                    <td th:text="${noticeType?.updateTime}"></td>
-                                    <td><input type="submit" value="提交"></td>
-                                </form>
-                            </tr>
-                            <tr>
-                                <form action="type/save" method="get">
-                                    <td >添加</td>
-                                    <td><input type="text" name="ntypeName"></td>
-                                    <td><input type="submit" value="提交"></td>
-                                </form>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
+        <div class="white-bg content-info">
+            <div class="col-md-offset-2" id="calendar"></div>
         </div>
-    </div>
 
 
-    <!-- Mainly scripts -->
-    <script src="/js/jquery-3.1.1.min.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
-    <script src="/js/plugins/metisMenu/jquery.metisMenu.js"></script>
-    <script src="/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+        <!-- Mainly scripts -->
+        <script src="/js/jquery-3.1.1.min.js"></script>
+        <script src="/js/bootstrap.min.js"></script>
+        <script src="/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+        <script src="/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
 
-    <!-- Custom and plugin javascript -->
-    <script src="/js/inspinia.js"></script>
-    <script src="/js/plugins/pace/pace.min.js"></script>
+        <!-- Custom and plugin javascript -->
+        <script src="/js/inspinia.js"></script>
+        <script src="/js/plugins/pace/pace.min.js"></script>
 
-    <!-- jQuery UI -->
-    <script src="/js/plugins/jquery-ui/jquery-ui.min.js"></script>
+        <!-- jQuery UI -->
+        <script src="/js/plugins/jquery-ui/jquery-ui.min.js"></script>
+        <script src="/js/calendar.js"></script>
+        <script>
+            var data = [
+                { startDate: "2019-2-10", name: "事件1" },
+            ];
+            $.ajax({
+                type:"get",
+                url:"http://localhost:8080/schedule/api/schedule/event",
+                data:{},
+                async: false,
+                success:function (data2) {
+                    data=data2;
+                    console.log(data2);
+                    console.log(data);
+                }
+            });
+            $("#calendar").calendar({
+                data: data,
+                mode: "month",
+                showModeBtn: false,
+                //  maxEvent: 3,
+                //  newDate: "2018-04-1",
+                cellClick: function (events) {
+                    //viewCell的事件列表
+                },
+            })
+        </script>
 
 </body>
 

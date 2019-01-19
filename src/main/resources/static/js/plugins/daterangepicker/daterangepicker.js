@@ -45,8 +45,8 @@
 
         //create the picker HTML object
         var DRPTemplate = '<div class="daterangepicker dropdown-menu">' +
-                '<div class="calendar first left"></div>' +
-                '<div class="calendar second right"></div>' +
+                '<div class="schedule first left"></div>' +
+                '<div class="schedule second right"></div>' +
                 '<div class="ranges">' +
                   '<div class="range_inputs">' +
                     '<div class="daterangepicker_start_input">' +
@@ -315,7 +315,7 @@
                 }
             }
 
-            // bind the time zone used to build the calendar to either the timeZone passed in through the options or the zone of the startDate (which will be the local time zone by default)
+            // bind the time zone used to build the schedule to either the timeZone passed in through the options or the zone of the startDate (which will be the local time zone by default)
             if (typeof options.timeZone === 'string' || typeof options.timeZone === 'number') {
             	if (typeof options.timeZone === 'string' && typeof moment.tz !== 'undefined') {
             		this.timeZone = moment.tz.zone(options.timeZone).parse(new Date) * -1;	// Offset is positive if the timezone is behind UTC and negative if it is ahead.
@@ -412,7 +412,7 @@
             };
 
             if (this.opens == 'right' || this.opens == 'center') {
-                //swap calendar positions
+                //swap schedule positions
                 var first = this.container.find('.calendar.first');
                 var second = this.container.find('.calendar.second');
 
@@ -431,7 +431,7 @@
             }
 
             if (typeof options.ranges === 'undefined' && !this.singleDatePicker) {
-                this.container.addClass('show-calendar');
+                this.container.addClass('show-schedule');
             }
 
             this.container.removeClass('opensleft opensright').addClass('opens' + this.opens);
@@ -647,7 +647,7 @@
                 e.type == "focusin" ||
                 target.closest(this.element).length ||
                 target.closest(this.container).length ||
-                target.closest('.calendar-date').length
+                target.closest('.schedule-date').length
                 ) return;
             this.hide();
         },
@@ -684,13 +684,13 @@
         },
 
         showCalendars: function() {
-            this.container.addClass('show-calendar');
+            this.container.addClass('show-schedule');
             this.move();
             this.element.trigger('showCalendar.daterangepicker', this);
         },
 
         hideCalendars: function() {
-            this.container.removeClass('show-calendar');
+            this.container.removeClass('show-schedule');
             this.element.trigger('hideCalendar.daterangepicker', this);
         },
 
@@ -757,7 +757,7 @@
         },
 
         clickPrev: function (e) {
-            var cal = $(e.target).parents('.calendar');
+            var cal = $(e.target).parents('.schedule');
             if (cal.hasClass('left')) {
                 this.leftCalendar.month.subtract(1, 'month');
             } else {
@@ -767,7 +767,7 @@
         },
 
         clickNext: function (e) {
-            var cal = $(e.target).parents('.calendar');
+            var cal = $(e.target).parents('.schedule');
             if (cal.hasClass('left')) {
                 this.leftCalendar.month.add(1, 'month');
             } else {
@@ -780,7 +780,7 @@
             var title = $(e.target).attr('data-title');
             var row = title.substr(1, 1);
             var col = title.substr(3, 1);
-            var cal = $(e.target).parents('.calendar');
+            var cal = $(e.target).parents('.schedule');
 
             if (cal.hasClass('left')) {
                 this.container.find('input[name=daterangepicker_start]').val(this.leftCalendar.calendar[row][col].format(this.format));
@@ -809,7 +809,7 @@
             var title = $(e.target).attr('data-title');
             var row = title.substr(1, 1);
             var col = title.substr(3, 1);
-            var cal = $(e.target).parents('.calendar');
+            var cal = $(e.target).parents('.schedule');
 
             var startDate, endDate;
             if (cal.hasClass('left')) {
@@ -868,7 +868,7 @@
         },
 
         updateMonthYear: function (e) {
-            var isLeft = $(e.target).closest('.calendar').hasClass('left'),
+            var isLeft = $(e.target).closest('.schedule').hasClass('left'),
                 leftOrRight = isLeft ? 'left' : 'right',
                 cal = this.container.find('.calendar.'+leftOrRight);
 
@@ -904,7 +904,7 @@
 
         updateTime: function(e) {
 
-            var cal = $(e.target).closest('.calendar'),
+            var cal = $(e.target).closest('.schedule'),
                 isLeft = cal.hasClass('left');
 
             var hour = parseInt(cal.find('.hourselect').val(), 10);
@@ -992,7 +992,7 @@
 
             var i;
 
-            //initialize a 6 rows x 7 columns array for the calendar
+            //initialize a 6 rows x 7 columns array for the schedule
             var calendar = [];
             calendar.firstDay = firstDay;
             calendar.lastDay = lastDay;
@@ -1001,7 +1001,7 @@
                 calendar[i] = [];
             }
 
-            //populate the calendar with date objects
+            //populate the schedule with date objects
             var startDay = daysInLastMonth - dayOfWeek + this.locale.firstDay + 1;
             if (startDay > daysInLastMonth)
                 startDay -= 7;
@@ -1067,7 +1067,7 @@
 
         renderCalendar: function (calendar, selected, minDate, maxDate, side) {
 
-            var html = '<div class="calendar-date">';
+            var html = '<div class="schedule-date">';
             html += '<table class="table-condensed">';
             html += '<thead>';
             html += '<tr>';
@@ -1150,7 +1150,7 @@
             var i;
             if (this.timePicker) {
 
-                html += '<div class="calendar-time">';
+                html += '<div class="schedule-time">';
                 html += '<select class="hourselect">';
 
                 // Disallow selections before the minDate or after the maxDate
