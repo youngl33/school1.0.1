@@ -27,7 +27,7 @@ public class AcademyInfoController {
     @Autowired
     private AcademyInfoService academyInfoService;
 
-    @GetMapping("/list")
+    @GetMapping("/index")
     public ModelAndView findAll(Map<String,Object> map){
         List<AcademyInfo> academyInfoList = academyInfoService.findAll();
         map.put("academyInfos",academyInfoList);

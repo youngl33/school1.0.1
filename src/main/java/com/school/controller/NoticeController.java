@@ -43,15 +43,17 @@ public class NoticeController {
      * 查看所有文章
      * @param page
      * @param model
+     * @param typeWeb 1资讯通知 2回收站
      * @return
      * @throws ParseException
      */
     @GetMapping("/index")
     public String index(@RequestParam(value = "page", defaultValue = "0") Integer page,
+                        @RequestParam(value= "typeWeb",defaultValue = "1") Integer typeWeb,
                         Model model) throws ParseException {
 
-        PageRequest request = new PageRequest(page, 10);
-        Page<NoticeDetail> noticeDetails = noticeDetailService.findByNdtlStatus(1,request);
+        PageRequest request = new PageRequest(page, 6);
+        Page<NoticeDetail> noticeDetails = noticeDetailService.findByNdtlStatus(typeWeb,request);
         List<NoticeDetail> noticeDetailList = noticeDetails.getContent();
         List<NoticeType> noticeTypeList = noticeTypeService.findAll();
 
@@ -69,8 +71,9 @@ public class NoticeController {
             noticeDTO.setUpdateTime(DateFormatUtils.dateConverterFormatString(noticeDetail.getUpdateTime()));
             noticeDTOList.add(noticeDTO);
         }
-
+        model.addAttribute("typeWeb",typeWeb);
         model.addAttribute("noticeDTOs", noticeDTOList);
+        model.addAttribute("noticeList",noticeDetails);
         return "notice/index";
     }
 
@@ -191,34 +194,6 @@ public class NoticeController {
         return res;
     }
 
-    /** 回收站 */
-    @GetMapping("/recycle")
-    public String recycle(@RequestParam(value = "page", defaultValue = "0") Integer page,
-                          Model model) throws ParseException {
-
-        PageRequest request = new PageRequest(page, 10);
-        Page<NoticeDetail> noticeDetails = noticeDetailService.findByNdtlStatus(2,request);
-        List<NoticeDetail> noticeDetailList = noticeDetails.getContent();
-        List<NoticeType> noticeTypeList = noticeTypeService.findAll();
-
-        //将类别存入map中
-        Map<Integer, String> noticeTypeMap = new HashMap<Integer, String>();
-        for (NoticeType noticeType : noticeTypeList) {
-            noticeTypeMap.put(noticeType.getNtypeId(), noticeType.getNtypeName());
-        }
-
-        List<NoticeDTO> noticeDTOList = new ArrayList<NoticeDTO>();
-        for (NoticeDetail noticeDetail : noticeDetailList) {
-            NoticeDTO noticeDTO = new NoticeDTO();
-            BeanUtils.copyProperties(noticeDetail, noticeDTO);
-            noticeDTO.setNtypeName(noticeTypeMap.get(noticeDTO.getNtypeId()));
-            noticeDTO.setUpdateTime(DateFormatUtils.dateConverterFormatString(noticeDetail.getUpdateTime()));
-            noticeDTOList.add(noticeDTO);
-        }
-
-        model.addAttribute("noticeDTOs", noticeDTOList);
-        return "notice/recycle";
-    }
 
     /** 删除和恢复  */
     @GetMapping("/changeStatus")
@@ -229,13 +204,13 @@ public class NoticeController {
             noticeDetail.setNdtlStatus(2);
             noticeDetailService.save(noticeDetail);
             model.addAttribute("msg", "修改成功");
-            model.addAttribute("url", "/notice/recycle");
+            model.addAttribute("url", "/notice/index?typeWeb=2");
             return "common/success";
         }else{
             noticeDetail.setNdtlStatus(1);
             noticeDetailService.save(noticeDetail);
             model.addAttribute("msg", "修改成功");
-            model.addAttribute("url", "/notice/index");
+            model.addAttribute("url", "/notice/index?typeWeb=1");
             return "common/success";
         }
     }
