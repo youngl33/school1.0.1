@@ -58,4 +58,9 @@ public class TeacherServiceImpl implements TeacherService {
     public Teacher findOne(String teacherId){
         return repository.findById(teacherId).orElse(null);
     }
+
+    @Override
+    public List<Teacher> findByTeacherNameContaining(String teacherName) {
+        return repository.findAllByTeacherNameContaining(teacherName);
+    }
 }

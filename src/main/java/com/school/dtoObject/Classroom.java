@@ -14,13 +14,22 @@ import java.util.Date;
 public class Classroom {
     @GeneratedValue(strategy =GenerationType.IDENTITY)
     @Id
-    private String classroomId;
+    private Integer classroomId;
 
     /** 教室号*/
     private String classroomNo;
 
+    /**所在校区*/
+    private String classroomLocation;
+
     /** 教室所在楼*/
-    private String buildingName;
+    private Integer buildingId;
+
+    /** 教室类型*/
+    private String classroomType;
+
+   /** 教室座位数*/
+   private Integer classroomSeats;
 
     /** 教室描述信息*/
     private String classroomDescription;

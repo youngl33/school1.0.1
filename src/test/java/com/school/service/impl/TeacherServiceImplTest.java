@@ -102,4 +102,10 @@ public class TeacherServiceImplTest {
         Assert.assertNotNull(teacher);
     }
 
+    @Test
+    public void findByTeacherNameContaining(){
+        List<Teacher> teacherList=teacherService.findByTeacherNameContaining("夏");
+        Assert.assertNotEquals(0,teacherList.size());
+    }
+
 }

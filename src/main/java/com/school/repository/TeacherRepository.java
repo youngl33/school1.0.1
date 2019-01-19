@@ -9,6 +9,8 @@ import java.util.List;
 
 public interface TeacherRepository extends JpaRepository<Teacher, String> {
 
+    List<Teacher> findAllByTeacherNameContaining(String teacherName);
+
     public List<Teacher> findByTeacherName(String teacherName);
 
     public Page<Teacher> findByTeacherStatus(Pageable pageable,String teacherStatus);

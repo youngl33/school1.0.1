@@ -16,6 +16,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.awt.print.Pageable;
 import java.text.ParseException;
+import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -110,5 +111,11 @@ public class TeacherRepositoryTest {
     public void findOne(){
         Teacher teacher=repository.findById("200809002").orElse(null);
         Assert.assertNotNull(teacher);
+    }
+
+    @Test
+    public void findByTeacherNameContaining(){
+        List<Teacher> teacherList=repository.findAllByTeacherNameContaining("夏");
+        Assert.assertNotEquals(0,teacherList.size());
     }
 }
