@@ -11,10 +11,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,6 +63,23 @@ public class ScheduleController {
         model.addAttribute("msg","删除成功");
         return "/common/success";
     }
+
+    @PostMapping("/import")
+    public String importExcel(MultipartFile file,Model model) throws Exception {
+        try {
+            String fileName=file.getOriginalFilename();
+            scheduleDetailService.importExcel(fileName,file);
+        }catch (AdminException e){
+            model.addAttribute("url","/schedule/index");
+            model.addAttribute("msg",e.getMessage());
+            return "/common/error";
+        }
+        model.addAttribute("url","/schedule/index");
+        model.addAttribute("msg","导入成功");
+        return "/common/success";
+    }
+
+
 
     @ResponseBody
     @GetMapping("/api/schedule/event")

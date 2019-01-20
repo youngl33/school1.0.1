@@ -3,6 +3,7 @@ package com.school.service;
 import com.school.dtoObject.ScheduleDetail;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -25,4 +26,6 @@ public interface ScheduleDetailService {
 
     /** 创建               */
     ScheduleDetail save(ScheduleDetail scheduleDetail);
+
+    void importExcel(String fileName, MultipartFile file) throws Exception;
 }

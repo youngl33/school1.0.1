@@ -203,12 +203,16 @@
                                     <td><a th:data-id="${schedule?.scheduleId}" onclick="scheduleDelete(this.dataset.id)">删除</a></td>
                                 </tr>
 
-
                                 </tbody>
                                 <tfoot>
                                 <tr>
                                     <td colspan="5">
-                                        <ul class="pagination pull-right"></ul>
+                                        <ul class="pagination pull-left">
+                                            <form action="import" method="post" enctype="multipart/form-data">
+                                                <input name="file" value="请选择excel文件" type="file"> <a href="\img\sample\excel-import-template.png">不会导入，请点击此处</a>
+                                                <input type="submit" class="btn btn-success save" value="上传">
+                                            </form>
+                                        </ul>
                                     </td>
                                 </tr>
                                 </tfoot>

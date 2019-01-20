@@ -1,6 +1,8 @@
 package com.school.utils;
 
 
+import org.springframework.web.multipart.MultipartFile;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
