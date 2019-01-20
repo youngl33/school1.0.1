@@ -175,9 +175,10 @@ public class ScheduleDatilServiceImpl implements ScheduleDetailService {
                 throw new AdminException(1,"导入失败(第"+(r+1)+"行,第几周格式错误)");
             }
             //当天描述信息
-            row.createCell(5);
-            row.getCell(5).setCellType(Cell.CELL_TYPE_STRING);
-            scheduleDetail.setScheduledtlAttr(row.getCell(5).getStringCellValue());
+            if(row.getPhysicalNumberOfCells()==6){
+                scheduleDetail.setScheduledtlAttr(row.getCell(5).getStringCellValue());
+            }
+
 
             //id
             scheduleDetail.setScheduledtlId(KeyUtils.uniqueKey());
