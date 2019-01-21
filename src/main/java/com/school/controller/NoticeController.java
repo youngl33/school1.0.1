@@ -18,7 +18,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.util.StringUtils;
@@ -50,11 +49,25 @@ public class NoticeController {
     @GetMapping("/index")
     public String index(@RequestParam(value = "page", defaultValue = "0") Integer page,
                         @RequestParam(value= "typeWeb",defaultValue = "1") Integer typeWeb,
+                        @RequestParam(value = "top-search",defaultValue = "") String search,
                         Model model) throws ParseException {
 
         PageRequest request = new PageRequest(page, 6);
-        Page<NoticeDetail> noticeDetails = noticeDetailService.findByNdtlStatus(typeWeb,request);
-        List<NoticeDetail> noticeDetailList = noticeDetails.getContent();
+        Page<NoticeDetail> noticeDetails = null;
+        if(StringUtils.isEmpty(search)){
+            noticeDetails = noticeDetailService.findByNdtlStatus(typeWeb, request);
+            List<NoticeDetail> noticeDetailList = noticeDetails.getContent();
+        }else if(noticeDetails==null){
+            noticeDetails = noticeDetailService.findByNdtlAuthor(search,request);
+        }
+        if(noticeDetails.getTotalElements()==0){
+            NoticeType noticeType = noticeTypeService.findByNtypeName(search);
+            if(noticeType!=null)
+                noticeDetails = noticeDetailService.findByType(noticeType.getNtypeId(),request);
+        }
+        if(noticeDetails.getTotalElements()==0){
+            noticeDetails = noticeDetailService.findByNDtlTitle(search,request);
+        }
         List<NoticeType> noticeTypeList = noticeTypeService.findAll();
 
         //将类别存入map中
@@ -64,7 +77,7 @@ public class NoticeController {
         }
 
         List<NoticeDTO> noticeDTOList = new ArrayList<NoticeDTO>();
-        for (NoticeDetail noticeDetail : noticeDetailList) {
+        for (NoticeDetail noticeDetail : noticeDetails) {
             NoticeDTO noticeDTO = new NoticeDTO();
             BeanUtils.copyProperties(noticeDetail, noticeDTO);
             noticeDTO.setNtypeName(noticeTypeMap.get(noticeDTO.getNtypeId()));

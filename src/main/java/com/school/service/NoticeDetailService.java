@@ -24,5 +24,5 @@ public interface NoticeDetailService {
     /** 通过状态查找文章     */
     public Page<NoticeDetail> findByNdtlStatus(Integer ndtlStatus,Pageable pageable);
 
-
+    Page<NoticeDetail> findByNdtlAuthor(String ndtlAuthor,Pageable pageable);
 }

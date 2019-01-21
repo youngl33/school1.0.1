@@ -83,7 +83,6 @@ public class TeacherController {
         model.addAttribute("teacherDTOs", teacherDTOList);
         return "teacher/index";
     }
-//TODO
     @GetMapping("/edit")
     public String teacherEdit(@RequestParam("teacherId") String teacherId,
                               Model model) throws ParseException {
