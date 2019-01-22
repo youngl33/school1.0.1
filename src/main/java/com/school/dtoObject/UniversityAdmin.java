@@ -31,8 +31,6 @@ public class UniversityAdmin {
     /** 管理员头像地址     */
     private String uadmAvater;
 
-    /** 0表示学校管理员     */
-    private Integer identity=0;
 
     /** 创建时间     */
     private Date createTime;

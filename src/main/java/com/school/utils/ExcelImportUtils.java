@@ -13,7 +13,7 @@ import java.io.InputStream;
 
 public class ExcelImportUtils {
 
-    public static Sheet importFile(String fileName, MultipartFile file) throws Exception{
+    public static Workbook importFile(String fileName, MultipartFile file) throws Exception{
         if (!fileName.matches("^.+\\.(?i)(xls)$") && !fileName.matches("^.+\\.(?i)(xlsx)$")) {
             throw new AdminException(ResultEnum.FILE_FORMAT_ERROR);
         }
@@ -28,6 +28,6 @@ public class ExcelImportUtils {
         } else {
             wb = new XSSFWorkbook(is);
         }
-        return wb.getSheetAt(0);
+        return wb;
     }
 }

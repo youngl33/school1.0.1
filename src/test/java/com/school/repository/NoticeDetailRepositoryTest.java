@@ -54,4 +54,11 @@ public class NoticeDetailRepositoryTest {
         Page<NoticeDetail> noticeDetailPage = noticeDetailRepository.findByNdtlStatus(1,request);
         Assert.assertNotEquals(0,noticeDetailPage.getTotalElements());
     }
+
+    @Test
+    public void findByNdtlAuthor(){
+        PageRequest request = new PageRequest(0,10);
+        Page<NoticeDetail> noticeDetailPage = noticeDetailRepository.findByNdtlAuthorContaining("党委",request);
+        Assert.assertNotEquals(0,noticeDetailPage.getTotalElements());
+    }
 }

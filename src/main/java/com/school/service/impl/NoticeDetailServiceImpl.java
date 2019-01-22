@@ -44,4 +44,9 @@ public class NoticeDetailServiceImpl implements NoticeDetailService {
     public NoticeDetail findOne(String ndtlId) {
         return noticeDetailRepository.findById(ndtlId).orElse(null);
     }
+
+    @Override
+    public Page<NoticeDetail> findByNdtlAuthor(String ndtlAuthor, Pageable pageable) {
+        return noticeDetailRepository.findByNdtlAuthorContaining(ndtlAuthor,pageable);
+    }
 }

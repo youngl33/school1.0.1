@@ -20,7 +20,6 @@ public class Schedule {
     /** 描述     */
     private String scheduleDescription;
 
-
     /** 创建时间     */
     private Date createTime;
 

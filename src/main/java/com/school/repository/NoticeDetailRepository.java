@@ -13,5 +13,7 @@ public interface NoticeDetailRepository extends JpaRepository<NoticeDetail,Strin
 
     Page<NoticeDetail> findByNdtlStatus(Integer ndtlStatus, Pageable pageable);
 
+    Page<NoticeDetail> findByNdtlAuthorContaining(String ndtlAuthor, Pageable pageable);
+
 
 }

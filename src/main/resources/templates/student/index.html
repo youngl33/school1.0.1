@@ -1,0 +1,380 @@
+<!--
+*
+*  INSPINIA - Responsive Admin Theme
+*  version 2.7.1
+*
+-->
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>INSPINIA | Dashboard</title>
+
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../font-awesome/css/font-awesome.css" rel="stylesheet">
+
+    <!-- Toastr style -->
+    <link href="../css/plugins/toastr/toastr.min.css" rel="stylesheet">
+
+    <!-- Gritter -->
+    <link href="../js/plugins/gritter/jquery.gritter.css" rel="stylesheet">
+
+    <link href="../css/animate.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+    <link href="../css/style/teacher.css" rel="stylesheet">
+
+</head>
+
+<body>
+    <div id="wrapper">
+        <nav class="navbar-default navbar-static-side" role="navigation">
+            <div class="sidebar-collapse">
+                <ul class="nav metismenu" id="side-menu">
+                    <li class="nav-header">
+                        <div class="dropdown profile-element"> <span>
+                                <img alt="image" class="img-circle" width="55px" height="57px" src="img/536d8973e432e325.jpg!200x200.jpg" />
+                            </span>
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="edit.html#">
+                                <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">管理员</strong>
+                                    </span> <span class="text-muted text-xs block">操作 <b class="caret"></b></span>
+                                </span> </a>
+                            <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                                <li><a href="#">个人信息</a></li>
+                                <li><a href="#">修改密码</a></li>
+                                <li><a href="#">留言</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">注销</a></li>
+                            </ul>
+                        </div>
+                        <div class="logo-element">
+                            IN+
+                        </div>
+                    </li>
+                    <li class="active">
+                        <a href="edit.html"><i class="fa fa-th-large"></i> <span class="nav-label">学生管理</span>
+                            <span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li><a href="/student/index">学生信息</a></li>
+                            <li><a href="/student/edit">添加学生</a></li>
+                            <li><a href="/student/import">导入</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-diamond"></i> <span class="nav-label">Layouts</span></a>
+                    </li>
+                    <li class="special_link">
+                        <a href="#"><i class="fa fa-database"></i> <span class="nav-label">Package</span></a>
+                    </li>
+                </ul>
+
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="gray-bg dashbard-1">
+            <!-- head -->
+            <div class="row border-bottom">
+                <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+                    <div class="navbar-header">
+                        <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="edit.html#"><i class="fa fa-bars"></i>
+                        </a>
+                        <form role="search" class="navbar-form-custom" action="index">
+                            <div class="form-group">
+                                <input type="text" placeholder="Search for something..." class="form-control" name="top-search"
+                                    id="top-search">
+                            </div>
+                        </form>
+                    </div>
+                    <ul class="nav navbar-top-links navbar-right">
+                        <li>
+                            <span class="m-r-sm text-muted welcome-message">Welcome to INSPINIA+ Admin Theme.</span>
+                        </li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle count-info" data-toggle="dropdown" href="edit.html#">
+                                <i class="fa fa-envelope"></i> <span class="label label-warning">16</span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-messages">
+                                <li>
+                                    <div class="dropdown-messages-box">
+                                        <a href="index.html" class="pull-left">
+                                            <img alt="image" class="img-circle" src="img/a7.jpg">
+                                        </a>
+                                        <div class="media-body">
+                                            <small class="pull-right">46h ago</small>
+                                            <strong>Mike Loreipsum</strong> started following <strong>Monica Smith</strong>.
+                                            <br>
+                                            <small class="text-muted">3 days ago at 7:58 pm - 10.06.2014</small>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle count-info" data-toggle="dropdown" href="edit.html#">
+                                <i class="fa fa-bell"></i> <span class="label label-primary">8</span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-alerts">
+                                <li>
+                                    <a href="mailbox.html">
+                                        <div>
+                                            <i class="fa fa-envelope fa-fw"></i> You have 16 messages
+                                            <span class="pull-right text-muted small">4 minutes ago</span>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li>
+                            <a href="login.html">
+                                <i class="fa fa-sign-out"></i> 注销
+                            </a>
+                        </li>
+                        <li>
+                            <a class="right-sidebar-toggle">
+                                <i class="fa fa-tasks"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <!-- catelog -->
+            <div class="row wrapper border-bottom white-bg page-heading">
+                <div class="col-lg-10">
+                    <h2>学生管理</h2>
+                    <ol class="breadcrumb">
+                        <li>
+                            <a href="edit.html">主页</a>
+                        </li>
+                        <li>
+                            <a>学生管理</a>
+                        </li>
+                        <li class="active">
+                            <strong>学生信息</strong>
+                        </li>
+                    </ol>
+                </div>
+                <div class="col-lg-2">
+
+                </div>
+            </div>
+
+            <!-- type search-->
+            <div class="white-bg">
+                <form class="form-horizontal" action="/student/index" >
+                    <div class="form-group form-inline">
+                        <label  class="col-sm-2 control-label">所在学院：</label>
+                        <div>
+                            <select class="form-control" name="ainfoName" id="selAcademy">
+                                <option value="">----请选择----</option>
+                            </select>
+                            <select class="form-control" name="majorName" id="selMajor">
+                                <option value="">----请选择----</option>
+                            </select>
+                            <select class="form-control" name="classId" id="selClass">
+                                <option value="">----请选择----</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-default">查询</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- content  -->
+            <div class="white-bg content-info">
+                <div class="col-md-offset-1 teacher-info" th:each="student:${studentList}">
+                    <div class="teacher-info-personal">
+                        <img src="../img/536d8973e432e325.jpg!200x200.jpg" width="105px" height="123px" alt="...">
+                    </div>
+                    <div class="teacher-info-detail">
+                        <span th:text="姓名：+${student?.studentName}"></span>
+                        <span th:text="班级：+${student?.classId}"></span>
+                        <span th:text="性别：+${student?.studentGender}"></span>
+                        <span th:text="TEL：+${student?.studentTel}"></span>
+                        <span th:text="学院：+${student?.ainfoName}"></span>
+                        <span th:text="专业：+${student?.majorName}"></span>
+                        <span th:text="身份证：+${student?.studentIcard}"></span>
+                        <div style="margin-top:10px;">
+                            <a class="btn" th:href="@{'edit?studentId='+${student?.studentId}}">修改</a>
+                            <a class="btn" href="#">查看详细信息</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="ibox-content col-md-offset-5 col-lg-12">
+                <ul class="pagination pagination-lg">
+                    <li th:switch="${studentList?.getNumber()}">
+                        <a th:case="0"
+                           th:href="@{'index?classId='+${classId}+'&page=0'}"
+                           aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                        <a th:case="*"
+                           th:href="@{'index?classId='+${classId}+'&page='+${studentList?.getNumber()-1}}"
+                           aria-label="Previous">
+                            <span aria-hidden="false">&laquo;</span>
+                        </a>
+                    </li>
+                    <li><span>当前第&nbsp;[[${studentList?.getNumber()+1}]]/[[${studentList?.getTotalPages()}]]&nbsp;页</span></li>
+                    <li th:switch="${studentList?.getNumber()}">
+                        <a th:case="${studentList?.getTotalPages()-1}"
+                           th:href="@{'index?classId='+${classId}+'&page='+${studentList?.getTotalPages()-1}}"
+                           aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                        <a th:case="*"
+                           th:href="@{'index?classId='+${classId}+'&page='+${studentList?.getNumber()+1}}"
+                           aria-label="Next">
+                            <span aria-hidden="false">&raquo;</span>
+                        </a>
+
+                    </li>
+                </ul>
+                </div>
+            </div>
+
+
+            <!-- foot -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="footer">
+                        <div class="pull-right">
+                            10GB of <strong>250GB</strong> Free.
+                        </div>
+                        <div>
+                            <strong>Copyright</strong> Example Company &copy; 2014-2017
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- small-chat -->
+        <div class="small-chat-box fadeInRight animated">
+
+            <div class="heading" draggable="true">
+                <small class="chat-date pull-right">
+                    02.19.2015
+                </small>
+                Small chat
+            </div>
+        </div>
+        <div id="small-chat">
+
+            <span class="badge badge-warning pull-right">5</span>
+            <a class="open-small-chat">
+                <i class="fa fa-comments"></i>
+
+            </a>
+        </div>
+        <!-- notes -->
+        <div id="right-sidebar" class="animated">
+            <div class="sidebar-container">
+                <div class="tab-content">
+
+
+                    <div id="tab-1" class="tab-pane active">
+
+                        <div class="sidebar-title">
+                            <h3> <i class="fa fa-comments-o"></i> Latest Notes</h3>
+                            <small><i class="fa fa-tim"></i> You have 10 new message.</small>
+                        </div>
+
+                        <div>
+
+                            <div class="sidebar-message">
+                                <a href="edit.html#">
+                                    <div class="pull-left text-center">
+                                        <img alt="image" class="img-circle message-avatar" src="img/a1.jpg">
+
+                                        <div class="m-t-xs">
+                                            <i class="fa fa-star text-warning"></i>
+                                            <i class="fa fa-star text-warning"></i>
+                                        </div>
+                                    </div>
+                                    <div class="media-body">
+
+                                        There are many variations of passages of Lorem Ipsum available.
+                                        <br>
+                                        <small class="text-muted">Today 4:21 pm</small>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+
+
+        </div>
+    </div>
+
+
+    <!-- Mainly scripts -->
+    <script src="../js/jquery-3.1.1.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="../js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
+    <!-- Custom and plugin javascript -->
+    <script src="../js/inspinia.js"></script>
+    <script src="../js/plugins/pace/pace.min.js"></script>
+
+    <!-- jQuery UI -->
+    <script src="../js/plugins/jquery-ui/jquery-ui.min.js"></script>
+
+    <script>
+
+        var data=[];
+        $.ajax(
+            {
+                type:"get",
+                url:"http://localhost:8080/api/academy/list",
+                data:{},
+                async:false,
+                success:function (dataDTO) {
+                    console.log(dataDTO)
+                    data = dataDTO;
+                }
+            }
+        )
+        $(function () {
+            for(var i=0;i<data.data.length;i++){
+                $('#selAcademy').append('<option value='+data.data[i].ainfoName+'>'+data.data[i].ainfoName+'</option>');
+            };
+            $('#selAcademy').change(function () {
+                $('#selMajor').children().not(':eq(0)').remove();
+                $('#selClass').children().not(':eq(0)').remove();
+                iNum1 = $(this).children('option:selected').index()-1;
+                var aaMajor = data.data[iNum1].majors;
+                for(var j=0;j<aaMajor.length;j++){
+                    $('#selMajor').append('<option value='+aaMajor[j].majorName+'>'+aaMajor[j].majorName+'</option>');
+                }
+            });
+            $('#selMajor').change(function () {
+                $('#selClass').children().not(':eq(0)').remove();
+                iNum2 = $(this).children('option:selected').index()-1;
+                var aaClass = data.data[iNum1].majors[iNum2].classes;
+                for(var k=0;k<aaClass.length;k++){
+                    $('#selClass').append('<option value='+aaClass[k].classId+'>'+aaClass[k].classId+'</option>');
+                }
+            })
+        })
+
+
+    </script>
+
+</body>
+
+</html>
