@@ -7,6 +7,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.text.ParseException;
@@ -24,13 +26,15 @@ public class StudentServiceTest {
     @Test
     public void create() throws ParseException {
         Student student = new Student();
-        student.setStudentId("201620180732");
+        student.setStudentId("201620180713");
         student.setStudentPassword("000000");
-        student.setStudentGender("女");
-        student.setStudentAddr("江西省新余市");
-        student.setStudentName("余若盈");
-        student.setStudentIcard("360732111111111112");
-        student.setStudentEnterdate(DateFormatUtils.dateConverter("2016-09-10"));
+        student.setStudentGender("男");
+        student.setStudentAddr("江西省赣州市");
+        student.setStudentName("赖家洋");
+        student.setStudentIcard("360732111111111111");
+        student.setStudentBorndate(DateFormatUtils.dateConverter("1997-9-9"));
+        student.setMajorName("软件工程");
+        student.setAinfoName("软件学院");
         student.setStudentAvater("123123");
         student.setStudentTel("12345678910");
         student.setClassId("1621807");
@@ -46,13 +50,17 @@ public class StudentServiceTest {
 
     @Test
     public void findByStudentName() {
-        List<Student> studentList = studentService.findByStudentName("余");
-        Assert.assertNotEquals(0,studentList.size());
+        PageRequest request = new PageRequest(0,10);
+        Page<Student> studentList = studentService.findByStudentNameContaining(request,"赖");
+        Assert.assertNotEquals(0,studentList.getTotalElements());
     }
 
+
+
     @Test
-    public void findByClassId() {
-        List<Student> studentList = studentService.findByClassId("1621807");
-        Assert.assertNotEquals(0,studentList.size());
+    public void findByClassId(){
+        PageRequest request = new PageRequest(0,10);
+        Page<Student> studentList = studentService.findByClassId(request,"1621807");
+        Assert.assertNotEquals(0,studentList.getTotalElements());
     }
 }

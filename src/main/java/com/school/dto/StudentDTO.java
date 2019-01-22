@@ -1,17 +1,12 @@
-package com.school.dtoObject;
+package com.school.dto;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import java.util.Date;
 
 @Data
-@Entity
-public class Student {
+public class StudentDTO {
 
     /**  学号         */
-    @Id
     private String studentId;
 
     /** 学生名字        */
@@ -27,7 +22,7 @@ public class Student {
     private String studentTel;
 
     /** 出生日期      */
-    private Date studentBorndate;
+    private String studentBorndate;
 
     /** 学生地址        */
     private String studentAddr;
@@ -46,14 +41,5 @@ public class Student {
 
     /** 学院名称       */
     private String ainfoName;
-    /** 描述信息        */
-    private String studentDescription;
-
-    /** 创建时间     */
-    private Date createTime;
-
-    /** 更新信息时间     */
-    private Date updateTime;
-
 
 }

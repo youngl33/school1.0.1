@@ -3,8 +3,8 @@ package com.school.service;
 import com.school.dtoObject.Student;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
 
 public interface StudentService {
 
@@ -12,11 +12,12 @@ public interface StudentService {
 
     Student findById(String studentId);
 
-    List<Student> findByStudentName(String studentName);
+    Page<Student> findByStudentNameContaining(Pageable pageable,String studentName);
 
-    List<Student> findByClassId(String classId);
 
     Page<Student> findAll(Pageable pageable);
 
-    Page<Student> findByStatus(Pageable pageable,String status);
+    Page<Student> findByClassId(Pageable pageable,String classID);
+
+    void importStudent(String fileName, MultipartFile file) throws Exception;
 }

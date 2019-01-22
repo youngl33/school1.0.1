@@ -83,25 +83,8 @@ public class ScheduleDatilServiceImpl implements ScheduleDetailService {
     @Transactional
     @Override
     public void importExcel(String fileName, MultipartFile file) throws Exception{
-        if (!fileName.matches("^.+\\.(?i)(xls)$") && !fileName.matches("^.+\\.(?i)(xlsx)$")) {
-            throw new AdminException(ResultEnum.FILE_FORMAT_ERROR);
-        }
-        boolean isExcel2003 = true;
-        if (fileName.matches("^.+\\.(?i)(xlsx)$")) {
-            isExcel2003 = false;
-        }
-        InputStream is = file.getInputStream();
-        Workbook wb = null;
-        if (isExcel2003) {
-            wb = new HSSFWorkbook(is);
-        } else {
-            wb = new XSSFWorkbook(is);
-        }
+        Workbook wb = ExcelImportUtils.importFile(fileName,file);
         Sheet sheet = wb.getSheetAt(0);
-        if(sheet==null){
-            throw new AdminException(ResultEnum.FILE_IMPORT_ERROR);
-        }
-
         //ID
         Row row0 =sheet.getRow(0);
         row0.getCell(0).setCellType(Cell.CELL_TYPE_STRING);
@@ -140,13 +123,11 @@ public class ScheduleDatilServiceImpl implements ScheduleDetailService {
 
             ScheduleDetail scheduleDetail = new ScheduleDetail();
 
-
             //年
             row.getCell(0).setCellType(Cell.CELL_TYPE_NUMERIC);
             scheduleDetail.setScheduledtlYear((int)row.getCell(0).getNumericCellValue());
             if(scheduleDetail.getScheduledtlYear()==null){
                 throw new AdminException(1,"导入失败(第"+(r+1)+"行,年格式错误)");
-
             }
             //月
             row.getCell(1).setCellType(Cell.CELL_TYPE_NUMERIC);

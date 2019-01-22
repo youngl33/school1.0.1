@@ -1,8 +1,6 @@
 package com.school.utils;
 
 
-import org.springframework.web.multipart.MultipartFile;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -12,6 +10,9 @@ public class DateFormatUtils {
         return new SimpleDateFormat("yyyy-MM-dd").parse(date);
     }
 
+    public static Date dateConverter2(String date) throws ParseException {
+        return new SimpleDateFormat("yyyyMMdd").parse(date);
+    }
 
     public static String dateConverterFormatString(Date date) throws ParseException {
         return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);

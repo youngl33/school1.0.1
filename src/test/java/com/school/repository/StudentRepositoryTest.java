@@ -30,7 +30,9 @@ public class StudentRepositoryTest {
         student.setStudentAddr("江西省新余市");
         student.setStudentName("余若盈");
         student.setStudentIcard("360732111111111112");
-        student.setStudentEnterdate(DateFormatUtils.dateConverter("2016-09-10"));
+        student.setStudentBorndate(DateFormatUtils.dateConverter("1998-12-15"));
+        student.setMajorName("软件工程");
+        student.setAinfoName("软件学院");
         student.setStudentAvater("123123");
         student.setStudentTel("12345678910");
         student.setClassId("1621807");
@@ -46,20 +48,24 @@ public class StudentRepositoryTest {
 
     @Test
     public void findByClassId(){
-        List<Student> studentList = repository.findByClassId("1621807");
-        Assert.assertNotEquals(0,studentList.size());
+        PageRequest request = new PageRequest(0,10);
+        Page<Student> studentPage = repository.findByClassId(request,"1621807");
+        Assert.assertNotEquals(0,studentPage.getTotalElements());
     }
 
     @Test
     public void findByStudentName(){
-        List<Student> studentList = repository.findByStudentNameContaining("赖");
-        Assert.assertNotEquals(0,studentList.size());
+        PageRequest request = new PageRequest(0,10);
+        Page<Student> studentPage = repository.findByStudentNameContaining(request,"赖");
+        Assert.assertNotEquals(0,studentPage.getTotalElements());
     }
 
     @Test
-    public void findByStudentStatus(){
+    public void findByAll(){
         PageRequest request = new PageRequest(0,10);
-        Page<Student> studentList = repository.findByStudentStatus(request,"在读");
+        Page<Student> studentList = repository.findBy(request);
         Assert.assertNotEquals(0,studentList.getTotalElements());
     }
+
+
 }
