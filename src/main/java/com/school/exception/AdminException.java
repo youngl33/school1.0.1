@@ -1,6 +1,5 @@
 package com.school.exception;
 
-import com.school.dtoObject.Schedule;
 import com.school.enums.ResultEnum;
 import com.school.enums.ScheduleEnum;
 

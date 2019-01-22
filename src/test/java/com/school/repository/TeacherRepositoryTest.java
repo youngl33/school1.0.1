@@ -115,7 +115,21 @@ public class TeacherRepositoryTest {
 
     @Test
     public void findByTeacherNameContaining(){
-        List<Teacher> teacherList=repository.findAllByTeacherNameContaining("夏");
+        List<Teacher> teacherList=repository.findByTeacherNameContaining("夏");
         Assert.assertNotEquals(0,teacherList.size());
+    }
+
+    @Test
+    public void findByTeacherNameContainingAndTeacherStatus(){
+        PageRequest request=new PageRequest(0,10);
+        Page<Teacher> teacherPage=repository.findByTeacherNameContainingAndTeacherStatus(request,"夏","在职");
+        Assert.assertNotEquals(0,teacherPage.getTotalElements());
+    }
+
+    @Test
+    public void findByTeacherNameAndTeacherStatusAndAinfoId(){
+        PageRequest request=new PageRequest(0,10);
+        Page<Teacher> teacherPage=repository.findByTeacherNameContainingAndTeacherStatusAndAinfoId(request,"夏","在职","1040502");
+        Assert.assertNotEquals(0,teacherPage.getTotalElements());
     }
 }

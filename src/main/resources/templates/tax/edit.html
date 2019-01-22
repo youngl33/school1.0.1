@@ -6,7 +6,7 @@
 -->
 
 <!DOCTYPE html>
-<html xmlns:th="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
@@ -19,8 +19,6 @@
     <link href="../css/bootstrap.min.css" rel="stylesheet">
     <link href="../font-awesome/css/font-awesome.css" rel="stylesheet">
 
-    <!-- Toastr style -->
-    <link href="../css/plugins/toastr/toastr.min.css" rel="stylesheet">
 
     <!-- Gritter -->
     <link href="../js/plugins/gritter/jquery.gritter.css" rel="stylesheet">
@@ -40,7 +38,7 @@
                     <div class="dropdown profile-element"> <span>
                                 <img alt="image" class="img-circle" width="55px" height="57px" src="img/536d8973e432e325.jpg!200x200.jpg" />
                             </span>
-                        <a data-toggle="dropdown" class="dropdown-toggle" href="profile.html#">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="index.html#">
                                 <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">管理员</strong>
                                     </span> <span class="text-muted text-xs block">操作 <b class="caret"></b></span>
                                 </span> </a>
@@ -57,10 +55,21 @@
                     </div>
                 </li>
                 <li class="active">
-                    <a href="profile.html"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboards</span>
+                    <a href="index.html"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboards</span>
                         <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li class="active"><a href="profile.html">教师管理</a></li>
+                        <li class="active"><a href="index.html">教师管理</a></li>
+                        <li><a href="#">Dashboard v.2</a></li>
+                        <li><a href="#">Dashboard v.3</a></li>
+                        <li><a href="#">Dashboard v.4</a></li>
+                        <li><a href="#">Dashboard v.5 </a></li>
+                    </ul>
+                </li>
+                <li class="active">
+                    <a href="index.html"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboards</span>
+                        <span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li class="active"><a href="index.html">教师管理</a></li>
                         <li><a href="#">Dashboard v.2</a></li>
                         <li><a href="#">Dashboard v.3</a></li>
                         <li><a href="#">Dashboard v.4</a></li>
@@ -79,11 +88,12 @@
     </nav>
 
     <div id="page-wrapper" class="gray-bg dashbard-1">
+
         <!-- head -->
         <div class="row border-bottom">
             <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
                 <div class="navbar-header">
-                    <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="profile.html#"><i class="fa fa-bars"></i>
+                    <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="index.html#"><i class="fa fa-bars"></i>
                     </a>
                     <form role="search" class="navbar-form-custom" action="search_results.html">
                         <div class="form-group">
@@ -97,13 +107,13 @@
                         <span class="m-r-sm text-muted welcome-message">Welcome to INSPINIA+ Admin Theme.</span>
                     </li>
                     <li class="dropdown">
-                        <a class="dropdown-toggle count-info" data-toggle="dropdown" href="profile.html#">
+                        <a class="dropdown-toggle count-info" data-toggle="dropdown" href="index.html#">
                             <i class="fa fa-envelope"></i> <span class="label label-warning">16</span>
                         </a>
                         <ul class="dropdown-menu dropdown-messages">
                             <li>
                                 <div class="dropdown-messages-box">
-                                    <a href="index.html" class="pull-left">
+                                    <a href="profile.html" class="pull-left">
                                         <img alt="image" class="img-circle" src="img/a7.jpg">
                                     </a>
                                     <div class="media-body">
@@ -117,7 +127,7 @@
                         </ul>
                     </li>
                     <li class="dropdown">
-                        <a class="dropdown-toggle count-info" data-toggle="dropdown" href="profile.html#">
+                        <a class="dropdown-toggle count-info" data-toggle="dropdown" href="index.html#">
                             <i class="fa fa-bell"></i> <span class="label label-primary">8</span>
                         </a>
                         <ul class="dropdown-menu dropdown-alerts">
@@ -151,7 +161,7 @@
                 <h2>Chat view</h2>
                 <ol class="breadcrumb">
                     <li>
-                        <a href="profile.html">Home</a>
+                        <a href="index.html">Home</a>
                     </li>
                     <li>
                         <a>Miscellaneous</a>
@@ -165,109 +175,83 @@
 
             </div>
         </div>
-        <!-- type search-->
-        <div class="white-bg" style="margin-bottom:0px;">
-            <form class="form-horizontal" action="/teacher/find" >
+        <!-- search   -->
+
+
+        <!-- content  -->
+        <div class="content white-bg" style="padding:40px 100px;">
+            <form class="form-horizontal" action="/tax/edit/save" method="post" onsubmit="return doSubmit()">
                 <div class="form-group">
-                    <label  class="col-sm-2 control-label">教师姓名：</label>
-                    <div class="col-sm-3">
-                        <input name="teacherName" id="teacherName" th:value="${teacherName}" type="text" class="form-control">
+                    <label class="col-sm-3 control-label">Id</label>
+                    <div class="col-sm-4">
+                        <input name="taxId" id="taxId" th:value="${tax?.taxId}"  type="text" class="form-control" readonly>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label  class="col-sm-2 control-label">教师状态：</label>
-                    <div class="col-sm-10">
-                        <label class="radio-inline">
-                            <input type="radio" th:if="${teacherStatus!='在职'}" name="teacherStatus" value="在职" >
-                            <input type="radio" th:if="${teacherStatus=='在职'}" checked name="teacherStatus" value="在职" >在职
-                        </label>
-                        <label class="radio-inline">
-                            <input type="radio" th:if="${teacherStatus!='离职'}" name="teacherStatus" value="离职">
-                            <input type="radio" th:if="${teacherStatus=='离职'}" checked name="teacherStatus" value="离职">离职
-                        </label>
-                        <label class="radio-inline">
-                            <input type="radio"  th:if="${teacherStatus!='退休'}"  name="teacherStatus" value="退休">
-                            <input type="radio"  th:if="${teacherStatus=='退休'}" checked name="teacherStatus" value="退休">退休
-                        </label>
+                    <label class="col-sm-3 control-label">科目名</label>
+                    <div class="col-sm-4">
+                        <input name="subjectName" id="subjectName" th:value="${tax?.subjectId}"  type="text" class="form-control" readonly>
                     </div>
                 </div>
-                <div class="form-group" >
-                    <label  class="col-sm-2 control-label">所在学院：</label>
-                    <div class="col-sm-3">
-                        <select class="form-control" name="ainfoId">
-                            <option th:if="${ainfoId}==''" value="">请选择</option>
-                            <option th:if="${ainfoId}!=''" th:value="${ainfoId}" th:text="${academySearch.ainfoName}"></option>
-                            <option th:each="academyInfo:${academyInfos}" th:value="${academyInfo?.ainfoId}" th:text="${academyInfo?.ainfoName}"></option>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">授课教师</label>
+                    <div class="col-sm-4">
+                        <input name="teacherName" id="teacherName" th:value="${tax?.teacherName}"  type="text" class="form-control" >
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">选课人数</label>
+                    <div class="col-sm-4">
+                        <input name="availableNum" id="availableNum" th:value="${tax?.availableNum}"  type="text" class="form-control" >
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">学时</label>
+                    <div class="col-sm-4">
+                        <input name="taxTime" id="taxTime" th:value="${tax?.taxTime}"  type="text" class="form-control" >
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">学分</label>
+                    <div class="col-sm-4">
+                        <input name="taxScore" id="taxScore" th:value="${tax?.taxScore}"  type="text" class="form-control" >
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">上课周</label>
+                    <div class="col-sm-4">
+                        <input name="taxWeek" id="taxWeek" th:value="${tax?.taxWeek}"  type="text" class="form-control" >
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">学年</label>
+                    <div class="col-sm-4">
+                        <select class="form-control" name="scheduleSemester" id="scheduleSemester">
+                                <option th:value="${tax?.scheduleSemester}" th:text="${tax?.scheduleSemester}"></option>
+                                <option th:each="schedule:${schedule}" th:value="${schedule.scheduleSemester}" th:text="${schedule.scheduleSemester}" ></option>
                         </select>
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-default">查询</button>
+                    <label class="col-sm-3 control-label">创建时间</label>
+                    <div class="col-sm-4">
+                        <input class="form-control" type="text" th:value="${tax?.createTime}"  placeholder="Disabled input here..." disabled>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">更新时间</label>
+                    <div class="col-sm-4">
+                        <input class="form-control" type="text" th:value="${tax?.updateTime}"  placeholder="Disabled input here..." disabled>
+                    </div>
+                </div>
+                <div class="form-group" style="margin-top:20px;">
+                    <div class="col-sm-offset-3 col-sm-10">
+                        <button type="submit" class="btn btn-success">提交</button>
+                        <a href="/tax/find" class="btn btn-danger" style="margin-left:30px;">返回</a>
                     </div>
                 </div>
             </form>
         </div>
-        <!-- content  -->
-        <div class="white-bg content-info">
-            <div class="col-md-offset-1 teacher-info" th:each="teacherDTO:${teacherDTOs}">
-                <div class="teacher-info-personal">
-                    <img th:src="${teacherDTO?.teacherAvater}" width="105px" height="123px" alt="...">
-                </div>
-                <div class="teacher-info-detail">
-                    <span th:text="姓名：+${teacherDTO?.teacherName}"></span>
-                    <span th:text="年龄：+${teacherDTO?.teacherAge}"></span>
-                    <span th:text="性别：+${teacherDTO?.teacherGender}"></span>
-                    <span th:text="TEL：+${teacherDTO?.teacherTel}"></span>
-                    <span th:text="出生日期：+${teacherDTO?.teacherBorndate}"></span>
-                    <span th:text="职位：+${teacherDTO?.teacherPosition}"></span>
-                    <span th:text="学院：+${teacherDTO?.AinfoName}" title="软件学院东华理工大学">软件学院东华理工大学</span>
-                </div>
-            </div>
-        </div>
-        <div >
-            <table align="center" >
-                <tfoot>
-                <tr>
-                    <td colspan="5">
-                        <ul class="pagination pull-right">
-                            <li><span>当前第&nbsp;[[${teacherPage?.getNumber()+1}]]/[[${teacherPage?.getTotalPages()}]]&nbsp;页</span></li>
-                            <li th:switch="${teacherPage?.getNumber()}">
-                                <a th:case="0"
-                                   th:href="@{'find?teacherStatus='+${teacherStatus}+'&ainfoId='+'${ainfoId}'+'&teacherName='+'${teacherName}'+'&page=0'}"
-                                   aria-label="Previous">
-                                    <span aria-hidden="true">&laquo;</span>
-                                </a>
-                                <a th:case="*"
-                                   th:href="@{'find?teacherStatus='+${teacherStatus}+'&ainfoId='+'${ainfoId}'+'&teacherName='+'${teacherName}'+'&page='+${teacherPage?.getNumber()-1}}"
-                                   aria-label="Previous">
-                                    <span aria-hidden="false">&laquo;</span>
-                                </a>
-
-                            </li>
-                            <li th:each="page:${#numbers.sequence(0, teacherPage?.getTotalPages() - 1)}">
-                                <a th:href="@{'find?teacherStatus='+${teacherStatus}+'&ainfoId='+'${ainfoId}'+'&teacherName='+'${teacherName}'+'&page='+${page}}"
-                                   th:text="${page+1}">1</a></li>
-                            <li th:switch="${teacherPage?.getNumber()}">
-                                <a th:case="${teacherPage?.getTotalPages()-1}"
-                                   th:href="@{'find?teacherStatus='+${teacherStatus}+'&ainfoId='+'${ainfoId}'+'&teacherName='+'${teacherName}'+'&page='+${teacherPage?.getTotalPages()-1}}"
-                                   aria-label="Next">
-                                    <span aria-hidden="true">&raquo;</span>
-                                </a>
-                                <a th:case="*"
-                                   th:href="@{'find?teacherStatus='+${teacherStatus}+'&ainfoId='+'${ainfoId}'+'&teacherName='+'${teacherName}'+'&page='+${teacherPage?.getNumber()+1}}"
-                                   aria-label="Next">
-                                    <span aria-hidden="false">&raquo;</span>
-                                </a>
-
-                            </li>
-                        </ul>
-                    </td>
-                </tr>
-                </tfoot>
-            </table>
-        </div>
-
 
 
         <!-- foot -->
@@ -287,7 +271,6 @@
     </div>
     <!-- small-chat -->
     <div class="small-chat-box fadeInRight animated">
-
         <div class="heading" draggable="true">
             <small class="chat-date pull-right">
                 02.19.2015
@@ -296,7 +279,6 @@
         </div>
     </div>
     <div id="small-chat">
-
         <span class="badge badge-warning pull-right">5</span>
         <a class="open-small-chat">
             <i class="fa fa-comments"></i>
@@ -307,19 +289,14 @@
     <div id="right-sidebar" class="animated">
         <div class="sidebar-container">
             <div class="tab-content">
-
-
                 <div id="tab-1" class="tab-pane active">
-
                     <div class="sidebar-title">
                         <h3> <i class="fa fa-comments-o"></i> Latest Notes</h3>
                         <small><i class="fa fa-tim"></i> You have 10 new message.</small>
                     </div>
-
                     <div>
-
                         <div class="sidebar-message">
-                            <a href="profile.html#">
+                            <a href="index.html#">
                                 <div class="pull-left text-center">
                                     <img alt="image" class="img-circle message-avatar" src="img/a1.jpg">
 
@@ -337,14 +314,9 @@
                             </a>
                         </div>
                     </div>
-
                 </div>
             </div>
-
         </div>
-
-
-
     </div>
 </div>
 
@@ -361,6 +333,30 @@
 
 <!-- jQuery UI -->
 <script src="../js/plugins/jquery-ui/jquery-ui.min.js"></script>
+<script>
+    function doSubmit(){
+        if(document.getElementById("teacherName").value!=""&&document.getElementById("taxTime").value!=""
+            &&document.getElementById("taxScore").value!=""&&document.getElementById("taxWeek").value!="")
+        {
+            return true;
+        }else {
+            if(document.getElementById("teacherName").value=="")
+                alert("请输入授课教师名！");
+            if(document.getElementById("taxTime").value=="")
+                alert("请输入课程学时！");
+            if(document.getElementById("taxScore").value=="")
+                alert("请输入课程学分！");
+            if(document.getElementById("taxWeek").value=="")
+                alert("请输入上课周！");
+            return false;
+        }
+    };
+
+
+
+
+</script>
+
 
 
 </body>

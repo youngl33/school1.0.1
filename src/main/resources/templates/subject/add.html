@@ -180,7 +180,7 @@
 
         <!-- content  -->
         <div class="content white-bg" style="padding:40px 100px;">
-            <form class="form-horizontal" action="/subject/add/save" method="post">
+            <form class="form-horizontal" action="/subject/add/save" method="post" onsubmit="return doSubmit()">
                 <div class="form-group">
                     <label class="col-sm-3 control-label">科目Id</label>
                     <div class="col-sm-4">
@@ -196,23 +196,10 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">开课学院</label>
                     <div class="col-sm-4">
-                        <select class="form-control" name="ainfoId">
+                        <select class="form-control" name="ainfoId" id="ainfoId">
                                 <option value="0"></option>
                                 <option th:each="academyInfo:${academyInfos}" th:value="${academyInfo.ainfoId}" th:text="${academyInfo.ainfoName}" ></option>
                         </select>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label  class="col-sm-3 control-label">学时</label>
-                    <div class="col-sm-4">
-                        <input name="subjectTime" id="subjectTime" type="text" th:value="${subject?.subjectTime}"  class="form-control" >
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">学分</label>
-                    <div class="col-sm-4">
-                        <input name="subjectScore" id="subjectScore" type="text" th:value="${subject?.subjectScore}"  class="form-control" >
                     </div>
                 </div>
                 <div class="form-group">
@@ -311,7 +298,29 @@
 
 <!-- jQuery UI -->
 <script src="../js/plugins/jquery-ui/jquery-ui.min.js"></script>
+<script>
+    function doSubmit(){
+        var dom1=document.getElementById("ainfoId");
+        var academyIndex=dom1.selectedIndex;
+        if(dom1.options[academyIndex].value!=0&&document.getElementById("subjectId").value!=""
+            &&document.getElementById("subjectName").value!="")
+        {
+            return true;
+        }else {
+            if(dom1.options[academyIndex].value==0)
+                alert("请选择开课学院！");
+            if(document.getElementById("subjectId").value=="")
+                alert("请输入科目Id！");
+            if(document.getElementById("subjectName").value=="")
+                alert("请输入科目名！");
+            return false;
+        }
+    };
 
+
+
+
+</script>
 
 </body>
 

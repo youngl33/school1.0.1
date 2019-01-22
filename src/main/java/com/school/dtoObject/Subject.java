@@ -18,12 +18,6 @@ public class Subject {
     /**科目名*/
     private String subjectName;
 
-    /**学时*/
-    private Integer subjectTime;
-
-    /**学分*/
-    private Double subjectScore;
-
     /**开课学院*/
     private String ainfoId;
 

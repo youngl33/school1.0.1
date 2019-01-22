@@ -36,49 +36,50 @@ public class TeacherController {
     @GetMapping("/find")
     public String findAll(@RequestParam(value = "page", defaultValue = "0") Integer page,
                           @RequestParam(value = "teacherStatus", defaultValue = "在职") String teacherStatus,
-                          @RequestParam(value = "ainfoId",required = false) String ainfoId,
-                          @RequestParam(value = "teacherPosition",defaultValue = "0") String teacherPosition,
+                          @RequestParam(value = "ainfoId",defaultValue = "") String ainfoId,
+                          @RequestParam(value="teacherName",defaultValue = "") String teacherName,
                           Model model) throws ParseException {
+
         //通过状态显示老师信息
         PageRequest request = new PageRequest(page, 16);
-        Page<Teacher> teacherPage = teacherService.findByTeacherStatus(request, teacherStatus);
+        Page<Teacher> teacherPage=null;
+
         List<AcademyInfo> ainfo=academyInfoService.findAll();
         List<AcademyInfo> academyInfoList=new ArrayList<AcademyInfo>();
         for(AcademyInfo academyInfo:ainfo ){
             academyInfoList.add(academyInfo);
         }
+        if(!StringUtils.isEmpty(teacherName)&&!StringUtils.isEmpty(ainfoId)){
+            teacherPage=teacherService.findByTeacherNameContainingAndTeacherStatusAndAinfoId(request,teacherName,teacherStatus,ainfoId);
+        }else if(!StringUtils.isEmpty(teacherName)&&StringUtils.isEmpty(ainfoId)){
+                   teacherPage=teacherService.findByTeacherNameContainingAndTeacherStatus(request,teacherName,teacherStatus);
+                }else if(StringUtils.isEmpty(teacherName)&&!StringUtils.isEmpty(ainfoId)){
+                            teacherPage=teacherService.findByAcademyIdAndTeacherStatus(request,ainfoId,teacherStatus);
+                        }else if(StringUtils.isEmpty(teacherName)&&StringUtils.isEmpty(ainfoId)){
+                                        teacherPage=teacherService.findByTeacherStatus(request,teacherStatus);
+                                    }
+
         List<Teacher> teacherList = teacherPage.getContent();
         List<TeacherDTO> teacherDTOList = new ArrayList<TeacherDTO>();
         for(Teacher teacher : teacherList){
-            boolean exist=true;
-            //判断是否有选择学院搜索
-            if(!StringUtils.isEmpty(ainfoId)&&!StringUtils.equals(ainfoId,"0")){
-                if(!StringUtils.equals(teacher.getAinfoId(),ainfoId)) {
-                    exist =false;
-                }
-            }
-            if(!StringUtils.isEmpty(teacherPosition)&&teacherPosition!=null&&!StringUtils.equals(teacherPosition,"0")){
-                if (!StringUtils.equals(teacher.getTeacherPosition(),teacherPosition)) {
-                    exist=false;
-                }
-            }
-            if(exist) {
-                TeacherDTO teacherDTO = new TeacherDTO();
-                BeanUtils.copyProperties(teacher, teacherDTO);
-                //若有学院id，则查找学院名
-                if (teacherDTO.getAinfoId() != null || teacherDTO.getAinfoId() != "") {
-                    AcademyInfo ainfo1 = academyInfoService.findOne(teacherDTO.getAinfoId());
-                    teacherDTO.setAinfoName(ainfo1.getAinfoName());
+            TeacherDTO teacherDTO = new TeacherDTO();
+            BeanUtils.copyProperties(teacher, teacherDTO);
+            //若有学院id，则查找学院名
+            if (teacherDTO.getAinfoId() != null || teacherDTO.getAinfoId() != "") {
+                AcademyInfo ainfo1 = academyInfoService.findOne(teacherDTO.getAinfoId());
+                teacherDTO.setAinfoName(ainfo1.getAinfoName());
                 } else {
                     teacherDTO.setAinfoName("无");
                 }
                 teacherDTO.setTeacherBorndate(DateFormatUtils.dateConverterFormatString2(teacher.getTeacherBorndate()));
                 teacherDTOList.add(teacherDTO);
             }
-        }
+        AcademyInfo academySearch=academyInfoService.findOne(ainfoId);
+        model.addAttribute("teacherName",teacherName);
+        model.addAttribute("teacherPage",teacherPage);
+        model.addAttribute("academySearch",academySearch);
         model.addAttribute("teacherStatus", teacherStatus);
         model.addAttribute("ainfoId", ainfoId);
-        model.addAttribute("teacherPosition", teacherPosition);
         model.addAttribute("academyInfos",academyInfoList);
         model.addAttribute("teacherDTOs", teacherDTOList);
         return "teacher/index";

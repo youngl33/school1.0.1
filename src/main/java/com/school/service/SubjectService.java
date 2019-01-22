@@ -25,5 +25,8 @@ public interface SubjectService {
     /**查找一个科目的信息*/
     Subject findOne(String subjectId);
 
+    /** 删除*/
+    void delete(String subjectId);
+
 
 }

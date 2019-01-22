@@ -6,7 +6,7 @@
 -->
 
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
 
 <head>
 
@@ -19,6 +19,8 @@
     <link href="../css/bootstrap.min.css" rel="stylesheet">
     <link href="../font-awesome/css/font-awesome.css" rel="stylesheet">
 
+    <!-- Toastr style -->
+    <link href="../css/plugins/toastr/toastr.min.css" rel="stylesheet">
 
     <!-- Gritter -->
     <link href="../js/plugins/gritter/jquery.gritter.css" rel="stylesheet">
@@ -26,6 +28,8 @@
     <link href="../css/animate.css" rel="stylesheet">
     <link href="../css/style.css" rel="stylesheet">
     <link href="../css/style/teacher.css" rel="stylesheet">
+    <!-- confirm -->
+    <link href="../css/plugins/jquery-confirm/jquery-confirm.min.css" rel="stylesheet">
 
 </head>
 
@@ -38,7 +42,7 @@
                         <div class="dropdown profile-element"> <span>
                                 <img alt="image" class="img-circle" width="55px" height="57px" src="img/536d8973e432e325.jpg!200x200.jpg" />
                             </span>
-                            <a data-toggle="dropdown" class="dropdown-toggle" href="index.html#">
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="profile.html#">
                                 <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">管理员</strong>
                                     </span> <span class="text-muted text-xs block">操作 <b class="caret"></b></span>
                                 </span> </a>
@@ -55,27 +59,16 @@
                         </div>
                     </li>
                     <li class="active">
-                        <a href="index.html"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboards</span>
+                        <a href="profile.html"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboards</span>
                             <span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
-                            <li class="active"><a href="index.html">教师管理</a></li>
+                            <li class="active"><a href="profile.html">教师管理</a></li>
                             <li><a href="#">Dashboard v.2</a></li>
                             <li><a href="#">Dashboard v.3</a></li>
                             <li><a href="#">Dashboard v.4</a></li>
                             <li><a href="#">Dashboard v.5 </a></li>
                         </ul>
                     </li>
-                    <li class="active">
-                            <a href="index.html"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboards</span>
-                                <span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li class="active"><a href="index.html">教师管理</a></li>
-                                <li><a href="#">Dashboard v.2</a></li>
-                                <li><a href="#">Dashboard v.3</a></li>
-                                <li><a href="#">Dashboard v.4</a></li>
-                                <li><a href="#">Dashboard v.5 </a></li>
-                            </ul>
-                        </li>
                     <li>
                         <a href="#"><i class="fa fa-diamond"></i> <span class="nav-label">Layouts</span></a>
                     </li>
@@ -88,12 +81,11 @@
         </nav>
 
         <div id="page-wrapper" class="gray-bg dashbard-1">
-
             <!-- head -->
             <div class="row border-bottom">
                 <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
                     <div class="navbar-header">
-                        <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="index.html#"><i class="fa fa-bars"></i>
+                        <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="profile.html#"><i class="fa fa-bars"></i>
                         </a>
                         <form role="search" class="navbar-form-custom" action="search_results.html">
                             <div class="form-group">
@@ -107,13 +99,13 @@
                             <span class="m-r-sm text-muted welcome-message">Welcome to INSPINIA+ Admin Theme.</span>
                         </li>
                         <li class="dropdown">
-                            <a class="dropdown-toggle count-info" data-toggle="dropdown" href="index.html#">
+                            <a class="dropdown-toggle count-info" data-toggle="dropdown" href="profile.html#">
                                 <i class="fa fa-envelope"></i> <span class="label label-warning">16</span>
                             </a>
                             <ul class="dropdown-menu dropdown-messages">
                                 <li>
                                     <div class="dropdown-messages-box">
-                                        <a href="profile.html" class="pull-left">
+                                        <a href="index.html" class="pull-left">
                                             <img alt="image" class="img-circle" src="img/a7.jpg">
                                         </a>
                                         <div class="media-body">
@@ -127,7 +119,7 @@
                             </ul>
                         </li>
                         <li class="dropdown">
-                            <a class="dropdown-toggle count-info" data-toggle="dropdown" href="index.html#">
+                            <a class="dropdown-toggle count-info" data-toggle="dropdown" href="profile.html#">
                                 <i class="fa fa-bell"></i> <span class="label label-primary">8</span>
                             </a>
                             <ul class="dropdown-menu dropdown-alerts">
@@ -161,82 +153,123 @@
                     <h2>Chat view</h2>
                     <ol class="breadcrumb">
                         <li>
-                            <a href="index.html">Home</a>
-                        </li>
+                            <a href="profile.html">Home</a>
+                            </li>
                         <li>
                             <a>Miscellaneous</a>
-                        </li>
+                            </li>
                         <li class="active">
                             <strong>Chat view</strong>
-                        </li>
+                                </li>
                     </ol>
                 </div>
                 <div class="col-lg-2">
 
                 </div>
             </div>
-
-            <!-- content  -->
-            <div class="content white-bg" style="padding:40px 100px;">
-                <form class="form-horizontal" action="/classroom/add/save" method="POST" onsubmit="return doSubmit()">
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">校区</label>
-                        <div class="col-sm-4">
-                            <select class="form-control" name="classroomLocation" id="classroomLocation">
-                                <option th:text="${classroomDTO?.classroomLocation}"></option>
-                                <option th:value="广兰校区">广兰校区</option>
-                                <option th:value="枫林校区">枫林校区</option>
-                                <option th:value="抚州校区">抚州校区</option>
+            <!-- type search-->
+            <div class="white-bg">
+                <form class="form-horizontal" action="/tax/find" >
+                    <div class="form-group" >
+                        <label  class="col-sm-2 control-label">学期</label>
+                        <div class="col-sm-3">
+                            <select class="form-control" name="scheduleSemester">
+                                <option th:value="${scheduleSemester}" th:text="${scheduleSemester}"></option>
+                                <option th:each=" schedule:${scheduleList}" th:value="${schedule?.scheduleSemester}" th:text="${schedule?.scheduleSemester}"></option>
                             </select>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">教学楼</label>
-                        <div class="col-sm-4">
-                            <select class="form-control" name="buildingId" id="buildingId">
-                                <option ></option>
-                                <option th:each="building:${buildings}" th:value="${building?.buildingId}" th:text="${building?.buildingName}" ></option>
-                            </select>
-                        </div>
-                    </div> 
-                   
-                    <div class="form-group">
-                        <label  class="col-sm-3 control-label">教室号</label>
-                        <div class="col-sm-4">
-                            <input name="classroomNo" id="classroomNo" type="text"  th:value="${classroomDTO?.classroomNo}" class="form-control" >
+                        <label  class="col-sm-2 control-label">教师姓名</label>
+                        <div class="col-sm-3">
+                            <input name="teacherName" id="teacherName" th:value="${teacherName}" type="text" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">座位数</label>
-                        <div class="col-sm-4">
-                            <input name="classroomSeats" id="classroomSeats" type="text" th:value="${classroomDTO?.classroomNo}" class="form-control" >
+                        <label  class="col-sm-2 control-label">科目名</label>
+                        <div class="col-sm-3">
+                            <input name="subjectName" id="subjectName" th:value="${subjectName}" type="text" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">教室类型</label>
-                        <div class="col-sm-4">
-                            <select class="form-control" name="classroomType" id="classroomType" >
-                                <option th:value="${classroomDTO?.classroomType}" th:text="${classroomDTO?.classroomType}"></option>
-                                <option th:value="多媒体教室">多媒体教室</option>
-                                <option th:value="实验室">实验室</option>
-                                <option th:value="普通教室">普通教室</option>
-                                <option th:value="不可用教室">不可用教室</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label  class="col-sm-3 control-label">描述信息</label>
-                        <div class="col-sm-4">
-                            <textarea name="classsDescription" id="classroomDescription"  th:value="${classroomDTO?.classroomDescription}" class="form-control" rows="4"></textarea>
-                        </div>
-                    </div>
-                    <div class="form-group" style="margin-top:20px;">
-                        <div class="col-sm-offset-3 col-sm-10">
-                                <button type="submit" class="btn btn-success">提交</button>
-                                <a href="" class="btn btn-danger" style="margin-left:30px;">返回</a>
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-default">查询</button>
                         </div>
                     </div>
                 </form>
+            </div>
+            <!-- content  -->
+            <div class="white-bg content-info">
+                <table class="table table-hover" vertical-align="middle" style="vertical-align:middle;color:#000">
+                    <tr>
+                        
+                        <th>Id</th>
+                        <th>科目</th>
+                        <th>授课教师</th>
+                        <th>选课人数</th>
+                        <th>上课周</th>
+                        <th>学时</th>
+                        <th>学分</th>
+                        <th>学年</th>
+                        <th width="200px" style="text-align: center;">操作</th>
+                    </tr>
+                    <tr th:each="tax: ${taxs}">
+                        <td th:text="${tax?.taxId}"></td>
+                        <td th:text="${tax?.subjectName}"></td>
+                        <td th:text="${tax?.teacherName}"></td>
+                        <td th:text="${tax?.availableNum}"></td>
+                        <td th:text="${tax?.taxWeek}"></td>
+                        <td th:text="${tax?.taxTime}"></td>
+                        <td th:text="${tax?.taxScore}"></td>
+                        <td th:text="${tax?.scheduleSemester}"></td>
+                        <td style="text-align: center;">
+                            <a class="btn btn-success btn-sm"  th:href="@{'/tax/edit?taxId='+${tax.taxId}}"
+                               role="button" style="margin-right:20px;">修改</a>
+                        </td>
+                    </tr>
+
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <td colspan="5">
+                            <ul class="pagination pull-right">
+                                <li><span>当前第&nbsp;[[${taxPage?.getNumber()+1}]]/[[${taxPage?.getTotalPages()}]]&nbsp;页</span></li>
+                                <li th:switch="${taxtPage?.getNumber()}">
+                                    <a th:case="0"
+                                       th:href="@{'find?taxId='+${taxId}+'&subjectName='+'${subjectName}'+'&teacherName='+'${teacherName}'+'&page=0'}"
+                                       aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                    <a th:case="*"
+                                       th:href="@{'find?taxId='+${taxId}+'&subjectName='+'${subjectName}'+'&teacherName='+'${teacherName}'+'&page='+${taxPage?.getNumber()-1}}"
+                                       aria-label="Previous">
+                                        <span aria-hidden="false">&laquo;</span>
+                                    </a>
+
+                                </li>
+                                <li th:each="page:${#numbers.sequence(0, taxPage?.getTotalPages() - 1)}">
+                                    <a th:href="@{'find?taxId='+${taxId}+'&subjectName='+'${subjectName}'+'&teacherName='+'${teacherName}'+'&page='+${page}}"
+                                       th:text="${page+1}">1</a></li>
+                                <li th:switch="${taxPage?.getNumber()}">
+                                    <a th:case="${taxPage?.getTotalPages()-1}"
+                                       th:href="@{'find?taxId='+${taxId}+'&subjectName='+'${subjectName}'+'&teacherName='+'${teacherName}'+'&page='+${taxPage?.getTotalPages()-1}}"
+                                       aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                    <a th:case="*"
+                                       th:href="@{'find?taxId='+${taxId}+'&subjectName='+'${subjectName}'+'&teacherName='+'${teacherName}'+'&page='+${taxPage?.getNumber()+1}}"
+                                       aria-label="Next">
+                                        <span aria-hidden="false">&raquo;</span>
+                                    </a>
+
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    </tfoot>
+
+    
+                </table>
             </div>
 
 
@@ -257,6 +290,7 @@
         </div>
         <!-- small-chat -->
         <div class="small-chat-box fadeInRight animated">
+
             <div class="heading" draggable="true">
                 <small class="chat-date pull-right">
                     02.19.2015
@@ -265,6 +299,7 @@
             </div>
         </div>
         <div id="small-chat">
+
             <span class="badge badge-warning pull-right">5</span>
             <a class="open-small-chat">
                 <i class="fa fa-comments"></i>
@@ -275,14 +310,19 @@
         <div id="right-sidebar" class="animated">
             <div class="sidebar-container">
                 <div class="tab-content">
+
+
                     <div id="tab-1" class="tab-pane active">
+
                         <div class="sidebar-title">
                             <h3> <i class="fa fa-comments-o"></i> Latest Notes</h3>
                             <small><i class="fa fa-tim"></i> You have 10 new message.</small>
                         </div>
+
                         <div>
+
                             <div class="sidebar-message">
-                                <a href="index.html#">
+                                <a href="profile.html#">
                                     <div class="pull-left text-center">
                                         <img alt="image" class="img-circle message-avatar" src="img/a1.jpg">
 
@@ -300,9 +340,14 @@
                                 </a>
                             </div>
                         </div>
+
                     </div>
                 </div>
+
             </div>
+
+
+
         </div>
     </div>
 
@@ -319,39 +364,8 @@
 
     <!-- jQuery UI -->
     <script src="../js/plugins/jquery-ui/jquery-ui.min.js"></script>
-    <script>
-        function doSubmit(){
-            var dom1=document.getElementById("classroomLocation");
-            var dom2=document.getElementById("buildingId");
-            var dom3=document.getElementById("classroomType");
-            var locationIndex=dom1.selectedIndex;
-            var buildingIndex=dom2.selectedIndex;
-            var typeIndex=dom3.selectedIndex;
-            if(dom1.options[locationIndex].value!=0&&dom3.options[typeIndex].value!=0
-                &&dom2.options[buildingIndex].value!=0
-                &&document.getElementById("classroomNo").value!=""
-                &&document.getElementById("classroomSeats").value!="")
-            {
-                return true;
-            }else {
-                if(dom1.options[locationIndex].value==0)
-                    alert("请选择所在校区！");
-                if(dom2.options[buildingIndex].value==0)
-                    alert("请选择所在教学楼！");
-                if(dom3.options[typeIndex].value==0)
-                    alert("请选择教室类型！");
-                if(document.getElementById("classroomNo").value=="")
-                    alert("请输入教室号！");
-                if(document.getElementById("classroomSeats").value=="")
-                    alert("请输入座位数！");
-                return false;
-            }
-        };
-
-
-
-
-    </script>
+    <!-- confirm  -->
+    <script src="/js/plugins/confirm/confirm.js"></script>
 
 </body>
 

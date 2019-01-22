@@ -28,6 +28,8 @@
     <link href="../css/animate.css" rel="stylesheet">
     <link href="../css/style.css" rel="stylesheet">
     <link href="../css/style/teacher.css" rel="stylesheet">
+    <!-- confirm -->
+    <link href="../css/plugins/jquery-confirm/jquery-confirm.min.css" rel="stylesheet">
 
 </head>
 
@@ -169,10 +171,11 @@
             <div class="white-bg">
                 <form class="form-horizontal" action="/subject/find" >
                     <div class="form-group" >
-                        <label  class="col-sm-2 control-label">开课学院：</label>
+                        <label  class="col-sm-2 control-label">开课学院</label>
                         <div class="col-sm-3">
                             <select class="form-control" name="ainfoId">
-                                <option value="">全部</option>
+                                <option th:if="${ainfoId==''}" value="">请选择</option>
+                                <option th:if="${ainfoId!=''}" th:value="${ainfoId}" th:text="${ainfoSearch.ainfoName}"></option>
                                 <option th:each="academy:${academys}" th:value="${academy?.ainfoId}" th:text="${academy?.ainfoName}"></option>
                             </select>
                         </div>
@@ -180,7 +183,7 @@
                     <div class="form-group">
                         <label  class="col-sm-2 control-label">科目名</label>
                         <div class="col-sm-3">
-                            <input name="subjectName" id="subjectName" th:value="${subject?.subjectName}" type="text" class="form-control">
+                            <input name="subjectName" id="subjectName" th:value="${subjectName}" type="text" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
@@ -197,8 +200,6 @@
                         <th>科目id</th>
                         <th>科目名</th>
                         <th>开课学院</th>
-                        <th>学时</th>
-                        <th>学分</th>
                         <th width="150px;">描述信息</th>
                         <th width="200px" style="text-align: center;">操作</th>
                     </tr>
@@ -206,8 +207,6 @@
                         <td th:text="${subject?.subjectId}"></td>
                         <td th:text="${subject?.subjectName}"></td>
                         <td th:text="${subject?.ainfoName}"></td>
-                        <td th:text="${subject?.subjectTime}"></td>
-                        <td th:text="${subject?.subjectScore}"></td>
                         <td width="150px;">
                             <a class="accordion-toggle" data-toggle="collapse" data-parent="#myAccordion"
                                th:href="@{'#collapse'+${subject?.subjectId}}"
@@ -222,8 +221,50 @@
                         <td style="text-align: center;">
                             <a class="btn btn-success btn-sm"  th:href="@{'/subject/edit?subjectId='+${subject.subjectId}}"
                                role="button" style="margin-right:20px;">修改</a>
+                            <a class="btn btn-success btn-sm" th:data-id="${subject?.subjectId}" onclick="scheduleDelete(this.dataset.id)">删除</a>
                         </td>
                     </tr>
+
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <td colspan="5">
+                            <ul class="pagination pull-right">
+                                <li><span>当前第&nbsp;[[${subjectPage?.getNumber()+1}]]/[[${subjectPage?.getTotalPages()}]]&nbsp;页</span></li>
+                                <li th:switch="${subjectPage?.getNumber()}">
+                                    <a th:case="0"
+                                       th:href="@{'find?ainfoId='+${ainfoId}+'&subjectName='+'${subjectName}'+'&page=0'}"
+                                       aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                    <a th:case="*"
+                                       th:href="@{'find?ainfoId='+${ainfoId}+'&subjectName='+'${subjectName}'+'&page='+${subjectPage?.getNumber()-1}}"
+                                       aria-label="Previous">
+                                        <span aria-hidden="false">&laquo;</span>
+                                    </a>
+
+                                </li>
+                                <li th:each="page:${#numbers.sequence(0, subjectPage?.getTotalPages() - 1)}">
+                                    <a th:href="@{'find?ainfoId='+${ainfoId}+'&subjectName='+'${subjectName}'+'&page='+${page}}"
+                                       th:text="${page+1}">1</a></li>
+                                <li th:switch="${subjectPage?.getNumber()}">
+                                    <a th:case="${subjectPage?.getTotalPages()-1}"
+                                       th:href="@{'find?ainfoId='+${ainfoId}+'&subjectName='+'${subjectName}'+'&page='+${subjectPage?.getTotalPages()-1}}"
+                                       aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                    <a th:case="*"
+                                       th:href="@{'find?ainfoId='+${ainfoId}+'&subjectName='+'${subjectName}'+'&page='+${subjectPage?.getNumber()+1}}"
+                                       aria-label="Next">
+                                        <span aria-hidden="false">&raquo;</span>
+                                    </a>
+
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    </tfoot>
+
     
                 </table>
             </div>
@@ -320,7 +361,35 @@
 
     <!-- jQuery UI -->
     <script src="../js/plugins/jquery-ui/jquery-ui.min.js"></script>
+    <!-- confirm  -->
+    <script src="/js/plugins/confirm/confirm.js"></script>
 
+    <script>
+        function confirm_alert(msg) {
+            $.confirm({
+                title: '删除',
+                content: '是否要刪除该科目',
+                type: 'green',
+                icon: 'glyphicon glyphicon-question-sign',
+                buttons: {
+                    ok: {
+                        text: '是(yes)',
+                        btnClass: 'btn-primary',
+                        action: function () {
+                            location.href = "find/delete?subjectId="+msg; //指向下载资源（此处为目标文件的输出数据流）
+                        }
+                    },
+                    cancel: {
+                        text: '否(no)',
+                        btnClass: 'btn-primary'
+                    }
+                }
+            });
+        }
+        function scheduleDelete(s) {
+            confirm_alert(s)
+        }
+    </script>
 
 </body>
 

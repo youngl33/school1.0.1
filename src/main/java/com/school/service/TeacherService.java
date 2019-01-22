@@ -7,6 +7,13 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 public interface TeacherService {
+
+    /**通过教师姓名和教师状态和所在学院查找教师信息*/
+    Page<Teacher> findByTeacherNameContainingAndTeacherStatusAndAinfoId(Pageable pageable,String teacherName,String teacherStatus,String ainfoId);
+
+    /**通过教师姓名和教师状态查询教师信息*/
+    Page<Teacher> findByTeacherNameContainingAndTeacherStatus(Pageable pageable,String teacherName,String teacherStatus);
+
     /** 通过教师ID查找教师信息*/
     Teacher findOne(String teacherId);
 

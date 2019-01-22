@@ -9,18 +9,22 @@ import java.util.List;
 
 public interface TeacherRepository extends JpaRepository<Teacher, String> {
 
-    List<Teacher> findAllByTeacherNameContaining(String teacherName);
+    Page<Teacher> findByTeacherNameContainingAndTeacherStatusAndAinfoId(Pageable pageable,String teacherName,String teacherStatus,String ainfoId);
 
-    public List<Teacher> findByTeacherName(String teacherName);
+    Page<Teacher> findByTeacherNameContainingAndTeacherStatus(Pageable pageable,String teacherName,String teacherStatus);
 
-    public Page<Teacher> findByTeacherStatus(Pageable pageable,String teacherStatus);
+    List<Teacher> findByTeacherNameContaining(String teacherName);
 
-    public Page<Teacher> findByTeacherPosition(Pageable pageable,String teacherPosition);
+    List<Teacher> findByTeacherName(String teacherName);
 
-    public Page<Teacher> findByAinfoIdAndTeacherStatus(Pageable pageable, String ainfoId,String teacherStatus);
+    Page<Teacher> findByTeacherStatus(Pageable pageable,String teacherStatus);
 
-    public Page<Teacher> findByTeacherPositionAndTeacherStatus(Pageable pageable,String teacherPosition,String teacherStatus);
+    Page<Teacher> findByTeacherPosition(Pageable pageable,String teacherPosition);
 
-    public Page<Teacher> findByAinfoIdAndTeacherPositionAndTeacherStatus(Pageable pageable,String ainfoId,String teacherPosition,String teacherStatus);
+    Page<Teacher> findByAinfoIdAndTeacherStatus(Pageable pageable, String ainfoId,String teacherStatus);
+
+    Page<Teacher> findByTeacherPositionAndTeacherStatus(Pageable pageable,String teacherPosition,String teacherStatus);
+
+    Page<Teacher> findByAinfoIdAndTeacherPositionAndTeacherStatus(Pageable pageable,String ainfoId,String teacherPosition,String teacherStatus);
 
 }

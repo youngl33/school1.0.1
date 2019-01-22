@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.thymeleaf.engine.TemplateHandlerAdapterMarkupHandler;
 
@@ -107,5 +108,20 @@ public class TeacherServiceImplTest {
         List<Teacher> teacherList=teacherService.findByTeacherNameContaining("夏");
         Assert.assertNotEquals(0,teacherList.size());
     }
+
+    @Test
+    public void findByTeacherNameContainingAndTeacherStatus(){
+        PageRequest request=new PageRequest(0,10);
+        Page<Teacher> teacherPage=teacherService.findByTeacherNameContainingAndTeacherStatus(request,"夏","在职");
+        Assert.assertNotEquals(0,teacherPage.getTotalElements());
+    }
+
+    @Test
+    public void findByTeacherNameAndTeacherStatusAndAinfoId(){
+        PageRequest request=new PageRequest(0,10);
+        Page<Teacher> teacherPage=teacherService.findByTeacherNameContainingAndTeacherStatusAndAinfoId(request,"夏","在职","1040502");
+        Assert.assertNotEquals(0,teacherPage.getTotalElements());
+    }
+
 
 }

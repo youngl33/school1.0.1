@@ -38,9 +38,9 @@ public class ClassroomController {
                                 @RequestParam(value="classroomType",defaultValue = "")String classroomType,
                                 Model model){
         List<Building> buildingListFind=buildingService.findAll();
-
+        Building buildingSearch=buildingService.findOne(buildingId);
         List<ClassroomDTO> classroomDTOList=new ArrayList<ClassroomDTO>();
-        PageRequest request=new PageRequest(page,40);
+        PageRequest request=new PageRequest(page,10);
         Page<Classroom> classroomPage = classroomService.search(request,classroomLocation,buildingId,classroomType);
         List<Classroom> classroomList=classroomPage.getContent();
         for(Classroom classroom:classroomList){
@@ -50,8 +50,13 @@ public class ClassroomController {
                 classroomDTO.setBuildingName(building.getBuildingName());
                 classroomDTOList.add(classroomDTO);
             }
+        model.addAttribute("buildingSearch",buildingSearch);
+        model.addAttribute("classroomPage",classroomPage);
         model.addAttribute("classroomDTOs",classroomDTOList);
         model.addAttribute("building",buildingListFind);
+        model.addAttribute("classroomLocation",classroomLocation);
+        model.addAttribute("buildingId",buildingId);
+        model.addAttribute("classroomType",classroomType);
         return "classroom/index";
     }
 
@@ -81,11 +86,7 @@ public class ClassroomController {
 
     @GetMapping("/add")
     public String addClassroom(Model model){
-        List<Building> buildings=buildingService.findAll();
-        List<Building> buildingList=new ArrayList<Building>();
-        for(Building building:buildings){
-            buildingList.add(building);
-        }
+        List<Building> buildingList=buildingService.findAll();
         model.addAttribute("buildings",buildingList);
         return "/classroom/add";
     }
@@ -96,7 +97,7 @@ public class ClassroomController {
         log.info("【找】:信息={}",classroom);
         classroomService.save(classroom);
         model.addAttribute("msg","保存成功");
-        model.addAttribute("url","/classroom/edit");
+        model.addAttribute("url","/classroom/find");
         return "/common/success";
     }
 

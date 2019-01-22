@@ -3,6 +3,7 @@ package com.school.controller;
 import com.school.dto.SubjectDTO;
 import com.school.dtoObject.AcademyInfo;
 import com.school.dtoObject.Subject;
+import com.school.exception.AdminException;
 import com.school.service.AcademyInfoService;
 import com.school.service.SubjectService;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,49 +44,33 @@ public class SubjectController {
         //1.查找所有学院
         List<AcademyInfo> academyInfoList  = academyInfoService.findAll();
 
+        AcademyInfo ainfoSearch=academyInfoService.findOne(ainfoId);
         //2.检查是否进行搜索
         List<SubjectDTO> subjectDTOList=new ArrayList<SubjectDTO>();
         PageRequest request=new PageRequest(page,20);
+        Page<Subject> subjectPage = null;
+
         if(!StringUtils.isEmpty(ainfoId)&&StringUtils.isEmpty(subjectName)) {
-            Page<Subject> subjectPage = subjectService.findByAinfoId(request, ainfoId);
-            List<Subject> subjects = subjectPage.getContent();
-            for (Subject subject : subjects) {
-                SubjectDTO subjectDTO = new SubjectDTO();
-                BeanUtils.copyProperties(subject, subjectDTO);
-                AcademyInfo academyInfo = academyInfoService.findOne(subject.getAinfoId());
-                subjectDTO.setAinfoName(academyInfo.getAinfoName());
-                subjectDTOList.add(subjectDTO);
-            }
+            subjectPage= subjectService.findByAinfoId(request, ainfoId);
+        }else if(!StringUtils.isEmpty(subjectName)&&StringUtils.isEmpty(ainfoId)){
+            subjectPage=subjectService.findBySubjectNameContainning(request,subjectName);
+        }else if(!StringUtils.isEmpty(subjectName)&&!StringUtils.isEmpty(ainfoId)){
+            subjectPage=subjectService.findByAinfoIdAndSubjectNameContaining(request,ainfoId,subjectName);
+        }else if(StringUtils.isEmpty(subjectName)&&StringUtils.isEmpty(ainfoId)){
+            subjectPage=subjectService.findAll(request);
         }
-        if(!StringUtils.isEmpty(subjectName)&&StringUtils.isEmpty(ainfoId)){
-             Page<Subject>  subjectPage1=subjectService.findBySubjectNameContainning(request,subjectName);
-             List<Subject> subjects1=subjectPage1.getContent();
-             for(Subject subject1:subjects1){
-                 SubjectDTO subjectDTO1=new SubjectDTO();
-                 BeanUtils.copyProperties(subject1,subjectDTO1);
-                 subjectDTOList.add(subjectDTO1);
-             }
+        List<Subject> subjects = subjectPage.getContent();
+        for (Subject subject : subjects) {
+            SubjectDTO subjectDTO = new SubjectDTO();
+            BeanUtils.copyProperties(subject, subjectDTO);
+            AcademyInfo academyInfo = academyInfoService.findOne(subject.getAinfoId());
+            subjectDTO.setAinfoName(academyInfo.getAinfoName());
+            subjectDTOList.add(subjectDTO);
         }
-        if(!StringUtils.isEmpty(subjectName)&&!StringUtils.isEmpty(ainfoId)){
-            Page<Subject> subjectPage2=subjectService.findByAinfoIdAndSubjectNameContaining(request,ainfoId,subjectName);
-            List<Subject> subjects2=subjectPage2.getContent();
-            for(Subject subject2:subjects2){
-                SubjectDTO subjectDTO2=new SubjectDTO();
-                BeanUtils.copyProperties(subject2,subjectDTO2);
-                subjectDTOList.add(subjectDTO2);
-            }
-
-        }
-
-        if(StringUtils.isEmpty(subjectName)&&StringUtils.isEmpty(ainfoId)){
-            Page<Subject> subjectPage3=subjectService.findAll(request);
-            List<Subject> subjects3=subjectPage3.getContent();
-            for(Subject subject3:subjects3){
-                SubjectDTO subjectDTO3=new SubjectDTO();
-                BeanUtils.copyProperties(subject3,subjectDTO3);
-                subjectDTOList.add(subjectDTO3);
-            }
-        }
+        model.addAttribute("ainfoSearch",ainfoSearch);
+        model.addAttribute("subjectPage",subjectPage);
+        model.addAttribute("ainfoId",ainfoId);
+        model.addAttribute("subjectName",subjectName);
         model.addAttribute("subjects",subjectDTOList);
         model.addAttribute("academys",academyInfoList);
         return "/subject/index";
@@ -134,11 +120,31 @@ public class SubjectController {
 
     @PostMapping("/add/save")
     public String subjectAddSave(@Valid Subject subject,
+                                 BindingResult bindingResult,
                                  Model model){
+        if(bindingResult.hasErrors()){
+            bindingResult.getFieldError().getField();
+        }
         subjectService.save(subject);
         model.addAttribute("msg","保存成功");
         model.addAttribute("url","/subject/find");
         return "/common/success";
     }
+
+    @GetMapping("/find/delete")
+    public String deleteSubject(@RequestParam(value = "subjectId",defaultValue = "")String subjectId,
+                                Model model){
+        try{
+            subjectService.delete(subjectId);
+        }catch(AdminException e){
+            model.addAttribute("url","/subject/find");
+            model.addAttribute("msg",e.getMessage());
+            return"/common/error";
+        }
+        model.addAttribute("url","/subject/find");
+        model.addAttribute("msg","删除成功");
+        return "/common/success";
+    }
+
 
 }

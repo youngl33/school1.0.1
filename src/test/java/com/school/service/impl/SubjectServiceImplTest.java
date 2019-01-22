@@ -26,8 +26,6 @@ public class SubjectServiceImplTest {
         Subject subject=new Subject();
         subject.setSubjectId("1040502003");
         subject.setSubjectName("大学英语III");
-        subject.setSubjectTime(38);
-        subject.setSubjectScore(4.0);
         subject.setAinfoId("1040502");
         subject.setSubjectDescription("是1621807的学位课");
         Subject result=subjectService.save(subject);
@@ -68,5 +66,10 @@ public class SubjectServiceImplTest {
     public void findOne(){
         Subject subject=subjectService.findOne("1040501001");
         Assert.assertNotNull(subject);
+    }
+
+    @Test
+    public void deleteById(){
+       subjectService.delete("1040501002");
     }
 }

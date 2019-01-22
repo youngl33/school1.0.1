@@ -180,7 +180,7 @@
 
         <!-- content  -->
         <div class="content white-bg" style="padding:40px 0;">
-            <form class="form-horizontal" action="/teacher/add/save" method="post">
+            <form class="form-horizontal" action="/teacher/add/save" method="post" onsubmit="return doSubmit()">
                 <div style="display: flex;flex-direction: row;">
                     <div style="margin-left:220px;" class="col-sm-offset-3">
                         <div class="form-group">
@@ -205,7 +205,7 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">状态</label>
                                 <div class="col-sm-9">
-                                    <select class="form-control" name="teacherStatus" >
+                                    <select class="form-control" name="teacherStatus" id="teacherStatus" >
                                         <option th:value="${teacherDTO?.teacherStatus}" th:text="${teacherDTO?.teacherStatus}"></option>
                                         <option  th:value="在职">在职</option>
                                         <option  th:value="离职">离职</option>
@@ -216,7 +216,7 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">职称</label>
                                 <div class="col-sm-9">
-                                    <select class="form-control" name="teacherPosition"  >
+                                    <select class="form-control" name="teacherPosition"  id="teacherPosition">
                                         <option  th:value="${teacherDTO?.teacherPosition}" th:text="${teacherDTO?.teacherPosition}" ></option>
                                         <option th:value="高校讲师">高校讲师</option>
                                         <option th:value="高校助教">高校助教</option>
@@ -228,7 +228,7 @@
                             <div class="form-group">
                                 <label  class="col-sm-3 control-label">学院</label>
                                 <div class="col-sm-9">
-                                    <select class="form-control" name="ainfoId">
+                                    <select class="form-control" name="ainfoId" id="ainfoId">
                                         //学院名字会有两个 怎么解决？
                                         <option th:value="${teacherDTO?.ainfoId}" th:text="${ainfo?.ainfoName}"></option>
                                         <option th:each="academyInfo:${academyInfo}" th:value="${academyInfo.ainfoId}" th:text="${academyInfo.ainfoName}" ></option>
@@ -238,7 +238,7 @@
                             <div class="form-group">
                                 <label  class="col-sm-3 control-label">性别</label>
                                 <div class="col-sm-9">
-                                    <select class="form-control" name="teacherGender" >
+                                    <select class="form-control" name="teacherGender" id="teacherGender" >
                                         <option th:text="${teacherDTO?.teacherGender}"></option>
                                         <option th:value="男">男</option>
                                         <option th:value="女">女</option>
@@ -386,7 +386,55 @@
 
 <!-- jQuery UI -->
 <script src="../js/plugins/jquery-ui/jquery-ui.min.js"></script>
+<script>
+    function doSubmit(){
+        var dom1=document.getElementById("teacherStatus");
+        var dom2=document.getElementById("teacherPosition");
+        var dom4=document.getElementById("teacherGender");
+        var statusIndex=dom1.selectedIndex;
+        var positionIndex=dom2.selectedIndex;
+        var genderIndex=dom4.selectedIndex;
+        if(dom1.options[statusIndex].value!=0
+            &&dom2.options[positionIndex].value!=0
+            &&dom4.options[genderIndex].value!=0
+            &&document.getElementById("teacherName").value!=""
+            &&document.getElementById("teacherAge").value!=""
+            &&document.getElementById("teacherBorndate").value!=""
+            &&document.getElementById("teacherTel").value!=""
+            &&document.getElementById("teacherIcard").value!=""
+            &&document.getElementById("teacherAddr").value!=""
+            &&document.getElementById("teacherPassword").value!=""
+            &&document.getElementById("teacherId").value!="")
+        {
+            return true;
+        }else {
+            if(document.getElementById("teacherId").value=="")
+                alert("请输入Id！");
+            if(document.getElementById("teacherPassword").value=="")
+                alert("请输入密码！");
+            if(document.getElementById("teacherName").value=="")
+                alert("请输入姓名！");
+            if(dom1.options[statusIndex].value==0)
+                alert("请选择教师状态！");
+            if(dom2.options[positionIndex].value==0)
+                alert("请选择职称");
+            if(dom4.options[genderIndex].value==0)
+                alert("请选择性别！");
+            if(document.getElementById("teacherAge").value=="")
+                alert("请输入年龄！");
+            if(document.getElementById("teacherBorndate").value=="")
+                alert("请输入出生日期！");
+            if(document.getElementById("teacherTel").value=="")
+                alert("请输入电话号码！");
+            if(document.getElementById("teacherIcard").value=="")
+                alert("请输入身份证号！");
+            if(document.getElementById("teacherAddr").value=="")
+                alert("请输入家庭住址！");
 
+            return false;
+        }
+    };
+</script>
 
 </body>
 

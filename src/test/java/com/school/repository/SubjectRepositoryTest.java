@@ -25,8 +25,6 @@ public class SubjectRepositoryTest {
         Subject subject=new Subject();
         subject.setSubjectId("1040502002");
         subject.setSubjectName("大学英语II");
-        subject.setSubjectTime(38);
-        subject.setSubjectScore(4.0);
         subject.setAinfoId("1040502");
         subject.setSubjectDescription("是1621807的学位课");
         Subject result=repository.save(subject);
@@ -54,6 +52,11 @@ public class SubjectRepositoryTest {
         PageRequest request=new PageRequest(0,10);
         Page<Subject> subjectPage=repository.findByAinfoIdAndSubjectNameContaining(request,"1040501","操作");
         Assert.assertNotEquals(0,subjectPage.getTotalElements());
+    }
+
+    @Test
+    public void delete(){
+        repository.deleteById("1040501001");
     }
 
 }

@@ -43,4 +43,10 @@ public class SubjectServiceImpl implements SubjectService {
     public Subject findOne(String subjectId) {
         return repository.findById(subjectId).orElse(null);
     }
+
+
+    @Override
+    public void delete(String subjectId) {
+        repository.deleteById(subjectId);
+    }
 }

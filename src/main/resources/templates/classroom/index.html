@@ -172,7 +172,8 @@
                         <label  class="col-sm-2 control-label">所在校区：</label>
                         <div class="col-sm-3">
                             <select class="form-control" name="classroomLocation" >
-                                <option ></option>
+                                <option th:if="${ classroomLocation==''}">请选择</option>
+                                <option th:if="${ classroomLocation!=''}" th:value="${classroomLocation}" th:text="${classroomLocation}"></option>
                                 <option th:value="广兰校区">广兰校区</option>
                                 <option th:value="枫林校区">枫林校区</option>
                                 <option th:value="抚州校区">抚州校区</option>
@@ -184,7 +185,8 @@
                         <label  class="col-sm-2 control-label">教学楼：</label>
                         <div class="col-sm-3">
                             <select class="form-control" name="buildingId" >
-                                <option th:value="0"></option>
+                                <option th:if="${buildingId}==0">请选择</option>
+                                <option th:if="${buildingId}!=0" th:value="${buildingId}" th:text="${buildingSearch.buildingName}"></option>
                                 <option th:each="building:${building}" th:value="${building?.buildingId}" th:text="${building?.buildingName}"></option>
                             </select>
                         </div>
@@ -193,7 +195,8 @@
                             <label  class="col-sm-2 control-label">教室类型：</label>
                             <div class="col-sm-3">
                                 <select class="form-control" name="classroomType" >
-                                    <option ></option>
+                                    <option th:if="${classroomType==''}">请选择</option>
+                                    <option th:if="${classroomType!=''}" th:value="${classroomType}" th:text="${classroomType}"></option>
                                     <option th:value="多媒体教室">多媒体教室</option>
                                     <option th:value="实验室">实验室</option>
                                     <option th:value="不可用教室">不可用教室</option>
@@ -221,12 +224,12 @@
                         <th width="200px" style="text-align: center;">操作</th>
                     </tr>
                     <tr th:each="classroomDTO: ${classroomDTOs}">
-                        <td th:text="${classroomDTO?.classroomId}">1</td>
-                        <td th:text="${classroomDTO?.classroomLocation}">广兰校区</td>
-                        <td th:text="${classroomDTO?.buildingName}">三教</td>
-                        <td th:text="${classroomDTO?.classroomNo}">101</td>
-                        <td th:text="${classroomDTO?.classroomType}">小教室</td>
-                        <td th:text="${classroomDTO?.classroomSeats}">68</td>
+                        <td th:text="${classroomDTO?.classroomId}"></td>
+                        <td th:text="${classroomDTO?.classroomLocation}"></td>
+                        <td th:text="${classroomDTO?.buildingName}"></td>
+                        <td th:text="${classroomDTO?.classroomNo}"></td>
+                        <td th:text="${classroomDTO?.classroomType}"></td>
+                        <td th:text="${classroomDTO?.classroomSeats}"></td>
                         <td width="150px;">
                             <a class="accordion-toggle" data-toggle="collapse" data-parent="#myAccordion"
                                th:href="@{'#collapse'+${classroomDTO?.classroomId}}"
@@ -243,6 +246,44 @@
                                role="button" style="margin-right:20px;">修改</a>
                         </td>
                     </tr>
+                    <tfoot>
+                    <tr>
+                        <td colspan="5">
+                            <ul class="pagination pull-right">
+                                <li><span>当前第&nbsp;[[${classroomPage?.getNumber()+1}]]/[[${classroomPage?.getTotalPages()}]]&nbsp;页</span></li>
+                                <li th:switch="${classroomPage?.getNumber()}">
+                                    <a th:case="0"
+                                       th:href="@{'find?classroomLocation='+${classroomLocation}+'&buildingId='+${buildingId}+'&classroomType='+${classroomType}+'&page=0'}"
+                                       aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                    <a th:case="*"
+                                       th:href="@{'find?classroomLocation='+${classroomLocation}+'&buildingId='+${buildingId}+'&classroomType='+${classroomType}+'&page='+${classroomPage?.getNumber()-1}}"
+                                       aria-label="Previous">
+                                        <span aria-hidden="false">&laquo;</span>
+                                    </a>
+
+                                </li>
+                                <li th:each="page:${#numbers.sequence(0, classroomPage?.getTotalPages() - 1)}">
+                                    <a th:href="@{'find?classroomLocation='+${classroomLocation}+'&buildingId='+${buildingId}+'&classroomType='+${classroomType}+'&page='+${page}}"
+                                       th:text="${page+1}">1</a></li>
+                                <li th:switch="${classroomPage?.getNumber()}">
+                                    <a th:case="${classroomPage?.getTotalPages()-1}"
+                                       th:href="@{'find?classroomLocation='+${classroomLocation}+'&buildingId='+${buildingId}+'&classroomType='+${classroomType}+'&page='+${classroomPage?.getTotalPages()-1}}"
+                                       aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                    <a th:case="*"
+                                       th:href="@{'find?classroomLocation='+${classroomLocation}+'&buildingId='+${buildingId}+'&classroomType='+${classroomType}+'&page='+${classroomPage?.getNumber()+1}}"
+                                       aria-label="Next">
+                                        <span aria-hidden="false">&raquo;</span>
+                                    </a>
+
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    </tfoot>
     
                 </table>
             </div>
