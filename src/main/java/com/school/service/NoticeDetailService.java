@@ -7,22 +7,23 @@ import org.springframework.data.domain.Pageable;
 public interface NoticeDetailService {
 
     /** 通过ID查找文章   */
-    public NoticeDetail findOne(String ndtlId);
+    NoticeDetail findOne(String ndtlId);
 
     /** 查找所有文章       */
-    public Page<NoticeDetail> findAll(Pageable pageable);
+    Page<NoticeDetail> findAll(String noticeBelong,Pageable pageable);
 
     /** 通过标题模糊查找     */
-    public Page<NoticeDetail> findByNDtlTitle(String ndtlName,Pageable pageable);
+    Page<NoticeDetail> findByNDtlTitle(String ndtlName,String noticeBelong,Pageable pageable);
 
     /** 通过类别查找       */
-    public Page<NoticeDetail> findByType(Integer ntypeId,Pageable pageable);
+    Page<NoticeDetail> findByType(Integer ntypeId,String noticeBelong,Pageable pageable);
 
     /** 保存文章信息       */
-    public NoticeDetail save(NoticeDetail noticeDetail);
+    NoticeDetail save(NoticeDetail noticeDetail);
 
     /** 通过状态查找文章     */
-    public Page<NoticeDetail> findByNdtlStatus(Integer ndtlStatus,Pageable pageable);
+    Page<NoticeDetail> findByNdtlStatus(Integer ndtlStatus,String noticeBelong,Pageable pageable);
 
-    Page<NoticeDetail> findByNdtlAuthor(String ndtlAuthor,Pageable pageable);
+    /** 通过作者查找文字  */
+    Page<NoticeDetail> findByNdtlAuthor(String ndtlAuthor,String noticeBelong,Pageable pageable);
 }

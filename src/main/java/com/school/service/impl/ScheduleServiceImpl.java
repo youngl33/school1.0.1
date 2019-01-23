@@ -2,6 +2,7 @@ package com.school.service.impl;
 
 import com.school.dtoObject.Schedule;
 import com.school.enums.ResultEnum;
+import com.school.enums.ScheduleEnum;
 import com.school.exception.AdminException;
 import com.school.repository.ScheduleRepository;
 import com.school.service.ScheduleService;
@@ -30,7 +31,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     public void deleteById(String scheduleId) {
         Schedule schedule = findOne(scheduleId);
         if(schedule==null){
-            throw new AdminException(ResultEnum.SCHEDULE_NOT_EXIST);
+            throw new AdminException(ScheduleEnum.SCHEDULE_NOT_EXIST);
         }
         repository.deleteById(scheduleId);
     }

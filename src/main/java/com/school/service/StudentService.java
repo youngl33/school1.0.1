@@ -20,4 +20,6 @@ public interface StudentService {
     Page<Student> findByClassId(Pageable pageable,String classID);
 
     void importStudent(String fileName, MultipartFile file) throws Exception;
+
+    void delete(String studentId);
 }

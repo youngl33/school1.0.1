@@ -30,6 +30,9 @@ public class NoticeDetail {
     /** 1:发送 2:删除   */
     private Integer ndtlStatus=1;
 
+    /** 为0时表示学校,其他填入学院ID */
+    private String noticeBelong="0";
+
     /** 创建时间     */
     private Date createTime;
 
