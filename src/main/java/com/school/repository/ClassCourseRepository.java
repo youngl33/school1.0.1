@@ -11,6 +11,6 @@ public interface ClassCourseRepository extends JpaRepository<ClassCourse,String>
 
     Page<ClassCourse> findByScheduleSemesterAndClassId(Pageable pageable,String scheduleSemester,String classId);
 
-
+    Page<ClassCourse> findByClassId(Pageable pageable,String classId);
 
 }

@@ -38,4 +38,14 @@ public class ClassCourseServiceImpl implements ClassCourseService {
     public Page<ClassCourse> findByScheduleSemesterAndClassId(Pageable pageable, String scheduleSemester, String classId) {
         return repository.findByScheduleSemesterAndClassId(pageable,scheduleSemester,classId);
     }
+
+    @Override
+    public Page<ClassCourse> findByClassId(Pageable pageable, String classId) {
+        return repository.findByClassId(pageable,classId);
+    }
+
+    @Override
+    public Page<ClassCourse> findAll(Pageable pageable) {
+        return repository.findAll(pageable);
+    }
 }

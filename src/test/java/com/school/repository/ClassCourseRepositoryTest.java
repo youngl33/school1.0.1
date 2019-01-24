@@ -51,4 +51,18 @@ public class ClassCourseRepositoryTest {
         Assert.assertNotNull(classCourse);
 
     }
+
+    @Test
+    public void findByClassId(){
+        PageRequest request=new PageRequest(0,10);
+        Page<ClassCourse> classCoursePage=repository.findByClassId(request,"1621807");
+        Assert.assertNotEquals(0,classCoursePage.getTotalElements());
     }
+
+    @Test
+    public void findAll(){
+        PageRequest request=new PageRequest(0,10);
+        Page<ClassCourse> classCoursePage=repository.findAll(request);
+        Assert.assertNotEquals(0,classCoursePage.getTotalElements());
+    }
+}

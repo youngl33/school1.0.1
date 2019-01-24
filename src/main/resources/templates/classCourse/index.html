@@ -166,7 +166,7 @@
 
             <!-- type search-->
             <div class="white-bg">
-                <form class="form-horizontal" action="/student/index" >
+                <form class="form-horizontal" action="/classCourse/find" >
                      <div class="form-group" >
                         <label  class="col-sm-2 control-label">学期:</label>
                         <div class="col-sm-3">
@@ -207,44 +207,44 @@
                         <th>班级</th>
                         <th width="200px" style="text-align: center;">操作</th>
                     </tr>
-                    <tr th:each="classroomDTO: ${classroomDTOs}">
-                        <td th:text="${classroomDTO?.classroomNo}"></td>
-                        <td th:text="${classroomDTO?.classroomType}"></td>
-                        <td th:text="${classroomDTO?.classroomSeats}"></td>
+                    <tr th:each="classCourse: ${classCourse}">
+                        <td th:text="${classCourse?.scheduleSemester}"></td>
+                        <td th:text="${classCourse?.ccourseId}"></td>
+                        <td th:text="${classCourse?.classId}"></td>
                         <td style="text-align: center;">
-                            <a class="btn btn-success btn-sm"  th:href="@{'/classroom/edit?classroomId='+${classroomDTO.classroomId}}"
-                               role="button" style="margin-right:20px;">修改</a>
+                            <a class="btn btn-success btn-sm"  href="@{'/classCourse/view?classId='+${classCourse.classId}}"
+                               role="button" style="margin-right:20px;">查看</a>
                         </td>
                     </tr>
                     <tfoot>
                     <tr>
                         <td colspan="5">
                             <ul class="pagination pull-right">
-                                <li><span>当前第&nbsp;[[${classroomPage?.getNumber()+1}]]/[[${classroomPage?.getTotalPages()}]]&nbsp;页</span></li>
-                                <li th:switch="${classroomPage?.getNumber()}">
+                                <li><span>当前第&nbsp;[[${classCoursePage?.getNumber()+1}]]/[[${classCoursePage?.getTotalPages()}]]&nbsp;页</span></li>
+                                <li th:switch="${classCoursePage?.getNumber()}">
                                     <a th:case="0"
-                                       th:href="@{'find?classroomLocation='+${classroomLocation}+'&buildingId='+${buildingId}+'&classroomType='+${classroomType}+'&page=0'}"
+                                       th:href="@{'find?scheduleSemester='+${scheduleSemester}+'&classId='+${classId}+'&page=0'}"
                                        aria-label="Previous">
                                         <span aria-hidden="true">&laquo;</span>
                                     </a>
                                     <a th:case="*"
-                                       th:href="@{'find?classroomLocation='+${classroomLocation}+'&buildingId='+${buildingId}+'&classroomType='+${classroomType}+'&page='+${classroomPage?.getNumber()-1}}"
+                                       th:href="@{'find?scheduleSemester='+${scheduleSemester}+'&classId='+${classId}+'&page='+${classCoursePage?.getNumber()-1}}"
                                        aria-label="Previous">
                                         <span aria-hidden="false">&laquo;</span>
                                     </a>
 
                                 </li>
-                                <li th:each="page:${#numbers.sequence(0, classroomPage?.getTotalPages() - 1)}">
-                                    <a th:href="@{'find?classroomLocation='+${classroomLocation}+'&buildingId='+${buildingId}+'&classroomType='+${classroomType}+'&page='+${page}}"
+                                <li th:each="page:${#numbers.sequence(0, classCoursePage?.getTotalPages() - 1)}">
+                                    <a th:href="@{'find?scheduleSemester='+${scheduleSemester}+'&classId='+${classId}+'&page='+${page}}"
                                        th:text="${page+1}">1</a></li>
-                                <li th:switch="${classroomPage?.getNumber()}">
-                                    <a th:case="${classroomPage?.getTotalPages()-1}"
-                                       th:href="@{'find?classroomLocation='+${classroomLocation}+'&buildingId='+${buildingId}+'&classroomType='+${classroomType}+'&page='+${classroomPage?.getTotalPages()-1}}"
+                                <li th:switch="${classCoursePage?.getNumber()}">
+                                    <a th:case="${classCoursePage?.getTotalPages()-1}"
+                                       th:href="@{'find?scheduleSemester='+${scheduleSemester}+'&classId='+${classId}+'&page='+${classCoursePage?.getTotalPages()-1}}"
                                        aria-label="Next">
                                         <span aria-hidden="true">&raquo;</span>
                                     </a>
                                     <a th:case="*"
-                                       th:href="@{'find?classroomLocation='+${classroomLocation}+'&buildingId='+${buildingId}+'&classroomType='+${classroomType}+'&page='+${classroomPage?.getNumber()+1}}"
+                                       th:href="@{'find?scheduleSemester='+${scheduleSemester}+'&classId='+${classId}+'&page='+${classCoursePage?.getNumber()+1}}"
                                        aria-label="Next">
                                         <span aria-hidden="false">&raquo;</span>
                                     </a>

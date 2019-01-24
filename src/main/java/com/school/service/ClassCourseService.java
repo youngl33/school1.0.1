@@ -16,6 +16,12 @@ public interface ClassCourseService {
     /**删除一个课表*/
     void delete(String ccourseId);
 
+    /**查找所有课表*/
+    Page<ClassCourse> findAll(Pageable pageable);
+
+    /**通过班级Id查找课表*/
+    Page<ClassCourse> findByClassId(Pageable pageable,String classId);
+
     /**通过学年信息查找课表*/
     Page<ClassCourse> findByScheduleSemester(Pageable pageable,String scheduleSemester);
 
