@@ -180,17 +180,17 @@
 
         <!-- content  -->
         <div class="content white-bg" style="padding:40px 100px;">
-            <form class="form-horizontal" action="/tax/edit/save" method="post" onsubmit="return doSubmit()">
+            <form class="form-horizontal" action="/tax/add/save" method="post" onsubmit="return doSubmit()">
                 <div class="form-group">
                     <label class="col-sm-3 control-label">Id</label>
                     <div class="col-sm-4">
-                        <input name="taxId" id="taxId" th:value="${tax?.taxId}"  type="text" class="form-control" readonly>
+                        <input name="taxId" id="taxId" th:value="${tax?.taxId}"  type="text" class="form-control" >
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">科目名</label>
                     <div class="col-sm-4">
-                        <input name="subjectName" id="subjectName" th:value="${tax?.subjectName}"  type="text" class="form-control" readonly>
+                        <input name="subjectName" id="subjectName" th:value="${tax?.subjectName}"  type="text" class="form-control" >
                     </div>
                 </div>
                 <div class="form-group">
@@ -227,21 +227,9 @@
                     <label class="col-sm-3 control-label">学年</label>
                     <div class="col-sm-4">
                         <select class="form-control" name="scheduleSemester" id="scheduleSemester">
-                                <option th:value="${tax?.scheduleSemester}" th:text="${tax?.scheduleSemester}"></option>
+                                <option></option>
                                 <option th:each="schedule:${schedule}" th:value="${schedule.scheduleSemester}" th:text="${schedule.scheduleSemester}" ></option>
                         </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">创建时间</label>
-                    <div class="col-sm-4">
-                        <input class="form-control" type="text" th:value="${tax?.createTime}"  placeholder="Disabled input here..." disabled>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">更新时间</label>
-                    <div class="col-sm-4">
-                        <input class="form-control" type="text" th:value="${tax?.updateTime}"  placeholder="Disabled input here..." disabled>
                     </div>
                 </div>
                 <div class="form-group" style="margin-top:20px;">
@@ -335,13 +323,23 @@
 <script src="../js/plugins/jquery-ui/jquery-ui.min.js"></script>
 <script>
     function doSubmit(){
-        if(document.getElementById("teacherId").value!=""&&document.getElementById("taxTime").value!=""
-            &&document.getElementById("taxScore").value!=""&&document.getElementById("taxWeek").value!="")
+        var dom1=document.getElementById("scheduleSemester");
+        var semesterIndex=dom1.selectedIndex;
+        if(dom1.options[semesterIndex].value!=0&&document.getElementById("teacherId").value!=""&&document.getElementById("taxTime").value!=""
+            &&document.getElementById("taxScore").value!=""&&document.getElementById("taxWeek").value!=""
+            &&document.getElementById("subjectName").value!=""&&document.getElementById("taxId").value!=""
+            &&document.getElementById("availableNum").value!="")
         {
             return true;
         }else {
+            if(document.getElementById("taxId").value=="")
+                alert("请输入课程Id！");
+            if(document.getElementById("subjectName").value=="")
+                alert("请输入科目名！");
             if(document.getElementById("teacherId").value=="")
                 alert("请输入授课教师Id！");
+            if(document.getElementById("availableNum").value=="")
+                alert("请输入选课人数！");
             if(document.getElementById("taxTime").value=="")
                 alert("请输入课程学时！");
             if(document.getElementById("taxScore").value=="")

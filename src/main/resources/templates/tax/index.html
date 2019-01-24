@@ -225,6 +225,7 @@
                         <td style="text-align: center;">
                             <a class="btn btn-success btn-sm"  th:href="@{'/tax/edit?taxId='+${tax.taxId}}"
                                role="button" style="margin-right:20px;">修改</a>
+                            <a class="btn btn-success btn-sm" th:data-id="${tax?.taxId}" onclick="scheduleDelete(this.dataset.id)">删除</a>
                         </td>
                     </tr>
 
@@ -236,28 +237,28 @@
                                 <li><span>当前第&nbsp;[[${taxPage?.getNumber()+1}]]/[[${taxPage?.getTotalPages()}]]&nbsp;页</span></li>
                                 <li th:switch="${taxtPage?.getNumber()}">
                                     <a th:case="0"
-                                       th:href="@{'find?taxId='+${taxId}+'&subjectName='+'${subjectName}'+'&teacherName='+'${teacherName}'+'&page=0'}"
+                                       th:href="@{'find?scheduleSemester='+${scheduleSemester}+'&subjectName='+${subjectName}+'&teacherName='+${teacherName}+'&page=0'}"
                                        aria-label="Previous">
                                         <span aria-hidden="true">&laquo;</span>
                                     </a>
                                     <a th:case="*"
-                                       th:href="@{'find?taxId='+${taxId}+'&subjectName='+'${subjectName}'+'&teacherName='+'${teacherName}'+'&page='+${taxPage?.getNumber()-1}}"
+                                       th:href="@{'find?scheduleSemester='+${scheduleSemester}+'&subjectName='+${subjectName}+'&teacherName='+${teacherName}+'&page='+${taxPage?.getNumber()-1}}"
                                        aria-label="Previous">
                                         <span aria-hidden="false">&laquo;</span>
                                     </a>
 
                                 </li>
                                 <li th:each="page:${#numbers.sequence(0, taxPage?.getTotalPages() - 1)}">
-                                    <a th:href="@{'find?taxId='+${taxId}+'&subjectName='+'${subjectName}'+'&teacherName='+'${teacherName}'+'&page='+${page}}"
+                                    <a th:href="@{'find?scheduleSemester='+${scheduleSemester}+'&subjectName='+${subjectName}+'&teacherName='+${teacherName}+'&page='+${page}}"
                                        th:text="${page+1}">1</a></li>
                                 <li th:switch="${taxPage?.getNumber()}">
                                     <a th:case="${taxPage?.getTotalPages()-1}"
-                                       th:href="@{'find?taxId='+${taxId}+'&subjectName='+'${subjectName}'+'&teacherName='+'${teacherName}'+'&page='+${taxPage?.getTotalPages()-1}}"
+                                       th:href="@{'find?scheduleSemester='+${scheduleSemester}+'&subjectName='+${subjectName}+'&teacherName='+${teacherName}+'&page='+${taxPage?.getTotalPages()-1}}"
                                        aria-label="Next">
                                         <span aria-hidden="true">&raquo;</span>
                                     </a>
                                     <a th:case="*"
-                                       th:href="@{'find?taxId='+${taxId}+'&subjectName='+'${subjectName}'+'&teacherName='+'${teacherName}'+'&page='+${taxPage?.getNumber()+1}}"
+                                       th:href="@{'find?scheduleSemester='+${scheduleSemester}+'&subjectName='+${subjectName}+'&teacherName='+${teacherName}+'&page='+${taxPage?.getNumber()+1}}"
                                        aria-label="Next">
                                         <span aria-hidden="false">&raquo;</span>
                                     </a>
@@ -367,6 +368,32 @@
     <!-- confirm  -->
     <script src="/js/plugins/confirm/confirm.js"></script>
 
+    <script>
+        function confirm_alert(msg) {
+            $.confirm({
+                title: '删除',
+                content: '是否要刪除该课程',
+                type: 'green',
+                icon: 'glyphicon glyphicon-question-sign',
+                buttons: {
+                    ok: {
+                        text: '是(yes)',
+                        btnClass: 'btn-primary',
+                        action: function () {
+                            location.href = "find/delete?taxId="+msg; //指向下载资源（此处为目标文件的输出数据流）
+                        }
+                    },
+                    cancel: {
+                        text: '否(no)',
+                        btnClass: 'btn-primary'
+                    }
+                }
+            });
+        }
+        function scheduleDelete(s) {
+            confirm_alert(s)
+        }
+    </script>
 </body>
 
 </html>

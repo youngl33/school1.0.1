@@ -29,9 +29,17 @@ public class Course {
 
     /**星期几*/
     private Integer courseDay;
+
+    /**日期*/
     private Date courseDate;
+
+    /**节次*/
     private Integer courseSequence;
+
+    /**创建时间*/
     private Date createTime;
+
+    /**更新时间*/
     private Date updateTime;
 
 }

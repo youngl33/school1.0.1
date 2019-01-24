@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface SubjectRepository extends JpaRepository<Subject,String> {
 
+    Subject findBySubjectName(String subjectName);
+
     Page<Subject> findBySubjectNameContaining(Pageable pageable, String subjectName);
 
     Page<Subject> findByAinfoId(Pageable pageable,String ainfoId);

@@ -212,7 +212,7 @@
         <div class="white-bg content-info">
             <div class="col-md-offset-1 teacher-info" th:each="teacherDTO:${teacherDTOs}">
                 <div class="teacher-info-personal">
-                    <img th:src="${teacherDTO?.teacherAvater}" width="105px" height="123px" alt="...">
+                    <img th:src="${teacherDTO?.teacherAvater}" width="105px" height="123px" >
                 </div>
                 <div class="teacher-info-detail">
                     <span th:text="姓名：+${teacherDTO?.teacherName}"></span>

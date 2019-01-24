@@ -70,4 +70,9 @@ public class TaxServiceTest {
         Tax tax=taxService.findOne("18020101002");
         Assert.assertNotNull(tax);
     }
+
+    @Test
+    public void delete(){
+        taxService.delete("18010101001");
+    }
 }

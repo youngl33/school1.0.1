@@ -4,6 +4,7 @@ import com.school.dtoObject.Schedule;
 import com.school.dtoObject.Subject;
 import com.school.dtoObject.Tax;
 import com.school.dtoObject.Teacher;
+import com.school.exception.AdminException;
 import com.school.service.ScheduleService;
 import com.school.service.SubjectService;
 import com.school.service.TaxService;
@@ -13,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -79,12 +81,53 @@ public class TaxController {
     public String editSave(@Valid Tax tax,
                            Model model){
         Teacher teacher=teacherService.findOne(tax.getTeacherId());
-        Subject subject=subjectService.findOne(tax.getSubjectId());
+        Subject subject=subjectService.findBySubjectName(tax.getSubjectName());
         tax.setTeacherName(teacher.getTeacherName());
-        tax.setSubjectName(subject.getSubjectName());
+        tax.setSubjectId(subject.getSubjectId());
         taxService.save(tax);
         model.addAttribute("msg","保存成功");
         model.addAttribute("url","/tax/find");
+        return "/common/success";
+    }
+
+    @GetMapping("/add")
+    public String add(Model model){
+        List<Schedule> scheduleList=scheduleService.findAll();
+        model.addAttribute("schedule",scheduleList);
+        return "/tax/add";
+
+    }
+
+    @PostMapping("/add/save")
+    public String addSave(@Valid Tax tax,
+                          BindingResult bindingResult,
+                          Model model){
+        Subject subject=subjectService.findBySubjectName(tax.getSubjectName());
+        Teacher teacher=teacherService.findOne(tax.getTeacherId());
+        tax.setTeacherName(teacher.getTeacherName());
+        tax.setSubjectId(subject.getSubjectId());
+
+        if(bindingResult.hasErrors()){
+            bindingResult.getFieldError().getField();
+        }
+        taxService.save(tax);
+        model.addAttribute("msg","保存成功");
+        model.addAttribute("url","/tax/find");
+        return "/common/success";
+    }
+
+    @GetMapping("/find/delete")
+    public String deleteSubject(@RequestParam(value = "taxId",defaultValue = "")String taxId,
+                                Model model){
+        try{
+            taxService.delete(taxId);
+        }catch(AdminException e){
+            model.addAttribute("url","/tax/find");
+            model.addAttribute("msg",e.getMessage());
+            return"/common/error";
+        }
+        model.addAttribute("url","/tax/find");
+        model.addAttribute("msg","删除成功");
         return "/common/success";
     }
 

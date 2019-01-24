@@ -59,4 +59,10 @@ public class SubjectRepositoryTest {
         repository.deleteById("1040501001");
     }
 
+    @Test
+    public void findBySubjectName(){
+        Subject subject=repository.findBySubjectName("操作系统原理");
+        Assert.assertNotNull(subject);
+    }
+
 }

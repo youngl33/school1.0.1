@@ -47,7 +47,7 @@ public class SubjectController {
         AcademyInfo ainfoSearch=academyInfoService.findOne(ainfoId);
         //2.检查是否进行搜索
         List<SubjectDTO> subjectDTOList=new ArrayList<SubjectDTO>();
-        PageRequest request=new PageRequest(page,20);
+        PageRequest request=new PageRequest(page,3);
         Page<Subject> subjectPage = null;
 
         if(!StringUtils.isEmpty(ainfoId)&&StringUtils.isEmpty(subjectName)) {
@@ -110,11 +110,7 @@ public class SubjectController {
     @GetMapping("/add")
     public String subjectAdd(Model model){
         List<AcademyInfo> ainfos=academyInfoService.findAll();
-        List<AcademyInfo> academyInfoList=new ArrayList<AcademyInfo>();
-        for(AcademyInfo a:ainfos ){
-            academyInfoList.add(a);
-        }
-        model.addAttribute("academyInfos",academyInfoList);
+        model.addAttribute("academyInfos",ainfos);
         return"/subject/add";
     }
 

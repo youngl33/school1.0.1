@@ -6,6 +6,9 @@ import org.springframework.data.domain.Pageable;
 
 public interface TaxService {
 
+    /**删除一个课程*/
+    void delete(String taxId);
+
     /**查找一个课程*/
     Tax findOne(String taxId);
 

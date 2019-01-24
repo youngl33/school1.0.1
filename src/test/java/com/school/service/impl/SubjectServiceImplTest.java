@@ -72,4 +72,10 @@ public class SubjectServiceImplTest {
     public void deleteById(){
        subjectService.delete("1040501002");
     }
+
+    @Test
+    public void findBySubjectName(){
+        Subject subject=subjectService.findBySubjectName("操作系统原理");
+        Assert.assertNotNull(subject);
+    }
 }

@@ -7,6 +7,9 @@ import org.springframework.data.domain.Pageable;
 
 public interface SubjectService {
 
+    /**通过科目名查找科目信息*/
+    Subject findBySubjectName(String subjectName);
+
     /**保存一个科目的信息*/
     Subject save(Subject subject);
 

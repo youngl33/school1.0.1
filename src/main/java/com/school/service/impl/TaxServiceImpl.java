@@ -43,4 +43,9 @@ public class TaxServiceImpl implements TaxService {
     public Tax findOne(String taxId) {
         return repository.findById(taxId).orElse(null);
     }
+
+    @Override
+    public void delete(String taxId){
+        repository.deleteById(taxId);
+    }
 }
