@@ -16,13 +16,13 @@ public class NoticeDetailServiceImpl implements NoticeDetailService {
     private NoticeDetailRepository noticeDetailRepository;
 
     @Override
-    public Page<NoticeDetail> findAll(Pageable pageable) {
+    public Page<NoticeDetail> findAll(String noticeBelong,Pageable pageable) {
         return noticeDetailRepository.findAll(pageable);
     }
 
     @Override
-    public Page<NoticeDetail> findByType(Integer ntypeId,Pageable pageable) {
-        return noticeDetailRepository.findByNtypeId(ntypeId,pageable);
+    public Page<NoticeDetail> findByType(Integer ntypeId,String noticeBelong,Pageable pageable) {
+        return noticeDetailRepository.findByNtypeIdAndNoticeBelong(ntypeId,noticeBelong,pageable);
     }
 
     @Override
@@ -31,13 +31,13 @@ public class NoticeDetailServiceImpl implements NoticeDetailService {
     }
 
     @Override
-    public Page<NoticeDetail> findByNDtlTitle(String ndtlName,Pageable pageable) {
-        return noticeDetailRepository.findByNdtlTitleContaining(ndtlName,pageable);
+    public Page<NoticeDetail> findByNDtlTitle(String noticeBelong,String ndtlName,Pageable pageable) {
+        return noticeDetailRepository.findByNdtlTitleContainingAndNoticeBelong(ndtlName,noticeBelong,pageable);
     }
 
     @Override
-    public Page<NoticeDetail> findByNdtlStatus(Integer ndtlStatus, Pageable pageable) {
-        return noticeDetailRepository.findByNdtlStatus(ndtlStatus,pageable);
+    public Page<NoticeDetail> findByNdtlStatus(Integer ndtlStatus,String noticeBelong, Pageable pageable) {
+        return noticeDetailRepository.findByNdtlStatusAndNoticeBelong(ndtlStatus,noticeBelong,pageable);
     }
 
     @Override
@@ -46,7 +46,7 @@ public class NoticeDetailServiceImpl implements NoticeDetailService {
     }
 
     @Override
-    public Page<NoticeDetail> findByNdtlAuthor(String ndtlAuthor, Pageable pageable) {
-        return noticeDetailRepository.findByNdtlAuthorContaining(ndtlAuthor,pageable);
+    public Page<NoticeDetail> findByNdtlAuthor(String noticeBelong,String ndtlAuthor, Pageable pageable) {
+        return noticeDetailRepository.findByNdtlAuthorContainingAndNoticeBelong(ndtlAuthor,noticeBelong,pageable);
     }
 }

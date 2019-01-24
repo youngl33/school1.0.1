@@ -7,13 +7,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface NoticeDetailRepository extends JpaRepository<NoticeDetail,String> {
 
-    Page<NoticeDetail> findByNdtlTitleContaining(String ndtlTitle, Pageable pageable);
+    Page<NoticeDetail> findByNdtlTitleContainingAndNoticeBelong(String ndtlTitle,String noticeBelong, Pageable pageable);
 
-    Page<NoticeDetail> findByNtypeId(Integer ntypeId, Pageable pageable);
+    Page<NoticeDetail> findByNtypeIdAndNoticeBelong(Integer ntypeId,String noticeBelong,  Pageable pageable);
 
-    Page<NoticeDetail> findByNdtlStatus(Integer ndtlStatus, Pageable pageable);
+    Page<NoticeDetail> findByNdtlStatusAndNoticeBelong(Integer ndtlStatus,String noticeBelong,  Pageable pageable);
 
-    Page<NoticeDetail> findByNdtlAuthorContaining(String ndtlAuthor, Pageable pageable);
+    Page<NoticeDetail> findByNdtlAuthorContainingAndNoticeBelong(String ndtlAuthor,String noticeBelong,  Pageable pageable);
 
 
 }

@@ -10,8 +10,13 @@ public class DateFormatUtils {
         return new SimpleDateFormat("yyyy-MM-dd").parse(date);
     }
 
+
     public static Date dateConverter2(String date) throws ParseException {
         return new SimpleDateFormat("yyyyMMdd").parse(date);
+    }
+
+    public static Date dateConverter3(String date) throws ParseException {
+        return new SimpleDateFormat("yyyy/MM/dd").parse(date);
     }
 
     public static String dateConverterFormatString(Date date) throws ParseException {

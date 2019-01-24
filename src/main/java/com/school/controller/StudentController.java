@@ -1,38 +1,30 @@
 package com.school.controller;
 
 import com.school.dto.StudentDTO;
-import com.school.dtoObject.Major;
+import com.school.dtoObject.Class;
 import com.school.dtoObject.Student;
 import com.school.exception.AdminException;
 import com.school.service.ClassService;
 import com.school.service.MajorService;
 import com.school.service.StudentService;
 import com.school.utils.DateFormatUtils;
-import com.school.utils.ExcelImportUtils;
 import com.school.utils.UploadImgUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.util.StringUtils;
-
 import javax.validation.Valid;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 
 @RequestMapping("/student")
@@ -52,8 +44,6 @@ public class StudentController {
     @GetMapping("/index")
     public String index(@RequestParam(value = "page",defaultValue = "0") Integer page,
                         @RequestParam(value = "classId",defaultValue = "") String classId,
-                        @RequestParam(value = "ainfoName",defaultValue = "") String ainfoName,
-                        @RequestParam(value = "majorName",defaultValue = "") String majorName,
                         @RequestParam(value = "top-search",defaultValue = "") String topSearch,
                         Model model) throws ParseException {
         PageRequest request = new PageRequest(page, 15);
@@ -67,8 +57,6 @@ public class StudentController {
         }
 
         model.addAttribute("studentList",studentPage);
-        model.addAttribute("ainfoName",ainfoName);
-        model.addAttribute("majorName",majorName);
         model.addAttribute("classId",classId);
         return "/student/index";
     }
@@ -85,19 +73,28 @@ public class StudentController {
 
     @PostMapping("/edit/save")
     public String save(@Valid StudentDTO studentForm,
+                       BindingResult bindingResult,
                        @RequestParam("teacherNewAvater") MultipartFile file,
                        Model model) throws Exception {
+        //TODO 使用ajax进行添加
         Student student = new Student();
         BeanUtils.copyProperties(studentForm,student);
-        student.setStudentBorndate(DateFormatUtils.dateConverter(studentForm.getStudentBorndate()));
+        student.setStudentBorndate(DateFormatUtils.dateConverter2(studentForm.getStudentBorndate()));
         if (!file.isEmpty()) {
             student.setStudentAvater(UploadImgUtils.uploadImg(file,"studentAvater"));
         }
-        Student result = studentService.create(student);
-        if(result==null){
-            model.addAttribute("msg", "添加失败");
-            model.addAttribute("url", "/student/index");
-            return "/common/error";
+        Class cla = classService.find(student.getClassId());
+        if(cla==null){
+            model.addAttribute("msg", "班级不存在");
+            model.addAttribute("url", "/student/edit");
+            return "common/error";
+        }try {
+            Student result = studentService.create(student);
+        }catch (AdminException e){
+            model.addAttribute("code","200001");
+            model.addAttribute("msg", "未知错误");
+            model.addAttribute("url", "/student/edit");
+            return "common/fail";
         }
         model.addAttribute("msg", "添加成功");
         model.addAttribute("url", "/student/index");

@@ -1,9 +1,9 @@
 package com.school.enums;
 
 public enum TeacherStatusEnum {
-    WORKING(0,"在职"),
-    RESIGNATION(1,"辞职"),
-    RETIRE(2,"退休");
+    WORKING(1,"在职"),
+    RESIGNATION(2,"辞职"),
+    RETIRE(3,"退休");
 
     private Integer code;
     private String message;

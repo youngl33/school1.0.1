@@ -37,28 +37,28 @@ public class NoticeDetailRepositoryTest {
     @Test
     public void findByNdtlTitleContaining() {
         PageRequest request = new PageRequest(0,10);
-        Page<NoticeDetail> noticeDetailPage = noticeDetailRepository.findByNdtlTitleContaining("誉校长",request);
+        Page<NoticeDetail> noticeDetailPage = noticeDetailRepository.findByNdtlTitleContainingAndNoticeBelong("誉校长","0",request);
         Assert.assertNotEquals(0,noticeDetailPage.getTotalElements());
     }
 
     @Test
     public void findByNtypeId(){
         PageRequest request = new PageRequest(0,10);
-        Page<NoticeDetail> noticeDetailPage = noticeDetailRepository.findByNtypeId(1,request);
+        Page<NoticeDetail> noticeDetailPage = noticeDetailRepository.findByNtypeIdAndNoticeBelong(1,"0",request);
         Assert.assertNotEquals(0,noticeDetailPage.getTotalElements());
     }
 
     @Test
     public void findByDtlStatus(){
         PageRequest request = new PageRequest(0,10);
-        Page<NoticeDetail> noticeDetailPage = noticeDetailRepository.findByNdtlStatus(1,request);
+        Page<NoticeDetail> noticeDetailPage = noticeDetailRepository.findByNdtlStatusAndNoticeBelong(1,"0",request);
         Assert.assertNotEquals(0,noticeDetailPage.getTotalElements());
     }
 
     @Test
     public void findByNdtlAuthor(){
         PageRequest request = new PageRequest(0,10);
-        Page<NoticeDetail> noticeDetailPage = noticeDetailRepository.findByNdtlAuthorContaining("党委",request);
+        Page<NoticeDetail> noticeDetailPage = noticeDetailRepository.findByNdtlAuthorContainingAndNoticeBelong("党委","0",request);
         Assert.assertNotEquals(0,noticeDetailPage.getTotalElements());
     }
 }

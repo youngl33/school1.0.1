@@ -2,6 +2,7 @@ package com.school.service.impl;
 
 import com.school.dtoObject.Class;
 import com.school.dtoObject.Student;
+import com.school.enums.ResultEnum;
 import com.school.enums.StudentEnum;
 import com.school.exception.AdminException;
 import com.school.repository.StudentRepository;
@@ -160,5 +161,15 @@ public class StudentServiceImpl implements StudentService {
             }
         }
 
+    }
+
+    @Override
+    public void delete(String studentId) {
+        try {
+            Student student = studentRepository.findById(studentId).orElse(null);
+            studentRepository.delete(student);
+        } catch (Exception e) {
+            throw new AdminException(ResultEnum.STUDENT_CANTOT_DELETE);
+        }
     }
 }

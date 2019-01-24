@@ -55,18 +55,18 @@ public class NoticeController {
         PageRequest request = new PageRequest(page, 6);
         Page<NoticeDetail> noticeDetails = null;
         if(StringUtils.isEmpty(search)){
-            noticeDetails = noticeDetailService.findByNdtlStatus(typeWeb, request);
+            noticeDetails = noticeDetailService.findByNdtlStatus(typeWeb,"0", request);
             List<NoticeDetail> noticeDetailList = noticeDetails.getContent();
         }else if(noticeDetails==null){
-            noticeDetails = noticeDetailService.findByNdtlAuthor(search,request);
+            noticeDetails = noticeDetailService.findByNdtlAuthor(search,"0",request);
         }
         if(noticeDetails.getTotalElements()==0){
             NoticeType noticeType = noticeTypeService.findByNtypeName(search);
             if(noticeType!=null)
-                noticeDetails = noticeDetailService.findByType(noticeType.getNtypeId(),request);
+                noticeDetails = noticeDetailService.findByType(noticeType.getNtypeId(),"0",request);
         }
         if(noticeDetails.getTotalElements()==0){
-            noticeDetails = noticeDetailService.findByNDtlTitle(search,request);
+            noticeDetails = noticeDetailService.findByNDtlTitle(search,"0",request);
         }
         List<NoticeType> noticeTypeList = noticeTypeService.findAll();
 
