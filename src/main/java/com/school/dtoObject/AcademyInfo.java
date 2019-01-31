@@ -7,12 +7,12 @@ import org.hibernate.annotations.DynamicUpdate;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.sql.Timestamp;
+import java.util.Date;
 
 
 @DynamicUpdate
 @Data
 @Entity
-
 public class AcademyInfo {
 
     @Id
@@ -21,10 +21,11 @@ public class AcademyInfo {
     private String ainfoName;
     /** 学院描述信息 */
     private String ainfoDescription;
-    /** 创建时间 */
-    private Timestamp createTime;
-    /** 更新时间 */
-    private Timestamp updateTime;
+    /** 创建时间     */
+    private Date createTime;
+
+    /** 更新信息时间     */
+    private Date updateTime;
 
 
 }

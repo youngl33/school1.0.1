@@ -56,7 +56,7 @@ public class TeacherServiceImplTest {
 
     @Test
     public void findAll(){
-        PageRequest request = new PageRequest(0,10);
+        PageRequest request = PageRequest.of(0,10);
         Page<Teacher> teacherPage=teacherService.findAll(request);
         log.info("【查找的数量】,Number={}",((Page) teacherPage).getTotalElements());
         Assert.assertNotEquals(0,teacherPage.getTotalElements());
@@ -64,21 +64,21 @@ public class TeacherServiceImplTest {
 
     @Test
     public void findByTeacherStatus(){
-        PageRequest request=new PageRequest(0,10);
+        PageRequest request=PageRequest.of(0,10);
         Page<Teacher> teacherPage=teacherService.findByTeacherStatus(request,"在职");
         Assert.assertNotEquals(0,teacherPage.getTotalElements());
     }
 
     @Test
     public void findByTeacherPosition(){
-        PageRequest request= new PageRequest(0,10);
+        PageRequest request= PageRequest.of(0,10);
         Page<Teacher> teacherPage=teacherService.findByTeacherPosition(request,"高校教授");
         Assert.assertNotEquals(0,teacherPage.getTotalElements());
     }
 
     @Test
     public void findByTeacherPositionAndTeacherStatus(){
-        PageRequest request=new PageRequest(0,10);
+        PageRequest request=PageRequest.of(0,10);
         Page<Teacher> teacherPage=teacherService.findByTeacherPositionAndTeacherStatus(request,"高校教授","在职");
         log.info("【数量】:Number={}",teacherPage.getTotalElements());
         Assert.assertNotEquals(0,teacherPage.getTotalElements());
@@ -86,13 +86,13 @@ public class TeacherServiceImplTest {
 
     @Test
     public void findByAinfoIdAndTeacherStatus(){
-        PageRequest request=new PageRequest(0,10);
+        PageRequest request=PageRequest.of(0,10);
         Page<Teacher> teacherPage=teacherService.findByAcademyIdAndTeacherStatus(request,"1040503","在职");
         Assert.assertNotEquals(0,teacherPage.getTotalElements());
     }
     @Test
     public  void findByAinfoIdAndTeacherPositionAndTeacherStatus(){
-        PageRequest request=new PageRequest(0,10);
+        PageRequest request=PageRequest.of(0,10);
         Page<Teacher> teacherPage=teacherService.findByAinfoIdAndTeacherPositionAndTeacherStatus(request,"1040503","高校讲师","在职");
         Assert.assertNotEquals(0,teacherPage.getTotalElements());
     }
@@ -111,14 +111,14 @@ public class TeacherServiceImplTest {
 
     @Test
     public void findByTeacherNameContainingAndTeacherStatus(){
-        PageRequest request=new PageRequest(0,10);
+        PageRequest request=PageRequest.of(0,10);
         Page<Teacher> teacherPage=teacherService.findByTeacherNameContainingAndTeacherStatus(request,"夏","在职");
         Assert.assertNotEquals(0,teacherPage.getTotalElements());
     }
 
     @Test
     public void findByTeacherNameAndTeacherStatusAndAinfoId(){
-        PageRequest request=new PageRequest(0,10);
+        PageRequest request=PageRequest.of(0,10);
         Page<Teacher> teacherPage=teacherService.findByTeacherNameContainingAndTeacherStatusAndAinfoId(request,"夏","在职","1040502");
         Assert.assertNotEquals(0,teacherPage.getTotalElements());
     }

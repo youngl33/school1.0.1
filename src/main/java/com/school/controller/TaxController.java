@@ -46,7 +46,7 @@ public class TaxController {
                        @RequestParam(value="subjectName",defaultValue = "") String subjectName,
                        @RequestParam(value = "teacherName",defaultValue = "")String teacherName,
                        Model model){
-        PageRequest request=new PageRequest(page,3);
+        PageRequest request=PageRequest.of(page,3);
         Page<Tax> taxPage=null;
         if(!StringUtils.isEmpty(subjectName)&&!StringUtils.isEmpty(teacherName)){
             taxPage=taxService.findByScheduleSemesterAndSubjectNameContainingAndTeacherName(request,scheduleSemester,subjectName,teacherName);

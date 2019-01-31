@@ -1,6 +1,7 @@
 package com.school.dtoObject;
 
 import lombok.Data;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -9,6 +10,7 @@ import java.util.Objects;
 
 @Data
 @Entity
+@DynamicUpdate
 public class Class {
 
     /** 班级号     */

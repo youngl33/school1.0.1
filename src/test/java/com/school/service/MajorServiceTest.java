@@ -55,7 +55,7 @@ public class MajorServiceTest {
 
     @Test
     public void findAll() {
-        PageRequest request = new PageRequest(0,10);
+        PageRequest request = PageRequest.of(0,10);
         Page<Major> majors = majorService.findAll(request);
         Assert.assertNotEquals(0,majors.getTotalElements());
     }

@@ -33,14 +33,14 @@ public class ClassCourseRepositoryTest {
 
     @Test
     public void findByScheduleSemester() {
-        PageRequest request=new PageRequest(0,10);
+        PageRequest request=PageRequest.of(0,10);
         Page<ClassCourse> classCoursePage=repository.findByScheduleSemester(request,"2018-2019学年第一学期");
         Assert.assertNotEquals(0,classCoursePage.getTotalElements());
     }
 
     @Test
     public void findByScheduleSemesterAndClassId() {
-        PageRequest request=new PageRequest(0,10);
+        PageRequest request=PageRequest.of(0,10);
         Page<ClassCourse> classCoursePage=repository.findByScheduleSemesterAndClassId(request,"2018-2019学年第一学期","1621807");
         Assert.assertNotEquals(0,classCoursePage.getTotalElements());
     }
@@ -54,14 +54,14 @@ public class ClassCourseRepositoryTest {
 
     @Test
     public void findByClassId(){
-        PageRequest request=new PageRequest(0,10);
+        PageRequest request=PageRequest.of(0,10);
         Page<ClassCourse> classCoursePage=repository.findByClassId(request,"1621807");
         Assert.assertNotEquals(0,classCoursePage.getTotalElements());
     }
 
     @Test
     public void findAll(){
-        PageRequest request=new PageRequest(0,10);
+        PageRequest request=PageRequest.of(0,10);
         Page<ClassCourse> classCoursePage=repository.findAll(request);
         Assert.assertNotEquals(0,classCoursePage.getTotalElements());
     }

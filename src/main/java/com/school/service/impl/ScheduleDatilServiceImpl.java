@@ -67,7 +67,7 @@ public class ScheduleDatilServiceImpl implements ScheduleDetailService {
     @Transactional
     @Override
     public void delete(String scheduleId) {
-        PageRequest pageRequest = new PageRequest(0,200);
+        PageRequest pageRequest = PageRequest.of(0,200);
         Page<ScheduleDetail> scheduleDetailPage = scheduleDetailRepository.findByScheduleId(pageRequest,scheduleId);
         List<ScheduleDetail> scheduleDetailList = scheduleDetailPage.getContent();
         for (ScheduleDetail scheduleDetails : scheduleDetailList) {

@@ -52,7 +52,7 @@ public class NoticeController {
                         @RequestParam(value = "top-search",defaultValue = "") String search,
                         Model model) throws ParseException {
 
-        PageRequest request = new PageRequest(page, 6);
+        PageRequest request = PageRequest.of(page, 6);
         Page<NoticeDetail> noticeDetails = null;
         if(StringUtils.isEmpty(search)){
             noticeDetails = noticeDetailService.findByNdtlStatus(typeWeb,"0", request);

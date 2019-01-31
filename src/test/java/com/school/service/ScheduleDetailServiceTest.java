@@ -25,7 +25,7 @@ public class ScheduleDetailServiceTest {
 
     @Test
     public void findByScheduleId() {
-        PageRequest request = new PageRequest(0,30);
+        PageRequest request = PageRequest.of(0,30);
         Page<ScheduleDetail> scheduleDetailPage = scheduleDetailService.findByScheduleId(request,"201802");
         Assert.assertNotEquals(0,scheduleDetailPage.getTotalElements());
     }

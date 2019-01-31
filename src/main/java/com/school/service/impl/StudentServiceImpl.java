@@ -3,7 +3,6 @@ package com.school.service.impl;
 import com.school.dtoObject.Class;
 import com.school.dtoObject.Student;
 import com.school.enums.ResultEnum;
-import com.school.enums.StudentEnum;
 import com.school.exception.AdminException;
 import com.school.repository.StudentRepository;
 import com.school.service.ClassService;
@@ -66,7 +65,7 @@ public class StudentServiceImpl implements StudentService {
         for(int i=0;i<wb.getNumberOfSheets();i++){
             Sheet sheet = wb.getSheetAt(i);
             List<Student> studentList = new ArrayList<Student>();
-            for(int r=1;r<sheet.getLastRowNum();r++){
+            for(int r=1;r<=sheet.getLastRowNum();r++){
                 Row row = sheet.getRow(r);
                 Student student = new Student();
                 if(row==null){

@@ -41,7 +41,7 @@ public class TeacherController {
                           Model model) throws ParseException {
 
         //通过状态显示老师信息
-        PageRequest request = new PageRequest(page, 16);
+        PageRequest request = PageRequest.of(page, 16);
         Page<Teacher> teacherPage=null;
 
         List<AcademyInfo> ainfo=academyInfoService.findAll();

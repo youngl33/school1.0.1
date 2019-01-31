@@ -1,10 +1,8 @@
 package com.school.dtoObject;
 
 import lombok.Data;
-
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.Objects;
 
 @Entity
 @Data
@@ -37,5 +35,4 @@ public class AcademyAdmin {
 
     /**更新时间*/
     private Timestamp updateTime;
-
 }

@@ -38,7 +38,7 @@ public class CourseRepositoryTest {
 
     @Test
     public void findByCcourseId(){
-        PageRequest request=new PageRequest(0,10);
+        PageRequest request=PageRequest.of(0,10);
         Page<Course> coursePage=repository.findByCcourseId(request,"162180701");
         Assert.assertNotEquals(0,coursePage.getTotalElements());
     }

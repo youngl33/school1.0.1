@@ -24,7 +24,7 @@ public class NoticeDetailServiceTest {
 
     @Test
     public void findByTitle() {
-        PageRequest request = new PageRequest(0,10);
+        PageRequest request = PageRequest.of(0,10);
         Page<NoticeDetail> noticeDetailPage = noticeDetailService.findByNDtlTitle("誉校长","0",request);
         Assert.assertNotEquals(0,noticeDetailPage.getTotalElements());
 
@@ -32,7 +32,7 @@ public class NoticeDetailServiceTest {
 
     @Test
     public void findByType() {
-        PageRequest request = new PageRequest(0,10);
+        PageRequest request = PageRequest.of(0,10);
         Page<NoticeDetail> noticeDetailPage = noticeDetailService.findByType(1,"0",request);
         Assert.assertNotEquals(0,noticeDetailPage.getTotalElements());
     }
@@ -60,14 +60,14 @@ public class NoticeDetailServiceTest {
 
     @Test
     public void findByDtlStatus(){
-        PageRequest request = new PageRequest(0,10);
+        PageRequest request = PageRequest.of(0,10);
         Page<NoticeDetail> noticeDetailPage = noticeDetailService.findByNdtlStatus(1,"0",request);
         Assert.assertNotEquals(0,noticeDetailPage.getTotalElements());
     }
 
     @Test
     public void findByNdtlAuthor(){
-        PageRequest request = new PageRequest(0,10);
+        PageRequest request = PageRequest.of(0,10);
         Page<NoticeDetail> noticeDetailPage = noticeDetailService.findByNdtlAuthor("党委","0",request);
         Assert.assertNotEquals(0,noticeDetailPage.getTotalElements());
     }

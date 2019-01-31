@@ -46,7 +46,7 @@ public class StudentController {
                         @RequestParam(value = "classId",defaultValue = "") String classId,
                         @RequestParam(value = "top-search",defaultValue = "") String topSearch,
                         Model model) throws ParseException {
-        PageRequest request = new PageRequest(page, 15);
+        PageRequest request = PageRequest.of(page, 15);
         Page<Student> studentPage = null;
         if(!StringUtils.isEmpty(topSearch)){
             studentPage = studentService.findByStudentNameContaining(request,topSearch);
@@ -73,16 +73,14 @@ public class StudentController {
 
     @PostMapping("/edit/save")
     public String save(@Valid StudentDTO studentForm,
-                       BindingResult bindingResult,
-                       @RequestParam("teacherNewAvater") MultipartFile file,
+                       @RequestParam("studentNewAvater") MultipartFile file,
                        Model model) throws Exception {
-        //TODO 使用ajax进行添加
         Student student = new Student();
+        if (!file.isEmpty()) {
+            studentForm.setStudentAvater(UploadImgUtils.uploadImg(file,"studentAvater"));
+        }
         BeanUtils.copyProperties(studentForm,student);
         student.setStudentBorndate(DateFormatUtils.dateConverter2(studentForm.getStudentBorndate()));
-        if (!file.isEmpty()) {
-            student.setStudentAvater(UploadImgUtils.uploadImg(file,"studentAvater"));
-        }
         Class cla = classService.find(student.getClassId());
         if(cla==null){
             model.addAttribute("msg", "班级不存在");
@@ -93,7 +91,7 @@ public class StudentController {
         }catch (AdminException e){
             model.addAttribute("code","200001");
             model.addAttribute("msg", "未知错误");
-            model.addAttribute("url", "/student/edit");
+            model.addAttribute("url", "/student/index");
             return "common/fail";
         }
         model.addAttribute("msg", "添加成功");

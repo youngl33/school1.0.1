@@ -5,6 +5,7 @@ import com.school.dtoObject.AcademyInfo;
 import com.school.service.AcademyAdminService;
 import com.school.service.AcademyInfoService;
 import com.school.utils.ImgSaveUtil;
+import com.school.utils.UploadImgUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -42,14 +43,10 @@ public class AcademyAdminController {
     @GetMapping("/edit")
     public String edit(@RequestParam(value = "aadmId",defaultValue = "") Integer aadmId,
                        Model model){
-
         List<AcademyInfo> academyInfoList=academyInfoService.findAll();
-
         AcademyAdmin academyAdmin=academyAdminService.findOne(aadmId);
-
         model.addAttribute("academyAdmin",academyAdmin);
         model.addAttribute("academyInfos",academyInfoList);
-
         return "/academyAdmin/edit";
     }
 
@@ -66,7 +63,7 @@ public class AcademyAdminController {
         AcademyAdmin result = academyAdminService.save(academyAdmin);
         if(result==null){
             model.addAttribute("msg","保存失败");
-            model.addAttribute("url","academyAdmin/list");
+            model.addAttribute("url","/academyAdmin/list");
             return "/common/error";
         }
         model.addAttribute("msg","保存成功");
@@ -88,7 +85,7 @@ public class AcademyAdminController {
         AcademyInfo academyInfo=academyInfoService.findOne(academyAdmin.getAinfoId());
         String path=academyAdmin.getAadmAvater();
         if(!file.isEmpty()){
-            path=ImgSaveUtil.saveImg(file);
+            path=UploadImgUtils.uploadImg(file,"adademyAdmin");
         }
         academyAdmin.setAadmAvater(path);
         academyAdmin.setAinfoName(academyInfo.getAinfoName());

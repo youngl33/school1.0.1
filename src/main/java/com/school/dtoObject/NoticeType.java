@@ -1,6 +1,7 @@
 package com.school.dtoObject;
 
 import lombok.Data;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,6 +11,7 @@ import java.util.Date;
 
 @Data
 @Entity
+@DynamicUpdate
 public class NoticeType {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)

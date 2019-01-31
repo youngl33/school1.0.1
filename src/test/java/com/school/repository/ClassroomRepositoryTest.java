@@ -36,7 +36,7 @@ public class ClassroomRepositoryTest {
 
     @Test
     public void findByClassroomLocationAndBuildingId(){
-        PageRequest request=new PageRequest(0,10);
+        PageRequest request=PageRequest.of(0,10);
         Page<Classroom> classroomPage=repository.findByClassroomLocationAndBuildingId(request,"广兰校区",31);
         log.info("【查找的数量】:Number={}",classroomPage.getTotalElements());
         Assert.assertNotEquals(0,classroomPage.getTotalElements());
@@ -44,7 +44,7 @@ public class ClassroomRepositoryTest {
 
     @Test
     public void findAll(){
-        PageRequest request=new PageRequest(0,10);
+        PageRequest request=PageRequest.of(0,10);
         Page<Classroom> classroomPage=repository.findAll(request);
         Assert.assertNotEquals(0,classroomPage.getTotalElements());
     }
@@ -57,14 +57,14 @@ public class ClassroomRepositoryTest {
 
     @Test
     public void findByClassroomLocationAndBuildingNameAndClassroomType(){
-        PageRequest request=new PageRequest(0,10);
+        PageRequest request=PageRequest.of(0,10);
         Page<Classroom> classroomPage=repository.findByClassroomLocationAndBuildingIdAndClassroomType(request,"广兰校区",31,"多媒体教室");
         Assert.assertNotEquals(0,classroomPage.getTotalElements());
     }
 
     @Test
     public void findByClassroomLocation(){
-        PageRequest request=new PageRequest(0,10);
+        PageRequest request=PageRequest.of(0,10);
         Page<Classroom> classroomPage=repository.findByClassroomLocation(request,"枫林校区");
         Assert.assertNotEquals(0,classroomPage.getTotalElements());
     }
@@ -77,28 +77,28 @@ public class ClassroomRepositoryTest {
 
     @Test
     public void findByClassroonType(){
-        PageRequest request=new PageRequest(0,10);
+        PageRequest request=PageRequest.of(0,10);
         Page<Classroom> classroomPage=repository.findByClassroomType(request,"多媒体教室");
         Assert.assertNotEquals(0,classroomPage.getTotalElements());
     }
 
     @Test
     public void findByClassroomLocationAndClassroomType(){
-        PageRequest request=new PageRequest(0,10);
+        PageRequest request=PageRequest.of(0,10);
         Page<Classroom> classroomPage=repository.findByClassroomLocationAndClassroomType(request,"广兰校区","多媒体教室");
         Assert.assertNotEquals(0,classroomPage.getTotalElements());
     }
 
     @Test
     public void findByBuildingId(){
-        PageRequest request=new PageRequest(0,10);
+        PageRequest request=PageRequest.of(0,10);
         Page<Classroom> classroomPage=repository.findByBuildingId(request,31);
         Assert.assertNotEquals(0,classroomPage.getTotalElements());
     }
 
     @Test
     public void findByBuildingIdAndClassroomType(){
-        PageRequest request=new PageRequest(0,10);
+        PageRequest request=PageRequest.of(0,10);
         Page<Classroom> classroomPage=repository.findByBuildingIdAndClassroomType(request,31,"多媒体教室");
         Assert.assertNotEquals(0,classroomPage.getTotalElements());
     }
