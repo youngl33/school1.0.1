@@ -8,7 +8,7 @@ import com.school.service.ClassService;
 import com.school.service.MajorService;
 import com.school.service.StudentService;
 import com.school.utils.DateFormatUtils;
-import com.school.utils.UploadImgUtils;
+import com.school.utils.UploadUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -77,7 +76,7 @@ public class StudentController {
                        Model model) throws Exception {
         Student student = new Student();
         if (!file.isEmpty()) {
-            studentForm.setStudentAvater(UploadImgUtils.uploadImg(file,"studentAvater"));
+            studentForm.setStudentAvater(UploadUtils.uploadImg(file,"studentAvater"));
         }
         BeanUtils.copyProperties(studentForm,student);
         student.setStudentBorndate(DateFormatUtils.dateConverter2(studentForm.getStudentBorndate()));

@@ -16,8 +16,11 @@ public class CourseResource {
     /** 课程表id主键   */
     private String courseId;
 
-    /** 1:ppt,2:word,3:视频   */
+    /** 0:ppt,1:word,2:视频,3:Pdf   */
     private Integer resAttribute;
+
+    /** 资源名称   */
+    private String resName;
 
     /** 资源地址   */
     private String resAddr;

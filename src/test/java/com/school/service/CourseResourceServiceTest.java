@@ -25,6 +25,7 @@ public class CourseResourceServiceTest {
         courseResource.setResId(KeyUtils.uniqueKey());
         courseResource.setCourseId("123123");
         courseResource.setResAttribute(1);
+        courseResource.setResName("测试");
         courseResource.setResAddr("123123");
         CourseResource result = courseResourceService.create(courseResource);
         Assert.assertNotNull(result);

@@ -10,7 +10,7 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 
 
-public class UploadImgUtils {
+public class UploadUtils {
 
     public static String uploadImg(MultipartFile file, String realPathLast) throws Exception{
         String fileName = file.getOriginalFilename();

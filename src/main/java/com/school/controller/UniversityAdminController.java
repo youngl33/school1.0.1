@@ -4,15 +4,13 @@ import com.school.dto.UAdminDTO;
 import com.school.dtoObject.UniversityAdmin;
 import com.school.exception.AdminException;
 import com.school.service.UniversityAdminSevice;
-import com.school.utils.ImgSaveUtil;
-import com.school.utils.UploadImgUtils;
+import com.school.utils.UploadUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.thymeleaf.util.StringUtils;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -55,7 +53,7 @@ public class UniversityAdminController {
         }
         BeanUtils.copyProperties(uAdminDTO,universityAdmin);
         if(!multipartFile.isEmpty()) {
-            universityAdmin.setUadmAvater(UploadImgUtils.uploadImg(multipartFile, "admin"));
+            universityAdmin.setUadmAvater(UploadUtils.uploadImg(multipartFile, "admin"));
         }
         UniversityAdmin result = universityAdminSevice.create(universityAdmin);
         if(result ==null){
