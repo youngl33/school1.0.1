@@ -50,7 +50,7 @@ public class StudentServiceTest {
 
     @Test
     public void findByStudentName() {
-        PageRequest request = new PageRequest(0,10);
+        PageRequest request = PageRequest.of(0,10);
         Page<Student> studentList = studentService.findByStudentNameContaining(request,"赖");
         Assert.assertNotEquals(0,studentList.getTotalElements());
     }
@@ -59,7 +59,7 @@ public class StudentServiceTest {
 
     @Test
     public void findByClassId(){
-        PageRequest request = new PageRequest(0,10);
+        PageRequest request = PageRequest.of(0,10);
         Page<Student> studentList = studentService.findByClassId(request,"1621807");
         Assert.assertNotEquals(0,studentList.getTotalElements());
     }

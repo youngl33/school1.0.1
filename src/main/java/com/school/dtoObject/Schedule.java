@@ -1,6 +1,7 @@
 package com.school.dtoObject;
 
 import lombok.Data;
+import org.hibernate.annotations.DynamicUpdate;
 
 
 import javax.persistence.Entity;
@@ -9,6 +10,7 @@ import java.util.Date;
 
 @Data
 @Entity
+@DynamicUpdate
 public class Schedule {
 
     @Id

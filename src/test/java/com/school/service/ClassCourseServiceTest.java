@@ -43,20 +43,20 @@ public class ClassCourseServiceTest {
 
     @Test
     public void findByScheduleSemester() {
-        PageRequest request=new PageRequest(0,10);
+        PageRequest request=PageRequest.of(0,10);
         Page<ClassCourse> classCoursePage=classCourseService.findByScheduleSemester(request,"2018-2019学年第一学期");
         Assert.assertNotEquals(0,classCoursePage.getTotalElements());
     }
 
     @Test
     public void findByScheduleSemesterAndClassId() {
-        PageRequest request=new PageRequest(0,10);
+        PageRequest request=PageRequest.of(0,10);
         Page<ClassCourse> classCoursePage=classCourseService.findByScheduleSemesterAndClassId(request,"2018-2019学年第一学期","1621808");
     }
 
     @Test
     public void findByClassId(){
-        PageRequest request=new PageRequest(0,10);
+        PageRequest request=PageRequest.of(0,10);
         Page<ClassCourse> classCoursePage=classCourseService.findByClassId(request,"1621807");
         Assert.assertNotEquals(0,classCoursePage.getTotalElements());
     }

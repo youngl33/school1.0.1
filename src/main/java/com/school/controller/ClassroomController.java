@@ -40,7 +40,7 @@ public class ClassroomController {
         List<Building> buildingListFind=buildingService.findAll();
         Building buildingSearch=buildingService.findOne(buildingId);
         List<ClassroomDTO> classroomDTOList=new ArrayList<ClassroomDTO>();
-        PageRequest request=new PageRequest(page,10);
+        PageRequest request=PageRequest.of(page,10);
         Page<Classroom> classroomPage = classroomService.search(request,classroomLocation,buildingId,classroomType);
         List<Classroom> classroomList=classroomPage.getContent();
         for(Classroom classroom:classroomList){

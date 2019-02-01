@@ -38,27 +38,27 @@ public class TaxRepositoryTest {
 
     @Test
     public void findByScheduleSemester(){
-        PageRequest request=new PageRequest(0,10);
+        PageRequest request=PageRequest.of(0,10);
         Page<Tax> taxPage=repository.findByScheduleSemester(request,"2018-2019学年第一学期");
         Assert.assertNotEquals(0,taxPage.getTotalElements());
     }
 
     @Test
     public void findByScheduleSemesterAndTeacherName(){
-        PageRequest request=new PageRequest(0,10);
+        PageRequest request=PageRequest.of(0,10);
         Page<Tax> taxPage=repository.findByScheduleSemesterAndTeacherName(request,"2018-2019学年第一学期","夏桂兰");
         Assert.assertNotEquals(0,taxPage.getTotalElements());
     }
 
     @Test
     public void findByScheduleSemesterAndSubjectName(){
-        PageRequest request=new PageRequest(0,10);
+        PageRequest request=PageRequest.of(0,10);
         Page<Tax> taxPage=repository.findByScheduleSemesterAndSubjectNameContaining(request,"2018-2019学年第一学期","计算机组成原理");
     }
 
     @Test
     public void findByScheduleSemesterAndSubjectNameAndTeacherName(){
-        PageRequest request=new PageRequest(0,10);
+        PageRequest request=PageRequest.of(0,10);
         Page<Tax> taxPage=repository.findByScheduleSemesterAndSubjectNameContainingAndTeacherName(request,"2018-2019学年第一学期","大学英语I","夏桂兰");
         Assert.assertNotEquals(0,taxPage.getTotalElements());
     }

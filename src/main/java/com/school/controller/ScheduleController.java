@@ -40,7 +40,7 @@ public class ScheduleController {
                        @RequestParam(value = "scheduleId",defaultValue = "")String scheduleId,
                        Model model){
         Schedule schedule = scheduleService.findOne(scheduleId);
-        PageRequest request = new PageRequest(page,15);
+        PageRequest request = PageRequest.of(page,15);
         Page<ScheduleDetail> scheduleDetails = scheduleDetailService.findByScheduleId(request,scheduleId);
         model.addAttribute("scheduleSemester",schedule.getScheduleSemester());
         model.addAttribute("scheduleDetails",scheduleDetails);

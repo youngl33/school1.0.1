@@ -4,4 +4,6 @@ import com.school.dtoObject.UniversityAdmin;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UniversityAdminRepository extends JpaRepository<UniversityAdmin,Integer> {
+
+    UniversityAdmin findByUadmUsername(String uadmName);
 }

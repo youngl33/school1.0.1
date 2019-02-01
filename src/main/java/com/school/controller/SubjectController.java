@@ -47,7 +47,7 @@ public class SubjectController {
         AcademyInfo ainfoSearch=academyInfoService.findOne(ainfoId);
         //2.检查是否进行搜索
         List<SubjectDTO> subjectDTOList=new ArrayList<SubjectDTO>();
-        PageRequest request=new PageRequest(page,3);
+        PageRequest request=PageRequest.of(page,3);
         Page<Subject> subjectPage = null;
 
         if(!StringUtils.isEmpty(ainfoId)&&StringUtils.isEmpty(subjectName)) {

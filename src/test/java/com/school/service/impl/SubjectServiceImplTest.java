@@ -34,7 +34,7 @@ public class SubjectServiceImplTest {
 
     @Test
     public void findBySubjectNameContainning() {
-        PageRequest request=new PageRequest(0,10);
+        PageRequest request=PageRequest.of(0,10);
         Page<Subject> subjectPage=subjectService.findBySubjectNameContainning(request,"大学");
         log.info("【找到的数量】：Number={}",subjectPage.getTotalElements());
         Assert.assertNotEquals(0,subjectPage.getTotalElements());
@@ -43,21 +43,21 @@ public class SubjectServiceImplTest {
 
     @Test
     public void findByAinfoId() {
-        PageRequest request=new PageRequest(0,10);
+        PageRequest request=PageRequest.of(0,10);
         Page<Subject> subjectPage=subjectService.findByAinfoId(request,"1040501");
         Assert.assertNotEquals(0,subjectPage.getTotalElements());
     }
 
     @Test
     public void findAll() {
-        PageRequest request=new PageRequest(0,10);
+        PageRequest request=PageRequest.of(0,10);
         Page<Subject> result=subjectService.findAll(request);
         Assert.assertNotEquals(0,result.getTotalElements());
     }
 
     @Test
     public void findByAinfoNameAndSubjectName() {
-        PageRequest request=new PageRequest(0,10);
+        PageRequest request=PageRequest.of(0,10);
         Page<Subject> subjectPage=subjectService.findByAinfoIdAndSubjectNameContaining(request,"1040501","操作");
         Assert.assertNotEquals(0,subjectPage.getTotalElements());
     }

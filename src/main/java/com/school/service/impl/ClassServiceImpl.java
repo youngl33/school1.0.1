@@ -65,7 +65,7 @@ public class ClassServiceImpl implements ClassService {
         if(cla==null){
             throw new AdminException(ResultEnum.CLASS_NOE_EXIST);
         }
-        Page<Student> studentList = studentService.findByClassId(new PageRequest(0,100),cla.getClassId());
+        Page<Student> studentList = studentService.findByClassId(PageRequest.of(0,100),cla.getClassId());
         for(Student student:studentList){
             studentService.delete(student.getStudentId());
         }
@@ -77,7 +77,7 @@ public class ClassServiceImpl implements ClassService {
         Workbook wb = ExcelImportUtils.importFile(fileName,file);
         Sheet sheet = wb.getSheetAt(0);
         List<Class> classList = new ArrayList<Class>();
-        for(int r=1;r<sheet.getLastRowNum();r++){
+        for(int r=1;r<=sheet.getLastRowNum();r++){
             Row row = sheet.getRow(r);
             Class cla = new Class();
             if(row==null){

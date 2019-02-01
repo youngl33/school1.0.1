@@ -1,6 +1,7 @@
 package com.school.dtoObject;
 
 import lombok.Data;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -8,6 +9,7 @@ import java.util.Objects;
 
 @Entity
 @Data
+@DynamicUpdate
 public class ClassCourse {
 
     @Id

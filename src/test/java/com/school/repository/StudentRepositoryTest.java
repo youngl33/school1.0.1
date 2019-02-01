@@ -48,21 +48,21 @@ public class StudentRepositoryTest {
 
     @Test
     public void findByClassId(){
-        PageRequest request = new PageRequest(0,10);
+        PageRequest request = PageRequest.of(0,10);
         Page<Student> studentPage = repository.findByClassId(request,"1621807");
         Assert.assertNotEquals(0,studentPage.getTotalElements());
     }
 
     @Test
     public void findByStudentName(){
-        PageRequest request = new PageRequest(0,10);
+        PageRequest request = PageRequest.of(0,10);
         Page<Student> studentPage = repository.findByStudentNameContaining(request,"赖");
         Assert.assertNotEquals(0,studentPage.getTotalElements());
     }
 
     @Test
     public void findByAll(){
-        PageRequest request = new PageRequest(0,10);
+        PageRequest request = PageRequest.of(0,10);
         Page<Student> studentList = repository.findBy(request);
         Assert.assertNotEquals(0,studentList.getTotalElements());
     }

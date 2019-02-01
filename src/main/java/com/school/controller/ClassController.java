@@ -33,7 +33,7 @@ public class ClassController {
     @GetMapping("/index")
     public String index(@RequestParam(value = "page",defaultValue = "0") Integer page,
                         Model model){
-        PageRequest request = new PageRequest(page, 15);
+        PageRequest request = PageRequest.of(page, 15);
         Page<Class> classPage =null;
         classPage = classService.findAll(request);
         model.addAttribute("classes",classPage);
@@ -117,7 +117,7 @@ public class ClassController {
         try {
             classService.importClasses(fileName,file);
         }catch (AdminException e){
-            model.addAttribute("url","/class/index");
+            model.addAttribute("url","/class/import");
             model.addAttribute("msg",e.getMessage());
             return "/common/error";
         }

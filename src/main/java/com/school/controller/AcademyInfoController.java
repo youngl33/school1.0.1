@@ -48,7 +48,7 @@ public class AcademyInfoController {
         log.info("【传入Academy对象】，result={}",academyInfo);
         academyInfoService.save(academyInfo);
         model.addAttribute("msg","保存成功");
-        model.addAttribute("url","/academy/list");
+        model.addAttribute("url","/academy/index");
         return "/common/success";
     }
 

@@ -33,7 +33,7 @@ public class ClassCourseController {
                        @RequestParam(value="classId",defaultValue = "")String classId,
                        Model model){
         List<Schedule> scheduleList=scheduleService.findAll();
-        PageRequest request=new PageRequest(page,10);
+        PageRequest request=PageRequest.of(page,10);
         Page<ClassCourse> classCoursePage=null;
         if(!StringUtils.isEmpty(scheduleSemester)&&!StringUtils.isEmpty(classId)){
             classCoursePage=classCourseService.findByScheduleSemesterAndClassId(request,scheduleSemester,classId);
