@@ -9,6 +9,12 @@ public class CourseDetailDTO {
 
     private String coursedtlId;
 
+    /**课程开始周*/
+    private Integer courseBegin;
+
+    /**节课周*/
+    private Integer courseEnd;
+
     /**教室Id*/
     private Integer classroomId;
 

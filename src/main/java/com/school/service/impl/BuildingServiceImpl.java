@@ -25,14 +25,18 @@ public class BuildingServiceImpl implements BuildingService {
     }
 
     @Override
-    /**保存教学楼信息*/
     public Building save(Building building){
         return repository.save(building);
     }
 
     @Override
-    /**通过教学楼名查找教学楼信息*/
     public Building findByBuildingName(String buildingName){
         return repository.findByBuildingName(buildingName);
     }
+
+    @Override
+    public List<Building> findByLocationId(Integer locationId) {
+        return repository.findByLocationId(locationId);
+    }
+
 }

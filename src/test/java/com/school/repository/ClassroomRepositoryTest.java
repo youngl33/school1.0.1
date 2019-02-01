@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 
 @RunWith(SpringRunner.class)
@@ -101,6 +102,12 @@ public class ClassroomRepositoryTest {
         PageRequest request=PageRequest.of(0,10);
         Page<Classroom> classroomPage=repository.findByBuildingIdAndClassroomType(request,31,"多媒体教室");
         Assert.assertNotEquals(0,classroomPage.getTotalElements());
+    }
+
+    @Test
+    public void findByBuildingId1(){
+        List<Classroom> classroomList=repository.findByBuildingId(31);
+        Assert.assertNotEquals(0,classroomList.size());
     }
 
 }

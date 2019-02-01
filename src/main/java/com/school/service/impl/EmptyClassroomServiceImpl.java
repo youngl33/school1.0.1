@@ -29,9 +29,10 @@ public class EmptyClassroomServiceImpl implements EmptyClassroomService {
     private CourseDetailService courseDetailService;
 
     @Override
-    public List<Classroom> findEmptyClassroom(Integer courseBegin,Integer courseEnd,Integer coursedtlDay,Integer coursedtlSequence) {
+    public List<Classroom> findEmptyClassroom(Integer buildingId,Integer courseBegin,
+                                              Integer courseEnd,Integer coursedtlDay,Integer coursedtlSequence) {
 
-        List<Classroom> classroomList=classroomService.findAllList();
+        List<Classroom> classroomList=classroomService.findByBuildingId(buildingId);
         List<Classroom> classroomList1 = new ArrayList<Classroom>();
         List<Classroom> classroomList2 = new ArrayList<Classroom>();
         classroomList1.addAll(classroomList);

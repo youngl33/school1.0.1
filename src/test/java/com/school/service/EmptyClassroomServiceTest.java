@@ -22,11 +22,5 @@ public class EmptyClassroomServiceTest {
     @Autowired
     private EmptyClassroomService emptyClassroomService;
 
-    @Test
-    public void findEmptyClassroom() {
-        List<Classroom> result=emptyClassroomService.findEmptyClassroom(3,15,4,2);
-        for(Classroom classroom:result){
-            log.info("result={}",classroom);
-        }
-    }
+
 }

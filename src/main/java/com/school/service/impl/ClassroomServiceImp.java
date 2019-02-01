@@ -101,4 +101,9 @@ public class ClassroomServiceImp implements ClassroomService {
         }
         return classroomPage;
     }
+
+    @Override
+    public List<Classroom> findByBuildingId(Integer buildingId) {
+        return  repository.findByBuildingId(buildingId);
+    }
 }

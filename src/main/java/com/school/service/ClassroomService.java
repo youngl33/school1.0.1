@@ -8,6 +8,9 @@ import java.util.List;
 
 public interface ClassroomService {
 
+    /**通过教学楼查找教室*/
+    List<Classroom> findByBuildingId(Integer buildingId);
+
     /**查找某个教室的信息*/
     Classroom findOne(Integer classroomId);
 
@@ -41,7 +44,7 @@ public interface ClassroomService {
     /**通过教学楼Id查找教室*/
     Page<Classroom> findByBuildingId(Pageable pageable,Integer buildingId);
 
-    /**通过教学楼和教师类型查找教师*/
+    /**通过教学楼和教师类型查找教室*/
     Page<Classroom> findByBuildingIdAndClassroomType(Pageable pageable,Integer buildingId,String classroomType);
 
     /**封装了一个查找功能*/
