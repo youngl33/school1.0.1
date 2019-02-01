@@ -9,6 +9,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.util.StringUtils;
 
+import java.util.List;
+
 @Service
 public class ClassroomServiceImp implements ClassroomService {
 
@@ -68,6 +70,11 @@ public class ClassroomServiceImp implements ClassroomService {
     @Override
     public Page<Classroom> findByBuildingIdAndClassroomType(Pageable pageable, Integer buildingId, String classroomType) {
         return repository.findByBuildingIdAndClassroomType(pageable,buildingId,classroomType);
+    }
+
+    @Override
+    public List<Classroom> findAllList() {
+        return repository.findAll();
     }
 
     @Override

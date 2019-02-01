@@ -38,7 +38,7 @@
                     <div class="dropdown profile-element"> <span>
                                 <img alt="image" class="img-circle" width="55px" height="57px" src="img/536d8973e432e325.jpg!200x200.jpg" />
                             </span>
-                        <a data-toggle="dropdown" class="dropdown-toggle" href="index.html#">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="profile.html#">
                                 <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">管理员</strong>
                                     </span> <span class="text-muted text-xs block">操作 <b class="caret"></b></span>
                                 </span> </a>
@@ -55,32 +55,12 @@
                     </div>
                 </li>
                 <li class="active">
-                    <a href="index.html"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboards</span>
+                    <a href="edit.html"><i class="fa fa-th-large"></i> <span class="nav-label">课程管理</span>
                         <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li class="active"><a href="index.html">教师管理</a></li>
-                        <li><a href="#">Dashboard v.2</a></li>
-                        <li><a href="#">Dashboard v.3</a></li>
-                        <li><a href="#">Dashboard v.4</a></li>
-                        <li><a href="#">Dashboard v.5 </a></li>
+                        <li><a href="/course/find">课程信息</a></li>
+                        <li><a href="/course/add">添加单个课程</a></li>
                     </ul>
-                </li>
-                <li class="active">
-                    <a href="index.html"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboards</span>
-                        <span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
-                        <li class="active"><a href="index.html">教师管理</a></li>
-                        <li><a href="#">Dashboard v.2</a></li>
-                        <li><a href="#">Dashboard v.3</a></li>
-                        <li><a href="#">Dashboard v.4</a></li>
-                        <li><a href="#">Dashboard v.5 </a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#"><i class="fa fa-diamond"></i> <span class="nav-label">Layouts</span></a>
-                </li>
-                <li class="special_link">
-                    <a href="#"><i class="fa fa-database"></i> <span class="nav-label">Package</span></a>
                 </li>
             </ul>
 
@@ -88,12 +68,11 @@
     </nav>
 
     <div id="page-wrapper" class="gray-bg dashbard-1">
-
         <!-- head -->
         <div class="row border-bottom">
             <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
                 <div class="navbar-header">
-                    <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="index.html#"><i class="fa fa-bars"></i>
+                    <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="profile.html#"><i class="fa fa-bars"></i>
                     </a>
                     <form role="search" class="navbar-form-custom" action="search_results.html">
                         <div class="form-group">
@@ -107,13 +86,13 @@
                         <span class="m-r-sm text-muted welcome-message">Welcome to INSPINIA+ Admin Theme.</span>
                     </li>
                     <li class="dropdown">
-                        <a class="dropdown-toggle count-info" data-toggle="dropdown" href="index.html#">
+                        <a class="dropdown-toggle count-info" data-toggle="dropdown" href="profile.html#">
                             <i class="fa fa-envelope"></i> <span class="label label-warning">16</span>
                         </a>
                         <ul class="dropdown-menu dropdown-messages">
                             <li>
                                 <div class="dropdown-messages-box">
-                                    <a href="profile.html" class="pull-left">
+                                    <a href="index.html" class="pull-left">
                                         <img alt="image" class="img-circle" src="img/a7.jpg">
                                     </a>
                                     <div class="media-body">
@@ -127,7 +106,7 @@
                         </ul>
                     </li>
                     <li class="dropdown">
-                        <a class="dropdown-toggle count-info" data-toggle="dropdown" href="index.html#">
+                        <a class="dropdown-toggle count-info" data-toggle="dropdown" href="profile.html#">
                             <i class="fa fa-bell"></i> <span class="label label-primary">8</span>
                         </a>
                         <ul class="dropdown-menu dropdown-alerts">
@@ -158,16 +137,19 @@
         <!-- catelog -->
         <div class="row wrapper border-bottom white-bg page-heading">
             <div class="col-lg-10">
-                <h2>Chat view</h2>
+                <h2>课程管理</h2>
                 <ol class="breadcrumb">
                     <li>
-                        <a href="index.html">Home</a>
+                        <a href="edit.html">主页</a>
                     </li>
                     <li>
-                        <a>Miscellaneous</a>
+                        <a>课程管理</a>
+                    </li>
+                    <li>
+                        <a>课程信息</a>
                     </li>
                     <li class="active">
-                        <strong>Chat view</strong>
+                        <strong>修改课程信息</strong>
                     </li>
                 </ol>
             </div>
@@ -175,79 +157,99 @@
 
             </div>
         </div>
-        <!-- search   -->
 
 
         <!-- content  -->
         <div class="content white-bg" style="padding:40px 100px;">
-            <form class="form-horizontal" action="/tax/edit/save" method="post" onsubmit="return doSubmit()">
+            <form class="form-horizontal" action="/course/edit/save" method="post" onsubmit="return doSubmit()">
                 <div class="form-group">
                     <label class="col-sm-3 control-label">Id</label>
                     <div class="col-sm-4">
-                        <input name="taxId" id="taxId" th:value="${tax?.taxId}"  type="text" class="form-control" readonly>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">科目名</label>
-                    <div class="col-sm-4">
-                        <input name="subjectName" id="subjectName" th:value="${tax?.subjectName}"  type="text" class="form-control" readonly>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">授课教师Id</label>
-                    <div class="col-sm-4">
-                        <input name="teacherId" id="teacherId" th:value="${tax?.teacherId}"  type="text" class="form-control" >
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">选课人数</label>
-                    <div class="col-sm-4">
-                        <input name="availableNum" id="availableNum" th:value="${tax?.availableNum}"  type="text" class="form-control" >
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">学时</label>
-                    <div class="col-sm-4">
-                        <input name="taxTime" id="taxTime" th:value="${tax?.taxTime}"  type="text" class="form-control" >
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">学分</label>
-                    <div class="col-sm-4">
-                        <input name="taxScore" id="taxScore" th:value="${tax?.taxScore}"  type="text" class="form-control" >
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">上课周</label>
-                    <div class="col-sm-4">
-                        <input name="taxWeek" id="taxWeek" th:value="${tax?.taxWeek}"  type="text" class="form-control" >
+                        <input name="courseId" id="courseId" th:value="${course?.courseId}"  type="text" class="form-control" readonly>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">学年</label>
                     <div class="col-sm-4">
-                        <select class="form-control" name="scheduleSemester" id="scheduleSemester">
-                                <option th:value="${tax?.scheduleSemester}" th:text="${tax?.scheduleSemester}"></option>
-                                <option th:each="schedule:${schedule}" th:value="${schedule.scheduleSemester}" th:text="${schedule.scheduleSemester}" ></option>
-                        </select>
+                        <input name="scheduleSemester" id="scheduleSemester" th:value="${course?.scheduleSemester}"  type="text" class="form-control" readonly>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">科目Id</label>
+                    <div class="col-sm-4">
+                        <input name="subjectId" id="subjectId" th:value="${course?.subjectId}"  type="text" class="form-control" readonly>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">科目名</label>
+                    <div class="col-sm-4">
+                        <input name="subjectName" id="subjectName" th:value="${course?.subjectName}"  type="text" class="form-control" readonly>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">授课教师Id</label>
+                    <div class="col-sm-4">
+                        <input name="teacherId" id="teacherId" th:value="${course?.teacherId}"  type="text" class="form-control" readonly>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">授课教师名</label>
+                    <div class="col-sm-4">
+                        <input name="teacherName" id="teacherName" th:value="${course?.teacherName}"  type="text" class="form-control" readonly>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">选课人数</label>
+                    <div class="col-sm-4">
+                        <input name="courseNum" id="courseNum" th:value="${course?.courseNum}"  type="text" class="form-control" readonly>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">可选人数</label>
+                    <div class="col-sm-4">
+                        <input name="courseTotalnum" id="courseTotalnum" th:value="${course?.courseTotalnum}"  type="text" class="form-control" >
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">学时</label>
+                    <div class="col-sm-4">
+                        <input name="courseTime" id="courseTime" th:value="${course?.courseTime}"  type="text" class="form-control" >
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">学分</label>
+                    <div class="col-sm-4">
+                        <input name="courseScore" id="courseScore" th:value="${course?.courseScore}"  type="text" class="form-control" >
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">起始周</label>
+                    <div class="col-sm-4">
+                        <input name="courseBegin" id="courseBegin" th:value="${course?.courseBegin}"  type="text" class="form-control" >
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">结课周</label>
+                    <div class="col-sm-4">
+                        <input name="courseEnd" id="courseEnd" th:value="${course?.courseEnd}"  type="text" class="form-control" >
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">创建时间</label>
                     <div class="col-sm-4">
-                        <input class="form-control" type="text" th:value="${tax?.createTime}"  placeholder="Disabled input here..." disabled>
+                        <input class="form-control" type="text" th:value="${course?.createTime}"  placeholder="Disabled input here..." disabled>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">更新时间</label>
                     <div class="col-sm-4">
-                        <input class="form-control" type="text" th:value="${tax?.updateTime}"  placeholder="Disabled input here..." disabled>
+                        <input class="form-control" type="text" th:value="${course?.updateTime}"  placeholder="Disabled input here..." disabled>
                     </div>
                 </div>
                 <div class="form-group" style="margin-top:20px;">
                     <div class="col-sm-offset-3 col-sm-10">
                         <button type="submit" class="btn btn-success">提交</button>
-                        <a href="/tax/find" class="btn btn-danger" style="margin-left:30px;">返回</a>
+                        <a href="/course/find" class="btn btn-danger" style="margin-left:30px;">返回</a>
                     </div>
                 </div>
             </form>
@@ -335,19 +337,22 @@
 <script src="../js/plugins/jquery-ui/jquery-ui.min.js"></script>
 <script>
     function doSubmit(){
-        if(document.getElementById("teacherId").value!=""&&document.getElementById("taxTime").value!=""
-            &&document.getElementById("taxScore").value!=""&&document.getElementById("taxWeek").value!="")
+        if(document.getElementById("courseTotalnum").value!=""&&document.getElementById("courseTime").value!=""
+            &&document.getElementById("courseScore").value!=""&&document.getElementById("courseBegin").value!=""
+            &&document.getElementById("courseEnd").value!="")
         {
             return true;
         }else {
-            if(document.getElementById("teacherId").value=="")
-                alert("请输入授课教师Id！");
-            if(document.getElementById("taxTime").value=="")
+            if(document.getElementById("courseTotalnum").value=="")
+                alert("请输入可选人数！");
+            if(document.getElementById("courseTime").value=="")
                 alert("请输入课程学时！");
-            if(document.getElementById("taxScore").value=="")
+            if(document.getElementById("courseScore").value=="")
                 alert("请输入课程学分！");
-            if(document.getElementById("taxWeek").value=="")
-                alert("请输入上课周！");
+            if(document.getElementById("courseBegin").value=="")
+                alert("请输入起始周！");
+            if(document.getElementById("courseEnd").value=="")
+                alert("请输入结课周！");
             return false;
         }
     };

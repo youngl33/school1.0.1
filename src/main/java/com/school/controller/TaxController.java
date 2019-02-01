@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.util.StringUtils;
 
 import javax.validation.Valid;
@@ -28,7 +29,7 @@ import java.util.List;
 @RequestMapping("/tax")
 @Controller
 public class TaxController {
-    @Autowired
+/*    @Autowired
     private TaxService taxService;
 
     @Autowired
@@ -131,5 +132,26 @@ public class TaxController {
         model.addAttribute("msg","删除成功");
         return "/common/success";
     }
+
+    @GetMapping("/import")
+    public String importFile(){
+        return "/tax/import";
+    }
+
+    @PostMapping("/import/save")
+    public String importSave(MultipartFile file, Model model) throws Exception {
+
+        String fileName= file.getOriginalFilename();
+        try {
+            taxService.importTax(fileName,file);
+        }catch (AdminException e){
+            model.addAttribute("url","/tax/find");
+            model.addAttribute("msg",e.getMessage());
+            return "/common/error";
+        }
+        model.addAttribute("url","/tax/find");
+        model.addAttribute("msg","导入成功");
+        return "/common/success";
+    }*/
 
 }

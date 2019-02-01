@@ -3,6 +3,7 @@ package com.school.exception;
 import com.school.enums.ResultEnum;
 import com.school.enums.ScheduleEnum;
 import com.school.enums.StudentEnum;
+import com.school.enums.TaxEnum;
 
 public class AdminException extends RuntimeException {
 
@@ -23,8 +24,14 @@ public class AdminException extends RuntimeException {
         this.code=studentEnum.getCode();
     }
 
+    public AdminException(TaxEnum taxEnum){
+        super(taxEnum.getMessage());
+        this.code=taxEnum.getCode();
+    }
+
     public AdminException(Integer code,String message){
         super(message);
         this.code = code;
     }
+
 }

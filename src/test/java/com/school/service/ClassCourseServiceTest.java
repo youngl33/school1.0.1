@@ -1,3 +1,4 @@
+/*
 package com.school.service;
 
 import com.school.dtoObject.ClassCourse;
@@ -59,4 +60,4 @@ public class ClassCourseServiceTest {
         Page<ClassCourse> classCoursePage=classCourseService.findByClassId(request,"1621807");
         Assert.assertNotEquals(0,classCoursePage.getTotalElements());
     }
-}
+}*/

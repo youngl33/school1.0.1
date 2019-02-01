@@ -13,6 +13,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.List;
+
 @Slf4j
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -100,6 +102,12 @@ public class ClassroomServiceImpTest {
         PageRequest request=new PageRequest(0,10);
         Page<Classroom> classroomPage=classroomService.findByBuildingIdAndClassroomType(request,31,"多媒体教室");
         Assert.assertNotEquals(0,classroomPage.getTotalElements());
+    }
+
+    @Test
+    public void findAllList(){
+        List<Classroom> classroomList=classroomService.findAllList();
+        Assert.assertNotEquals(0,classroomList.size());
     }
 
 

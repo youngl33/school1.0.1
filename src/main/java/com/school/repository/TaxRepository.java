@@ -9,13 +9,15 @@ import java.util.List;
 
 public interface TaxRepository extends JpaRepository<Tax,String> {
 
-    Page<Tax> findByScheduleSemester(Pageable pageable, String scheduleSemester);
+
+
+  /*  Page<Tax> findByScheduleSemester(Pageable pageable, String scheduleSemester);
 
     Page<Tax> findByScheduleSemesterAndTeacherName(Pageable pageable,String scheduleSemester, String teacherName);
 
     Page<Tax> findByScheduleSemesterAndSubjectNameContaining(Pageable pageable,String scheduleSemester,String subjectName);
 
     Page<Tax> findByScheduleSemesterAndSubjectNameContainingAndTeacherName(Pageable pageable,String scheduleSemester,String subjectName,String teacherName);
-
+*/
 
 }

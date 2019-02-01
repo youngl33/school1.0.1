@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ClassCourseServiceImpl implements ClassCourseService {
-
+/*
     @Autowired
     private ClassCourseRepository repository;
 
@@ -47,5 +47,5 @@ public class ClassCourseServiceImpl implements ClassCourseService {
     @Override
     public Page<ClassCourse> findAll(Pageable pageable) {
         return repository.findAll(pageable);
-    }
+    }*/
 }

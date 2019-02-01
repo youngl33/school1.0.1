@@ -12,12 +12,12 @@ public class ClassCourse {
 
     @Id
     private String ccourseId;
-    
+
+    /**课程Id*/
+    private String taxId;
+
     /**班级Id*/
     private String classId;
-    
-    /**学年信息*/
-    private String scheduleSemester;
     
     /**创建时间*/
     private Date createTime;

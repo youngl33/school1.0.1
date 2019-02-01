@@ -4,10 +4,15 @@ import com.school.dtoObject.Classroom;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+
 public interface ClassroomService {
 
     /**查找某个教室的信息*/
     Classroom findOne(Integer classroomId);
+
+    /**查找所有空教室信息*/
+    List<Classroom> findAllList();
 
     /**查找所有教室信息*/
     Page<Classroom> findAll(Pageable pageable);

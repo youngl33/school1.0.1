@@ -2,7 +2,11 @@ package com.school.dtoObject;
 
 import lombok.Data;
 
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Objects;
@@ -12,29 +16,34 @@ import java.util.Objects;
 public class Course {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int courseId;
+    private String courseId;
 
-    /**课Id*/
-    private String taxId;
+    /**科目Id*/
+    private String subjectId;
 
-    /**所在课表Id*/
-    private String ccourseId;
+    /**教师Id*/
+    private String teacherId;
 
-    /**上课教室Id*/
-    private Integer classroomId;
+    /**学时*/
+    private int courseTime;
 
-    /**第几周*/
-    private Integer courseWeek;
+    /**学分*/
+    private Double courseScore;
 
-    /**星期几*/
-    private Integer courseDay;
+    /**学习人数*/
+    private Integer courseNum;
 
-    /**日期*/
-    private Date courseDate;
+    /**总人数*/
+    private Integer courseTotalnum;
 
-    /**节次*/
-    private Integer courseSequence;
+    /**课程开始周*/
+    private Integer courseBegin;
+
+    /**节课周*/
+    private Integer courseEnd;
+
+    /**学年信息*/
+    private String scheduleSemester;
 
     /**创建时间*/
     private Date createTime;

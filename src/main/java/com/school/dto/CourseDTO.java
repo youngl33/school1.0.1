@@ -8,41 +8,44 @@ import java.util.Date;
 @Data
 public class CourseDTO {
 
-    private int courseId;
+    private String courseId;
 
-    /**课Id*/
-    private String taxId;
+    /**科目Id*/
+    private String subjectId;
 
-    /**所在课表Id*/
-    private String ccourseId;
+    /**科目名*/
+    private String subjectName;
 
-    /**上课教室Id*/
-    private Integer classroomId;
+    /**教师Id*/
+    private String teacherId;
 
-    /**第几周*/
-    private Integer courseWeek;
+    /**教师名*/
+    private String teacherName;
 
-    /**星期几*/
-    private Integer courseDay;
+    /**学时*/
+    private int courseTime;
 
-    /**日期*/
-    private Date courseDate;
+    /**学分*/
+    private Double courseScore;
 
-    /**节次*/
-    private Integer courseSequence;
+    /**学习人数*/
+    private Integer courseNum;
+
+    /**总人数*/
+    private Integer courseTotalnum;
+
+    /**课程开始周*/
+    private Integer courseBegin;
+
+    /**节课周*/
+    private Integer courseEnd;
+
+    /**学年信息*/
+    private String scheduleSemester;
 
     /**创建时间*/
     private Date createTime;
 
     /**更新时间*/
     private Date updateTime;
-
-    /**科目名*/
-    private String subjectName;
-
-    /**上课周*/
-    private Integer taxWeek;
-
-    /**教师名*/
-    private String  teacherName;
 }
