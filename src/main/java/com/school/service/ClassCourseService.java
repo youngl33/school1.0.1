@@ -1,10 +1,5 @@
 package com.school.service;
 
-import com.school.dtoObject.Class;
-import com.school.dtoObject.ClassCourse;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-
 public interface ClassCourseService {
 
    /* *//**创建一个课表*//*

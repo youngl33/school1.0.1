@@ -173,6 +173,7 @@ public class CourseController {
     @GetMapping("/courseDetail")
     public String courseDetail(@RequestParam (value="courseId") String courseId,
                                Model model){
+        Course course=courseService.findOne(courseId);
         List<CourseDetail> courseDetailList=courseDetailService.findByCourseId(courseId);
         List<CourseDetailDTO> courseDetailDTOList=new ArrayList<CourseDetailDTO>();
         for(CourseDetail courseDetail:courseDetailList){
@@ -184,10 +185,42 @@ public class CourseController {
             courseDetailDTO.setBuildingId(classroom.getBuildingId());
             courseDetailDTO.setBuildingName(building.getBuildingName());
             courseDetailDTO.setClassroomNo(classroom.getClassroomNo());
+            courseDetailDTO.setCourseBegin(course.getCourseBegin());
+            courseDetailDTO.setCourseEnd(course.getCourseEnd());
             courseDetailDTOList.add(courseDetailDTO);
         }
+        model.addAttribute("course",course);
         model.addAttribute("courseDetail",courseDetailDTOList);
-
+        model.addAttribute("courseId",courseId);
         return "/course/courseDetail";
     }
+
+    @GetMapping("/courseDetail/add")
+    public String courseDetailEdit(@RequestParam(value="courseId") String courseId,
+                                   @RequestParam(value="courseBegin") Integer courseBegin,
+                                   @RequestParam(value="courseEnd") Integer courseEnd,
+                                   Model model
+                                   ){
+        model.addAttribute("courseId",courseId);
+        model.addAttribute("courseBegin",courseBegin);
+        model.addAttribute("courseEnd",courseEnd);
+        return "/course/courseDetailAdd";
+    }
+
+    @PostMapping("/courseDetail/add/save")
+    public String courseDetailAddSave(@Valid CourseDetailDTO courseDetailDTO,
+                                      Model model){
+        Building building=buildingService.findByBuildingName(courseDetailDTO.getBuildingName());
+        Classroom classroom=classroomService.findByClassroomLocationAndBuildingIdAndClassroomNo(courseDetailDTO.getClassroomLocation(),building.getBuildingId(),courseDetailDTO.getClassroomNo());
+        courseDetailDTO.setCoursedtlId(KeyUtils.uniqueKey());
+        courseDetailDTO.setClassroomId(classroom.getClassroomId());
+        CourseDetail courseDetail=new CourseDetail();
+        BeanUtils.copyProperties(courseDetailDTO,courseDetail);
+        courseDetailService.save(courseDetail);
+        model.addAttribute("msg","保存成功");
+        model.addAttribute("url","/course/find");
+        return "common/success";
+
+    }
+
 }

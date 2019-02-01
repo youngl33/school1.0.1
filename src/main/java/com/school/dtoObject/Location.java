@@ -9,23 +9,19 @@ import java.util.Objects;
 
 @Data
 @Entity
-public class Building {
+public class Location {
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    private Integer buildingId;
-
-    /**教学楼*/
-    private String buildingName;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer locationId;
 
     /**所在校区*/
-    private Integer locationId;
+    private String classroomLocation;
 
     /**创建时间*/
     private Date createTime;
 
-    /**更新时间*/
+    /**修改时间*/
     private Date updateTime;
-
 
 }

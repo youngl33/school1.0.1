@@ -110,5 +110,11 @@ public class ClassroomServiceImpTest {
         Assert.assertNotEquals(0,classroomList.size());
     }
 
+    @Test
+    public void findByBuildingId1(){
+        List<Classroom> classroomList=classroomService.findByBuildingId(31);
+        Assert.assertNotEquals(0,classroomList.size());
+    }
+
 
 }

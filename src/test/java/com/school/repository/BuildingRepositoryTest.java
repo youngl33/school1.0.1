@@ -46,4 +46,10 @@ public class BuildingRepositoryTest {
         List<Building> buildingList=repository.findAll();
         Assert.assertNotEquals(0,buildingList.size());
     }
+
+    @Test
+    public void findByClassroomLocation(){
+        List<Building> buildingList=repository.findByLocationId(1);
+        Assert.assertNotEquals(0,buildingList.size());
+    }
 }

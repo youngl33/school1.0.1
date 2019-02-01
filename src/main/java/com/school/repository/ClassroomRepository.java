@@ -5,8 +5,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
+
 
 public interface ClassroomRepository extends JpaRepository<Classroom,Integer> {
+
+    List<Classroom> findByBuildingId(Integer buildingId);
 
     Page<Classroom> findByClassroomLocationAndBuildingId(Pageable pageable,String classroomLocation, Integer buildingId);
 

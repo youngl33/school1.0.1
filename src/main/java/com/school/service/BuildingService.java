@@ -17,4 +17,9 @@ public interface BuildingService {
 
     /**通过教学楼名查找教学楼*/
     Building findByBuildingName(String buildingName);
+
+    /**通过校区查找*/
+    List<Building> findByLocationId(Integer locationId);
+
+
 }

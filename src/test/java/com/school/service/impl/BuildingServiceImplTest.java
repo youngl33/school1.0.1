@@ -46,4 +46,9 @@ public class BuildingServiceImplTest {
         Assert.assertNotNull(building);
     }
 
+    @Test
+    public void findByLocationId(){
+        List<Building> result=buildingService.findByLocationId(1);
+        Assert.assertNotEquals(0,result.size());
+    }
 }
