@@ -1,9 +1,13 @@
 package com.school.controller;
 
+import com.school.dto.CourseDTO;
 import com.school.dto.TeacherDTO;
 import com.school.dtoObject.AcademyInfo;
+import com.school.dtoObject.Course;
 import com.school.dtoObject.Teacher;
 import com.school.service.AcademyInfoService;
+import com.school.service.CourseService;
+import com.school.service.SubjectService;
 import com.school.service.TeacherService;
 import com.school.utils.DateFormatUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -32,6 +36,11 @@ public class TeacherController {
     @Autowired
     private AcademyInfoService academyInfoService;
 
+    @Autowired
+    private CourseService courseService;
+
+    @Autowired
+    private SubjectService subjectService;
 
     @GetMapping("/find")
     public String findAll(@RequestParam(value = "page", defaultValue = "0") Integer page,
@@ -146,5 +155,22 @@ public class TeacherController {
         return "common/success";
     }
 
+    @GetMapping("/profile")
+    public String profile(@RequestParam("teacherId")String teacherId,
+                          Model model){
+        Teacher teacher = teacherService.findOne(teacherId);
+        List<Course> courseList = courseService.findByTeacherId(teacherId);
+        List<CourseDTO> courseDTOList = new ArrayList<>();
+        for(Course course:courseList){
+            CourseDTO courseDTO = new CourseDTO();
+            BeanUtils.copyProperties(course,courseDTO);
+            courseDTO.setSubjectName(subjectService.findOne(course.getSubjectId()).getSubjectName());
+            courseDTO.setTeacherName(teacher.getTeacherName());
+            courseDTOList.add(courseDTO);
+        }
+        model.addAttribute("teacher",teacher);
+        model.addAttribute("courseList",courseDTOList);
+        return "/teacher/profile";
+    }
 
 }

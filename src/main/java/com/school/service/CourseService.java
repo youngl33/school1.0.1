@@ -48,5 +48,5 @@ public interface CourseService {
     /**通过学期和科目id和教师id查找课程*/
     Page<Course> findByScheduleSemesterAndSubjectIdAndTeacherId(Pageable pageable,String scheduleSemester,String subjectId,String teacherId);
 
-
+    List<Course> findByTeacherId(String teacherId);
 }

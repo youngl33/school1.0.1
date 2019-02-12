@@ -119,4 +119,12 @@ public class StudentController {
         return "/common/success";
     }
 
+    @GetMapping("/profile")
+    public String profile(@RequestParam("studentId")String studentId,
+                          Model model){
+        Student student = studentService.findById(studentId);
+        model.addAttribute("student",student);
+        return "/student/profile";
+    }
+
 }

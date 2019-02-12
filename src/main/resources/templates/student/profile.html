@@ -157,80 +157,63 @@
                 </div>
             </div>
 
-            <!-- type search-->
-            <div class="white-bg">
-                <form class="form-horizontal" action="/student/index" >
-                    <div class="form-group form-inline">
-                        <label  class="col-sm-2 control-label">所在学院：</label>
-                        <div>
-                            <select class="form-control" name="ainfoName" id="selAcademy">
-                                <option value="">----请选择----</option>
-                            </select>
-                            <select class="form-control" name="majorName" id="selMajor">
-                                <option value="">----请选择----</option>
-                            </select>
-                            <select class="form-control" name="classId" id="selClass">
-                                <option value="">----请选择----</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-10">
-                            <button type="submit" class="btn btn-default">查询</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
 
             <!-- content  -->
-            <div class="white-bg content-info" style="margin-top:20px;">
-                <div class="col-md-offset-1 teacher-info" th:each="student:${studentList}">
-                    <div class="teacher-info-personal">
-                        <img src="../img/536d8973e432e325.jpg!200x200.jpg" width="105px" height="123px" alt="...">
-                    </div>
-                    <div class="teacher-info-detail">
-                        <span th:text="姓名：+${student?.studentName}"></span>
-                        <span th:text="班级：+${student?.classId}"></span>
-                        <span th:text="性别：+${student?.studentGender}"></span>
-                        <span th:text="TEL：+${student?.studentTel}"></span>
-                        <span th:text="学院：+${student?.ainfoName}"></span>
-                        <span th:text="专业：+${student?.majorName}"></span>
-                        <span th:text="身份证：+${student?.studentIcard}"></span>
-                        <div style="margin-top:10px;">
-                            <a class="btn" th:href="@{'edit?studentId='+${student?.studentId}}">修改</a>
-                            <a class="btn" th:href="@{'profile?studentId='+${student?.studentId}}">查看详细信息</a>
+            <div class="wrapper wrapper-content white-bg animated fadeInRight">
+                <div class="row m-b-lg m-t-lg">
+                    <div class="col-md-5">
+
+                        <div class="profile-image">
+                            <img src="../img/536d8973e432e325.jpg!200x200.jpg" class="img-circle circle-border m-b-md" alt="profile">
+                        </div>
+                        <div class="profile-info">
+                            <div class="">
+                                <div>
+                                    <h2 class="no-margins">
+                                        [[${student?.studentName}]]
+                                    </h2>
+                                    <h4>[[${student?.studentId}]]</h4>
+                                    <small>
+                                        [[${student?.ainfoName}]]、[[${student?.majorName}]]、[[${student?.classId}]]
+                                    </small>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="ibox-content col-md-offset-5 col-lg-12">
-                <ul class="pagination pagination-lg">
-                    <li th:switch="${studentList?.getNumber()}">
-                        <a th:case="0"
-                           th:href="@{'index?classId='+${classId}+'&page=0'}"
-                           aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                        <a th:case="*"
-                           th:href="@{'index?classId='+${classId}+'&page='+${studentList?.getNumber()-1}}"
-                           aria-label="Previous">
-                            <span aria-hidden="false">&laquo;</span>
-                        </a>
-                    </li>
-                    <li><span>当前第&nbsp;[[${studentList?.getNumber()+1}]]/[[${studentList?.getTotalPages()}]]&nbsp;页</span></li>
-                    <li th:switch="${studentList?.getNumber()}">
-                        <a th:case="${studentList?.getTotalPages()-1}"
-                           th:href="@{'index?classId='+${classId}+'&page='+${studentList?.getTotalPages()-1}}"
-                           aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                        <a th:case="*"
-                           th:href="@{'index?classId='+${classId}+'&page='+${studentList?.getNumber()+1}}"
-                           aria-label="Next">
-                            <span aria-hidden="false">&raquo;</span>
-                        </a>
+                    <div class="col-md-4">
+                        <table class="table small m-b-xs">
 
-                    </li>
-                </ul>
+                            <tbody>
+                            <tr>
+                                <td>
+                                    <strong>性别</strong> [[${student?.studentGender}]]
+                                </td>
+                                <td>
+                                    <strong>联系方式</strong> [[${student?.studentTel}]]
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <strong>身份证</strong> [[${student?.studentIcard}]]
+                                </td>
+
+                            </tr>
+
+                            <tr>
+                                <td colspan="2">
+                                    <strong>地址</strong> [[${student?.studentAddr}]]
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-md-3">
+                        <small>Sales in last 24h</small>
+                        <h2 class="no-margins">206 480</h2>
+                        <div id="sparkline1"></div>
+                    </div>
+
+
                 </div>
             </div>
 

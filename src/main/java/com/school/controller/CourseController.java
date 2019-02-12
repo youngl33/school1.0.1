@@ -3,8 +3,10 @@ package com.school.controller;
 import com.school.dto.CourseDTO;
 import com.school.dto.CourseDetailDTO;
 import com.school.dtoObject.*;
+import com.school.exception.AdminException;
 import com.school.service.*;
 import com.school.utils.KeyUtils;
+import com.school.utils.UploadUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.util.StringUtils;
 
 import javax.validation.Valid;
@@ -52,10 +55,13 @@ public class CourseController {
     @Autowired
     private BuildingService buildingService;
 
+    @Autowired
+    private CourseResourceService courseResourceService;
+
     @GetMapping("/find")
     public String find(@RequestParam(value="page",defaultValue = "0")Integer page,
                        @RequestParam(value="scheduleSemester",defaultValue = "")String scheduleSemester,
-                       @RequestParam(value = "subjectId",defaultValue = "") String subjectId,
+                       @RequestParam(value ="subjectId",defaultValue = "") String subjectId,
                        @RequestParam(value="teacherId",defaultValue = "")String teacherId,
                        Model model){
         PageRequest request =new PageRequest(page,16);
@@ -221,9 +227,19 @@ public class CourseController {
 
     }
 
-
     @GetMapping("/resource")
-    public String rescource(@RequestParam("courseId") String courseId,
+    public String resource(@RequestParam(value = "page",defaultValue = "0") Integer page,
+                           @RequestParam("courseId") String courseId,
+                           Model model){
+        PageRequest request = PageRequest.of(page,10);
+        Page<CourseResource> courseResourcePage = courseResourceService.findByCourseId(request, courseId);
+        model.addAttribute("courseResources",courseResourcePage);
+        model.addAttribute("courseId", courseId);
+        return "/course/resource";
+    }
+
+    @GetMapping("/resource/add")
+    public String resourceAdd(@RequestParam("courseId") String courseId,
                             Model model) {
         Course course = courseService.findOne(courseId);
         if (course == null) {
@@ -236,7 +252,7 @@ public class CourseController {
     }
 
     @PostMapping("/resource/upload")
-    public String resource(@Valid CourseResource courseResource,
+    public String resourceUpload(@Valid CourseResource courseResource,
                            @RequestParam("newAddr") MultipartFile multipartFile,
                            Model model) throws Exception {
         String url = "";
@@ -247,17 +263,46 @@ public class CourseController {
             case 1:
                 url = "word";
                 break;
+            case 2:
+                url="video";
             default:
-                url = "video";
+                url = "pdf";
                 break;
         }
         courseResource.setResId(KeyUtils.uniqueKey());
         String fileaddr = UploadUtils.uploadImg(multipartFile,url);
         courseResource.setResAddr(fileaddr);
         CourseResource result = courseResourceService.create(courseResource);
-        model.addAttribute("url", "/course/find");
+        model.addAttribute("url", "/course/resource?courseId="+courseResource.getCourseId());
         model.addAttribute("msg", "上传成功");
         return "/common/success";
     }
 
+    @GetMapping("/resource/edit")
+    public String resourceEdit(@Valid CourseResource courseResourceDTO,
+                               Model model){
+        CourseResource courseResource = courseResourceService.findById(courseResourceDTO.getResId());
+        courseResource.setResName(courseResourceDTO.getResName());
+        courseResource.setResAttribute(courseResourceDTO.getResAttribute());
+        courseResource.setResDescription(courseResourceDTO.getResDescription());
+        courseResourceService.create(courseResource);
+        model.addAttribute("url", "/course/resource?courseId="+courseResourceDTO.getCourseId());
+        model.addAttribute("msg", "修改成功");
+        return "/common/success";
+    }
+
+    @GetMapping("/resource/delete")
+    public String resourceDelete(@RequestParam("resId") String resId,
+                                 Model model) {
+        try{
+            CourseResource courseResource =courseResourceService.delete(resId);
+            model.addAttribute("url", "/course/resource?courseId="+courseResource.getCourseId());
+            model.addAttribute("msg", "修改成功");
+            return "/common/success";
+        }catch (AdminException e){
+            model.addAttribute("url", "/course/find");
+            model.addAttribute("msg", e.getMessage());
+            return "/common/error";
+        }
+    }
 }

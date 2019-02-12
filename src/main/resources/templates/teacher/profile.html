@@ -142,47 +142,146 @@
                 </ul>
             </nav>
         </div>
-        <!-- search   -->
-        <div class="search2 bar6">
-            <form>
-                <input type="text" placeholder="请输入教师姓名" name="cname">
-                <button type="submit"></button>
-            </form>
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-10">
+                <h2>教师管理</h2>
+                <ol class="breadcrumb">
+                    <li>
+                        <a href="edit.html">主页</a>
+                    </li>
+                    <li>
+                        <a>教师管理</a>
+                    </li>
+                    <li class="active">
+                        <strong>教师信息</strong>
+                    </li>
+                </ol>
+            </div>
+            <div class="col-lg-2">
+
+            </div>
         </div>
+
 
         <!-- content  -->
-        <div class="white-bg content-info">
-            <div class="col-md-offset-1 teacher-info">
-                <div class="teacher-info-personal">
-                    <img src="/img/536d8973e432e325.jpg!200x200.jpg" width="105px" height="123px" alt="...">
-                </div>
-                <div class="teacher-info-detail">
-                    <span>姓名：吴光明</span>
-                    <span>年龄：57</span>
-                    <span>性别：男</span>
-                    <span>TEL：12345678910</span>
-                    <span>出生日期：1997-09-09</span>
-                    <span>职位：副教授</span>
-                    <span title="软件学院东华理工大学">学院：软件学院东华理工大学</span>
-                </div>
-            </div>
-            <div class="col-md-offset-1 teacher-info" th:each="teacherDTO:${teacherDTOs}">
-                <div class="teacher-info-personal">
-                    <img src="/img/536d8973e432e325.jpg!200x200.jpg" width="105px" height="123px" alt="...">
-                </div>
-                <div class="teacher-info-detail">
-                    <span th:text="姓名：+${teacherDTO?.teacherName}">吴光明</span>
-                    <span th:text="年龄：+${teacherDTO?.teacherAge}">57</span>
-                    <span th:text="性别：+${teacherDTO?.teacherGender}">男</span>
-                    <span th:text="TEL：+${teacherDTO?.teacherTel}">12345678910</span>
-                    <span th:text="出生日期：+${teacherDTO?.teacherBorndate}">1997-09-09</span>
-                    <span th:text="职位：+${teacherDTO?.teacherPosition}">副教授</span>
-                    <span th:text="学院：+${teacherDTO?.AinfoName}" title="软件学院东华理工大学">软件学院东华理工大学</span>
-                </div>
-            </div>
+        <div class="wrapper wrapper-content white-bg animated fadeInRight">
+            <div class="row m-b-lg m-t-lg">
+                <div class="col-md-5">
 
+                    <div class="profile-image">
+                        <img src="../img/536d8973e432e325.jpg!200x200.jpg" class="img-circle circle-border m-b-md" alt="profile">
+                    </div>
+                    <div class="profile-info">
+                        <div class="">
+                            <div>
+                                <h2 class="no-margins">
+                                    [[${teacher?.teacherName}]]
+                                </h2>
+                                <h4>[[${teacher?.teacherId}]]</h4>
+                                <small>
+                                    [[${teacher?.teacherCareer}]]
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <table class="table small m-b-xs">
 
+                        <tbody>
+                        <tr>
+                            <td>
+                                <strong>性别</strong> [[${teacher?.teacherGender}]]
+                            </td>
+                            <td>
+                                <strong>联系方式</strong> [[${teacher?.teacherTel}]]
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <strong>身份证</strong> [[${teacher?.teacherIcard}]]
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <strong>职位</strong> [[${teacher?.teacherPosition}]]
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <strong>地址</strong> [[${teacher?.teacherAddr}]]
+                            </td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-3">
+                    <small>Sales in last 24h</small>
+                    <h2 class="no-margins">206 480</h2>
+                    <div id="sparkline1"></div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>课程信息</h5>
+
+                            <div class="ibox-tools">
+                                <a class="collapse-link">
+                                    <i class="fa fa-chevron-up"></i>
+                                </a>
+                                <a class="close-link">
+                                    <i class="fa fa-times"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+                            <input type="text" class="form-control input-sm m-b-xs" id="filter"
+                                   placeholder="Search in table">
+
+                            <table class="footable table table-stripped" data-page-size="8" data-filter=#filter>
+                                <thead>
+                                <tr>
+                                    <th>编号</th>
+                                    <th>课程名</th>
+                                    <th data-hide="phone,tablet">课时</th>
+                                    <th data-hide="phone,tablet">学分</th>
+                                    <th data-hide="phone,tablet">课程总人数</th>
+                                    <th data-hide="phone,tablet">开始周</th>
+                                    <th data-hide="phone,tablet">结束周</th>
+                                    <th data-hide="phone,tablet">学年</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr class="gradeX" th:each="course,courseStat:${courseList}">
+                                    <td th:text="${courseStat?.index}">Trident</td>
+                                    <td th:text="${course?.subjectName}">Internet</td>
+                                    <td th:text="${course?.courseTime}">Internet</td>
+                                    <td th:text="${course?.courseScore}">Internet</td>
+                                    <td th:text="${course?.courseNum}">Internet</td>
+                                    <td th:text="${course?.courseBegin}">Internet</td>
+                                    <td th:text="${course?.courseEnd}">Internet</td>
+                                    <td th:text="${course?.scheduleSemester}">Internet</td>
+
+                                </tr>
+
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <td colspan="5">
+                                        <ul class="pagination pull-right"></ul>
+                                    </td>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
         </div>
+
 
 
         <!-- foot -->

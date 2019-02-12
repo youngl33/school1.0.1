@@ -119,4 +119,10 @@ public class CourseServiceTest {
         Page<Course> coursePage=courseService.findAll(request);
         Assert.assertNotEquals(0,coursePage.getTotalElements());
     }
+
+    @Test
+    public void findByTeacherIdList(){
+        List<Course> courseList = courseService.findByTeacherId("201002001");
+        Assert.assertNotEquals(0,courseList);
+    }
 }

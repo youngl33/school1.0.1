@@ -114,4 +114,10 @@ public class CourseRepositoryTest {
         Course result = repository.findById("1549002715891559975").orElse(null);
         Assert.assertNotNull(result);
     }
+
+    @Test
+    public void findByTeacherIdList(){
+        List<Course> courseList = repository.findByTeacherId("201002001");
+        Assert.assertNotEquals(0,courseList);
+    }
 }

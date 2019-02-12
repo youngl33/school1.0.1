@@ -1,3 +1,9 @@
+<!--
+*
+*  INSPINIA - Responsive Admin Theme
+*  version 2.7.1
+*
+-->
 
 <!DOCTYPE html>
 <html xmlns:th="http://www.w3.org/1999/xhtml">
@@ -22,6 +28,8 @@
     <link href="../css/animate.css" rel="stylesheet">
     <link href="../css/style.css" rel="stylesheet">
     <link href="../css/style/teacher.css" rel="stylesheet">
+    <!-- confirm -->
+    <link href="../css/plugins/jquery-confirm/jquery-confirm.min.css" rel="stylesheet">
 
 </head>
 
@@ -51,19 +59,12 @@
                     </div>
                 </li>
                 <li class="active">
-                    <a href="edit.html"><i class="fa fa-th-large"></i> <span class="nav-label">教师管理</span>
+                    <a href="edit.html"><i class="fa fa-th-large"></i> <span class="nav-label">课程管理</span>
                         <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li><a href="/teacher/find">教师信息</a></li>
-                        <li><a href="/teacher/add">添加教师</a></li>
-                        <li><a href="/teacher/import">导入</a></li>
+                        <li><a href="/course/find">课程信息</a></li>
+                        <li><a href="/course/add">添加单个课程</a></li>
                     </ul>
-                </li>
-                <li>
-                    <a href="#"><i class="fa fa-diamond"></i> <span class="nav-label">Layouts</span></a>
-                </li>
-                <li class="special_link">
-                    <a href="#"><i class="fa fa-database"></i> <span class="nav-label">Package</span></a>
                 </li>
             </ul>
 
@@ -140,16 +141,16 @@
         <!-- catelog -->
         <div class="row wrapper border-bottom white-bg page-heading">
             <div class="col-lg-10">
-                <h2>教师管理</h2>
+                <h2>课程管理</h2>
                 <ol class="breadcrumb">
                     <li>
                         <a href="edit.html">主页</a>
                     </li>
                     <li>
-                        <a>教师管理</a>
+                        <a>课程管理</a>
                     </li>
                     <li class="active">
-                        <strong>教师信息</strong>
+                        <strong>课程资源</strong>
                     </li>
                 </ol>
             </div>
@@ -157,115 +158,64 @@
 
             </div>
         </div>
-        <!-- type search-->
-        <div class="white-bg" style="margin-bottom:0px;">
-            <form class="form-horizontal" action="/teacher/find" >
-                <div class="form-group">
-                    <label  class="col-sm-2 control-label">教师姓名：</label>
-                    <div class="col-sm-3">
-                        <input name="teacherName" id="teacherName" th:value="${teacherName}" type="text" class="form-control">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label  class="col-sm-2 control-label">教师状态：</label>
-                    <div class="col-sm-10">
-                        <label class="radio-inline">
-                            <input type="radio" th:if="${teacherStatus!='在职'}" name="teacherStatus" value="在职" >
-                            <input type="radio" th:if="${teacherStatus=='在职'}" checked name="teacherStatus" value="在职" >在职
-                        </label>
-                        <label class="radio-inline">
-                            <input type="radio" th:if="${teacherStatus!='离职'}" name="teacherStatus" value="离职">
-                            <input type="radio" th:if="${teacherStatus=='离职'}" checked name="teacherStatus" value="离职">离职
-                        </label>
-                        <label class="radio-inline">
-                            <input type="radio"  th:if="${teacherStatus!='退休'}"  name="teacherStatus" value="退休">
-                            <input type="radio"  th:if="${teacherStatus=='退休'}" checked name="teacherStatus" value="退休">退休
-                        </label>
-                    </div>
-                </div>
-                <div class="form-group" >
-                    <label  class="col-sm-2 control-label">所在学院：</label>
-                    <div class="col-sm-3">
-                        <select class="form-control" name="ainfoId">
-                            <option th:if="${ainfoId}==''" value="">请选择</option>
-                            <option th:if="${ainfoId}!=''" th:value="${ainfoId}" th:text="${academySearch.ainfoName}"></option>
-                            <option th:each="academyInfo:${academyInfos}" th:value="${academyInfo?.ainfoId}" th:text="${academyInfo?.ainfoName}"></option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-default">查询</button>
-                    </div>
-                </div>
-            </form>
-        </div>
         <!-- content  -->
-        <div class="white-bg content-info" style="margin-top:20px;">
-            <div class="col-md-offset-1 teacher-info" th:each="teacherDTO:${teacherDTOs}">
-                <div class="teacher-info-personal">
-                    <img th:src="${teacherDTO?.teacherAvater}" width="105px" height="123px" >
-                </div>
-                <div class="teacher-info-detail">
-                    <span th:text="姓名：+${teacherDTO?.teacherName}"></span>
-                    <span th:text="Id：+${teacherDTO?.teacherId}"></span>
-                    <span th:text="年龄：+${teacherDTO?.teacherAge}"></span>
-                    <span th:text="性别：+${teacherDTO?.teacherGender}"></span>
-                    <span th:text="TEL：+${teacherDTO?.teacherTel}"></span>
-                    <span th:text="出生日期：+${teacherDTO?.teacherBorndate}"></span>
-                    <span th:text="职位：+${teacherDTO?.teacherPosition}"></span>
-                    <span th:text="学院：+${teacherDTO?.AinfoName}" title="软件学院东华理工大学">软件学院</span>
-                    <div style="margin-top:10px;">
-                        <a class="btn" th:href="@{'edit?teacherId='+${teacherDTO?.teacherId}}">修改</a>
-                        <a class="btn" th:href="@{'profile?teacherId='+${teacherDTO?.teacherId}}">查看详细信息</a>
-                    </div>
-                </div>
+        <div class="white-bg content-info">
+            <table class="table table-bordered" vertical-align="middle" style="vertical-align:middle;color:#000">
+                <tr>
+                    <th>编号</th>
+                    <th>资源名</th>
+                    <th>类别</th>
+                    <th>资源地址</th>
+                    <th>描述信息</th>
+                    <th>操作</th>
+                </tr>
+                <tr th:each="courseResource: ${courseResources}">
+                    <form method="get" action="/course/resource/edit">
+                        <input type="hidden" th:value="${courseResource?.resId}" name="resId">
+                        <input type="hidden" name="courseId" th:value="${courseId}">
+                    <td th:text="${courseResource?.resId}"></td>
+                    <td><input type="text" name="resName" th:value="${courseResource?.resName}"></td>
+                    <td>
+                        <select name="resAttribute">
+                            <option value="0" th:if="${courseResource?.resAttribute==0}">PPT</option>
+                            <option value="1" th:if="${courseResource?.resAttribute==1}">WORD</option>
+                            <option value="2" th:if="${courseResource?.resAttribute==2}">视频</option>
+                            <option value="3" th:if="${courseResource?.resAttribute==3}">PDF</option>
+                            <option value="0">PPT</option>
+                            <option value="1">WORD</option>
+                            <option value="2">视频</option>
+                            <option value="3">PDF</option>
+                        </select>
+                    </td>
+                        <td><a th:href="${courseResource?.resAddr}">资源地址</a></td>
+                    <td>
+                        <textarea name="resDescription" rows="1">[[${courseResource?.resDescription}]]</textarea>
+                    </td>
+                    <td class="text-left">
+                        <div class="btn-group">
+                            <input type="submit" name="修改" class="btn-white btn btn-xs">
+                            <a th:data-id="${courseResource?.resId}" onclick="deleteResource(this.dataset.id)" class="btn-white btn btn-xs">删除</a>
+                        </div>
+                    </td>
+                    </form>
+                </tr>
 
+                </tbody>
+
+
+            </table>
+            <div class="form-group" style="margin-top:20px;">
+                <div class="col-sm-offset-3 col-sm-10">
+                    <a class="btn btn-success btn-sm"  th:href="@{'/course/resource/add?courseId='+${courseId}}"
+                       role="button" style="margin-right:20px;">添加</a>
+                </div>
+            </div>
+            <div class="form-group" style="margin-top:20px;">
+                <div class="col-sm-offset-3 col-sm-10">
+                    <a href="/course/find" class="btn btn-danger" style="margin-right:30px;">返回</a>
+                </div>
             </div>
         </div>
-        <div >
-            <table align="center" >
-                <tfoot>
-                <tr>
-                    <td colspan="5">
-                        <ul class="pagination pull-right">
-                            <li><span>当前第&nbsp;[[${teacherPage?.getNumber()+1}]]/[[${teacherPage?.getTotalPages()}]]&nbsp;页</span></li>
-                            <li th:switch="${teacherPage?.getNumber()}">
-                                <a th:case="0"
-                                   th:href="@{'find?teacherStatus='+${teacherStatus}+'&ainfoId='+'${ainfoId}'+'&teacherName='+'${teacherName}'+'&page=0'}"
-                                   aria-label="Previous">
-                                    <span aria-hidden="true">&laquo;</span>
-                                </a>
-                                <a th:case="*"
-                                   th:href="@{'find?teacherStatus='+${teacherStatus}+'&ainfoId='+'${ainfoId}'+'&teacherName='+'${teacherName}'+'&page='+${teacherPage?.getNumber()-1}}"
-                                   aria-label="Previous">
-                                    <span aria-hidden="false">&laquo;</span>
-                                </a>
-
-                            </li>
-                            <li th:each="page:${#numbers.sequence(0, teacherPage?.getTotalPages() - 1)}">
-                                <a th:href="@{'find?teacherStatus='+${teacherStatus}+'&ainfoId='+'${ainfoId}'+'&teacherName='+'${teacherName}'+'&page='+${page}}"
-                                   th:text="${page+1}">1</a></li>
-                            <li th:switch="${teacherPage?.getNumber()}">
-                                <a th:case="${teacherPage?.getTotalPages()-1}"
-                                   th:href="@{'find?teacherStatus='+${teacherStatus}+'&ainfoId='+'${ainfoId}'+'&teacherName='+'${teacherName}'+'&page='+${teacherPage?.getTotalPages()-1}}"
-                                   aria-label="Next">
-                                    <span aria-hidden="true">&raquo;</span>
-                                </a>
-                                <a th:case="*"
-                                   th:href="@{'find?teacherStatus='+${teacherStatus}+'&ainfoId='+'${ainfoId}'+'&teacherName='+'${teacherName}'+'&page='+${teacherPage?.getNumber()+1}}"
-                                   aria-label="Next">
-                                    <span aria-hidden="false">&raquo;</span>
-                                </a>
-
-                            </li>
-                        </ul>
-                    </td>
-                </tr>
-                </tfoot>
-            </table>
-        </div>
-
 
 
         <!-- foot -->
@@ -359,7 +309,34 @@
 
 <!-- jQuery UI -->
 <script src="../js/plugins/jquery-ui/jquery-ui.min.js"></script>
-
+<!-- confirm  -->
+<script src="/js/plugins/confirm/confirm.js"></script>
+<script>
+    function confirm_alert(msg) {
+        $.confirm({
+            title: '删除',
+            content: '是否要刪除该文档',
+            type: 'green',
+            icon: 'glyphicon glyphicon-question-sign',
+            buttons: {
+                ok: {
+                    text: '是(yes)',
+                    btnClass: 'btn-primary',
+                    action: function () {
+                        location.href = "/course/resource/delete?resId="+msg; //指向下载资源（此处为目标文件的输出数据流）
+                    }
+                },
+                cancel: {
+                    text: '否(no)',
+                    btnClass: 'btn-primary'
+                }
+            }
+        });
+    }
+    function deleteResource(s) {
+        confirm_alert(s)
+    }
+</script>
 
 </body>
 
