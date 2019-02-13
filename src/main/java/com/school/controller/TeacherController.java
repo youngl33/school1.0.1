@@ -1,14 +1,17 @@
 package com.school.controller;
 
+import com.school.dto.CourseDTO;
 import com.school.dto.TeacherDTO;
 import com.school.dtoObject.AcademyInfo;
+import com.school.dtoObject.Course;
 import com.school.dtoObject.Teacher;
 import com.school.exception.AdminException;
 import com.school.service.AcademyInfoService;
+import com.school.service.CourseService;
+import com.school.service.SubjectService;
 import com.school.service.TeacherService;
 import com.school.utils.DateFormatUtils;
 import com.school.utils.ImgSaveUtil;
-import com.school.utils.UploadImgUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +38,12 @@ public class TeacherController {
 
     @Autowired
     private AcademyInfoService academyInfoService;
+
+    @Autowired
+    SubjectService subjectService;
+
+    @Autowired
+    CourseService  courseService;
 
 
     @GetMapping("/index")
@@ -179,6 +188,24 @@ public class TeacherController {
         model.addAttribute("url","/teacher/index");
         model.addAttribute("msg","导入成功！");
         return "/common/success";
+    }
+
+    @GetMapping("/profile")
+    public String profile(@RequestParam("teacherId")String teacherId,
+                          Model model){
+        Teacher teacher = teacherService.findOne(teacherId);
+        List<Course> courseList = courseService.findByTeacherId(teacherId);
+        List<CourseDTO> courseDTOList = new ArrayList<>();
+        for(Course course:courseList){
+            CourseDTO courseDTO = new CourseDTO();
+            BeanUtils.copyProperties(course,courseDTO);
+            courseDTO.setSubjectName(subjectService.findOne(course.getSubjectId()).getSubjectName());
+            courseDTO.setTeacherName(teacher.getTeacherName());
+            courseDTOList.add(courseDTO);
+        }
+        model.addAttribute("teacher",teacher);
+        model.addAttribute("courseList",courseDTOList);
+        return "/teacher/profile";
     }
 
 }

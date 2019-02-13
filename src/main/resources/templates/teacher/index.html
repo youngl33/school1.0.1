@@ -201,7 +201,7 @@
             </form>
         </div>
         <!-- content  -->
-        <div class="white-bg content-info">
+        <div class="white-bg content-info"  style="margin-top:20px;">
             <div class="col-md-offset-1 teacher-info" th:each="teacherDTO:${teacherDTOs}">
                 <div class="teacher-info-personal">
                     <img th:src="${teacherDTO?.teacherAvater}" width="105px" height="123px" >
@@ -214,6 +214,10 @@
                     <span th:text="出生日期：+${teacherDTO?.teacherBorndate}"></span>
                     <span th:text="职位：+${teacherDTO?.teacherPosition}"></span>
                     <span th:text="学院：+${teacherDTO?.AinfoName}" title="软件学院东华理工大学"></span>
+                    <div style="margin-top:10px;">
+                        <a class="btn" th:href="@{'edit?teacherId='+${teacherDTO?.teacherId}}">修改</a>
+                        <a class="btn" th:href="@{'profile?teacherId='+${teacherDTO?.teacherId}}">查看详细信息</a>
+                    </div>
                 </div>
             </div>
         </div>
