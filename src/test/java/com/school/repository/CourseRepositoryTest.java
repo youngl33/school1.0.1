@@ -108,4 +108,16 @@ public class CourseRepositoryTest {
         Page<Course> coursePage=repository.findByScheduleSemesterAndSubjectIdAndTeacherId(request,"2018-2019学年第一学期","1040501001","200709002");
         Assert.assertNotEquals(0,coursePage.getTotalElements());
     }
+
+    @Test
+    public void findOne(){
+        Course result = repository.findById("1549002715891559975").orElse(null);
+        Assert.assertNotNull(result);
+    }
+
+    @Test
+    public void findByTeacherIdList(){
+        List<Course> courseList = repository.findByTeacherId("201002001");
+        Assert.assertNotEquals(0,courseList);
+    }
 }

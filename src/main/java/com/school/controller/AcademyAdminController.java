@@ -5,12 +5,11 @@ import com.school.dtoObject.AcademyInfo;
 import com.school.service.AcademyAdminService;
 import com.school.service.AcademyInfoService;
 import com.school.utils.ImgSaveUtil;
-import com.school.utils.UploadImgUtils;
+import com.school.utils.UploadUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -85,7 +84,7 @@ public class AcademyAdminController {
         AcademyInfo academyInfo=academyInfoService.findOne(academyAdmin.getAinfoId());
         String path=academyAdmin.getAadmAvater();
         if(!file.isEmpty()){
-            path=UploadImgUtils.uploadImg(file,"adademyAdmin");
+            path=UploadUtils.uploadImg(file,"adademyAdmin");
         }
         academyAdmin.setAadmAvater(path);
         academyAdmin.setAinfoName(academyInfo.getAinfoName());

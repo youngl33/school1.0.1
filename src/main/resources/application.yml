@@ -11,4 +11,15 @@ spring:
     suffix: .html
     mode: html
     cache: false
+  redis:
+    database: 1
+    host: 127.0.0.1
+    port: 6379
+    jedis:
+      pool:
+        max-idle: 8
+        max-active: 8
+        max-wait: -1ms
+        min-idle: 0
+    timeout: 5000ms
 

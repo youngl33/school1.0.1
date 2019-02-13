@@ -1,6 +1,5 @@
-
 <!DOCTYPE html>
-<html xmlns:th="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
@@ -13,8 +12,6 @@
     <link href="/css/bootstrap.min.css" rel="stylesheet">
     <link href="/font-awesome/css/font-awesome.css" rel="stylesheet">
 
-    <!-- Toastr style -->
-    <link href="/css/plugins/toastr/toastr.min.css" rel="stylesheet">
 
     <!-- Gritter -->
     <link href="/js/plugins/gritter/jquery.gritter.css" rel="stylesheet">
@@ -32,8 +29,7 @@
             <ul class="nav metismenu" id="side-menu">
                 <li class="nav-header">
                     <div class="dropdown profile-element"> <span>
-                                <img alt="image" class="img-circle" width="55px" height="57px"
-                                     src="/img/536d8973e432e325.jpg!200x200.jpg"/>
+                                <img alt="image" class="img-circle" width="55px" height="57px" src="img/536d8973e432e325.jpg!200x200.jpg" />
                             </span>
                         <a data-toggle="dropdown" class="dropdown-toggle" href="profile.html#">
                                 <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">管理员</strong>
@@ -52,21 +48,12 @@
                     </div>
                 </li>
                 <li class="active">
-                    <a href="profile.html"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboards</span>
+                    <a href="edit.html"><i class="fa fa-th-large"></i> <span class="nav-label">课程管理</span>
                         <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li class="active"><a href="profile.html">教师管理</a></li>
-                        <li><a href="#">Dashboard v.2</a></li>
-                        <li><a href="#">Dashboard v.3</a></li>
-                        <li><a href="#">Dashboard v.4</a></li>
-                        <li><a href="#">Dashboard v.5 </a></li>
+                        <li><a href="/course/find">课程信息</a></li>
+                        <li><a href="/course/add">添加单个课程</a></li>
                     </ul>
-                </li>
-                <li>
-                    <a href="#"><i class="fa fa-diamond"></i> <span class="nav-label">Layouts</span></a>
-                </li>
-                <li class="special_link">
-                    <a href="#"><i class="fa fa-database"></i> <span class="nav-label">Package</span></a>
                 </li>
             </ul>
 
@@ -78,13 +65,11 @@
         <div class="row border-bottom">
             <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
                 <div class="navbar-header">
-                    <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="profile.html#"><i
-                            class="fa fa-bars"></i>
+                    <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="profile.html#"><i class="fa fa-bars"></i>
                     </a>
                     <form role="search" class="navbar-form-custom" action="search_results.html">
                         <div class="form-group">
-                            <input type="text" placeholder="Search for something..." class="form-control"
-                                   name="top-search"
+                            <input type="text" placeholder="Search for something..." class="form-control" name="top-search"
                                    id="top-search">
                         </div>
                     </form>
@@ -142,18 +127,19 @@
                 </ul>
             </nav>
         </div>
+        <!-- catelog -->
         <div class="row wrapper border-bottom white-bg page-heading">
             <div class="col-lg-10">
-                <h2>教师管理</h2>
+                <h2>课程管理</h2>
                 <ol class="breadcrumb">
                     <li>
                         <a href="edit.html">主页</a>
                     </li>
                     <li>
-                        <a>教师管理</a>
+                        <a>课程管理</a>
                     </li>
                     <li class="active">
-                        <strong>教师信息</strong>
+                        <strong>添加课程资源</strong>
                     </li>
                 </ol>
             </div>
@@ -164,124 +150,47 @@
 
 
         <!-- content  -->
-        <div class="wrapper wrapper-content white-bg animated fadeInRight">
-            <div class="row m-b-lg m-t-lg">
-                <div class="col-md-5">
-
-                    <div class="profile-image">
-                        <img src="../img/536d8973e432e325.jpg!200x200.jpg" class="img-circle circle-border m-b-md" alt="profile">
-                    </div>
-                    <div class="profile-info">
-                        <div class="">
-                            <div>
-                                <h2 class="no-margins">
-                                    [[${teacher?.teacherName}]]
-                                </h2>
-                                <h4>[[${teacher?.teacherId}]]</h4>
-                                <small>
-                                    [[${teacher?.teacherCareer}]]
-                                </small>
-                            </div>
-                        </div>
+        <div class="white-bg wrapper-content row">
+            <form class="form-horizontal col-lg-6 col-sm-offset-2" enctype="multipart/form-data" action="/course/resource/upload" method="post" onsubmit="return doSubmit()">
+                <div class="form-group">
+                    <input type="hidden" th:value="${courseId}" name="courseId" >
+                    <label for="resName" class="col-sm-2 control-label">资源名称</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="resName" id="resName" placeholder="资源名称">
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <table class="table small m-b-xs">
-
-                        <tbody>
-                        <tr>
-                            <td>
-                                <strong>性别</strong> [[${teacher?.teacherGender}]]
-                            </td>
-                            <td>
-                                <strong>联系方式</strong> [[${teacher?.teacherTel}]]
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">
-                                <strong>身份证</strong> [[${teacher?.teacherIcard}]]
-                            </td>
-
-                        </tr>
-                        <tr>
-                            <td colspan="2">
-                                <strong>职位</strong> [[${teacher?.teacherPosition}]]
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">
-                                <strong>地址</strong> [[${teacher?.teacherAddr}]]
-                            </td>
-                        </tr>
-
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col-md-3">
-                    <small>Sales in last 24h</small>
-                    <h2 class="no-margins">206 480</h2>
-                    <div id="sparkline1"></div>
-                </div>
-                <div class="col-lg-12">
-                    <div class="ibox float-e-margins">
-                        <div class="ibox-title">
-                            <h5>课程信息</h5>
-
-                            <div class="ibox-tools">
-                                <a class="collapse-link">
-                                    <i class="fa fa-chevron-up"></i>
-                                </a>
-                                <a class="close-link">
-                                    <i class="fa fa-times"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="ibox-content">
-                            <input type="text" class="form-control input-sm m-b-xs" id="filter"
-                                   placeholder="Search in table">
-
-                            <table class="footable table table-stripped" data-page-size="8" data-filter=#filter>
-                                <thead>
-                                <tr>
-                                    <th>编号</th>
-                                    <th>课程名</th>
-                                    <th data-hide="phone,tablet">课时</th>
-                                    <th data-hide="phone,tablet">学分</th>
-                                    <th data-hide="phone,tablet">课程总人数</th>
-                                    <th data-hide="phone,tablet">开始周</th>
-                                    <th data-hide="phone,tablet">结束周</th>
-                                    <th data-hide="phone,tablet">学年</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr class="gradeX" th:each="course,courseStat:${courseList}">
-                                    <td th:text="${courseStat?.index}">Trident</td>
-                                    <td th:text="${course?.subjectName}">Internet</td>
-                                    <td th:text="${course?.courseTime}">Internet</td>
-                                    <td th:text="${course?.courseScore}">Internet</td>
-                                    <td th:text="${course?.courseNum}">Internet</td>
-                                    <td th:text="${course?.courseBegin}">Internet</td>
-                                    <td th:text="${course?.courseEnd}">Internet</td>
-                                    <td th:text="${course?.scheduleSemester}">Internet</td>
-
-                                </tr>
-
-                                </tbody>
-                                <tfoot>
-                                <tr>
-                                    <td colspan="5">
-                                        <ul class="pagination pull-right"></ul>
-                                    </td>
-                                </tr>
-                                </tfoot>
-                            </table>
-                        </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">类别</label>
+                    <div class="col-sm-10">
+                        <select class="form-control" id="resAttribute" name="resAttribute">
+                            <option value="">请选择</option>
+                            <option value="0">PPT</option>
+                            <option value="1">WORD文档</option>
+                            <option value="2">视频</option>
+                            <option value="3">pdf</option>
+                        </select>
                     </div>
                 </div>
-
-            </div>
+                <div class="form-group">
+                    <label for="resDescription" class="col-sm-2 control-label">资源描述</label>
+                    <div class="col-sm-10">
+                            <textarea rows="6" class="form-control" name="resDescription" id="resDescription"
+                                      placeholder="资源描述"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="resDescription" class="col-sm-2 control-label">资源上传</label>
+                    <div class="col-sm-10">
+                        <input name="newAddr" id="newAddr" onclick="return checkFileType()" class="form-control" size="10" type="file">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-default">上传</button>
+                    </div>
+                </div>
+            </form>
         </div>
-
 
 
         <!-- foot -->
@@ -301,7 +210,6 @@
     </div>
     <!-- small-chat -->
     <div class="small-chat-box fadeInRight animated">
-
         <div class="heading" draggable="true">
             <small class="chat-date pull-right">
                 02.19.2015
@@ -310,7 +218,6 @@
         </div>
     </div>
     <div id="small-chat">
-
         <span class="badge badge-warning pull-right">5</span>
         <a class="open-small-chat">
             <i class="fa fa-comments"></i>
@@ -321,19 +228,14 @@
     <div id="right-sidebar" class="animated">
         <div class="sidebar-container">
             <div class="tab-content">
-
-
                 <div id="tab-1" class="tab-pane active">
-
                     <div class="sidebar-title">
-                        <h3><i class="fa fa-comments-o"></i> Latest Notes</h3>
+                        <h3> <i class="fa fa-comments-o"></i> Latest Notes</h3>
                         <small><i class="fa fa-tim"></i> You have 10 new message.</small>
                     </div>
-
                     <div>
-
                         <div class="sidebar-message">
-                            <a href="profile.html#">
+                            <a href="index.html#">
                                 <div class="pull-left text-center">
                                     <img alt="image" class="img-circle message-avatar" src="img/a1.jpg">
 
@@ -351,13 +253,9 @@
                             </a>
                         </div>
                     </div>
-
                 </div>
             </div>
-
         </div>
-
-
     </div>
 </div>
 
@@ -374,6 +272,53 @@
 
 <!-- jQuery UI -->
 <script src="/js/plugins/jquery-ui/jquery-ui.min.js"></script>
+<script>
+
+    $('#resAttribute').change(function(){
+        var dom = $('#newAddr');
+        var n = $('#resAttribute').val();
+        if(n==0){
+            dom.attr("accept","application/vnd.openxmlformats-officedocument.presentationml.presentation");
+        }else if(n==1){
+            dom.attr("accept","application/vnd.openxmlformats-officedocument.wordprocessingml.document");
+        }else if(n==2){
+            dom.attr("accept","video/*");
+        }else if(n==3){
+            dom.attr("accept","application/pdf");
+        }
+
+    })
+    function checkFileType(){
+        if($('#resAttribute').val()==''){
+            $('#resAttribute').focus();
+            alert("请先选择类别")
+            return false;
+        }
+        return true;
+    }
+
+    function doSubmit(){
+        if(document.getElementById('resName').value!=""&&document.getElementById('resAttribute').selectedIndex!=0&&document.getElementById('newAddr').value!=null&&document.getElementById('newAddr').value!=''){
+            return true;
+        }else{
+            if (document.getElementById('resName').value == "") {
+                alert("请输入课程资源名")
+                return false;
+            }
+            if(document.getElementById('resAttribute').selectedIndex==0){
+                alert("请选择类别")
+                return false;
+            }
+            if(document.getElementById('newAddr').value==null||document.getElementById('newAddr').value==''){
+                alert("请上传文件")
+                return false;
+            }
+            return false;
+        }
+    }
+
+</script>
+
 
 
 </body>

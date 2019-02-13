@@ -10,6 +10,7 @@ public enum ResultEnum {
     ADMIN_UN_NOT_EXIST(200001, "管理员不存在"),
     CLASS_NOE_EXIST(202201,"班级不存在"),
     STUDENT_CANTOT_DELETE(202301,"该学生不能删除"),
+    COURSE_RESOURCE_NOT_EXIST(202410,"课程资源不存在"),
     BBS_ARTICLE_NOT_EXIST(203101,"文章不存在"),
     UNKNOW_ERROR(200001,"未知错误"),
     FILE_FORMAT_ERROR(206001,"Excel文件格式错误，支持格式.xlsx、.xlsx"),

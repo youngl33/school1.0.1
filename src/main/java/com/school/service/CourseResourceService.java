@@ -11,4 +11,6 @@ public interface CourseResourceService {
     CourseResource findById(String id);
 
     Page<CourseResource> findByCourseId(Pageable pageable,String courseId);
+
+    CourseResource delete(String id);
 }

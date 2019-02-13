@@ -23,6 +23,7 @@ public class CourseResourceRepositoryTest {
         CourseResource courseResource = new CourseResource();
         courseResource.setResId(KeyUtils.uniqueKey());
         courseResource.setCourseId("123123");
+        courseResource.setResName("测试");
         courseResource.setResAttribute(1);
         courseResource.setResAddr("123123");
         CourseResource result = resourceRepository.save(courseResource);

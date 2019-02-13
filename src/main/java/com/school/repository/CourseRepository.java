@@ -29,4 +29,6 @@ public interface CourseRepository extends JpaRepository<Course,String> {
     List<Course> findByCourseEndGreaterThanEqualAndCourseEndLessThanEqual(Integer courseBegin,Integer courseEnd);
 
     List<Course> findByCourseBeginLessThanEqualAndCourseEndGreaterThanEqual(Integer coursBegin,Integer courseEnd);
+
+    List<Course> findByTeacherId(String teacherId);
 }

@@ -80,6 +80,11 @@ public class CourseServiceImpl implements CourseService {
     public Page<Course> findByScheduleSemesterAndSubjectIdAndTeacherId(Pageable pageable, String scheduleSemester, String subjectId, String teacherId) {
         return repository.findByScheduleSemesterAndSubjectIdAndTeacherId(pageable,scheduleSemester,subjectId,teacherId);
     }
+
+    @Override
+    public List<Course> findByTeacherId(String teacherId) {
+        return repository.findByTeacherId(teacherId);
+    }
 }
 
 

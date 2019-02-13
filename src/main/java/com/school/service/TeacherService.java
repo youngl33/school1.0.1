@@ -20,6 +20,7 @@ public interface TeacherService {
 
     /**通过模糊查询老师姓名来查找某些老师信息*/
     List<Teacher> findByTeacherNameContaining(String teacherName);
+
     /** 保存一个老师的信息*/
     Teacher save(Teacher teacher);
 

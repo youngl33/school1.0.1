@@ -1,3 +1,9 @@
+<!--
+*
+*  INSPINIA - Responsive Admin Theme
+*  version 2.7.1
+*
+-->
 
 <!DOCTYPE html>
 <html xmlns:th="http://www.w3.org/1999/xhtml">
@@ -10,18 +16,20 @@
 
     <title>INSPINIA | Dashboard</title>
 
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../font-awesome/css/font-awesome.css" rel="stylesheet">
 
     <!-- Toastr style -->
-    <link href="/css/plugins/toastr/toastr.min.css" rel="stylesheet">
+    <link href="../css/plugins/toastr/toastr.min.css" rel="stylesheet">
 
     <!-- Gritter -->
-    <link href="/js/plugins/gritter/jquery.gritter.css" rel="stylesheet">
+    <link href="../js/plugins/gritter/jquery.gritter.css" rel="stylesheet">
 
-    <link href="/css/animate.css" rel="stylesheet">
-    <link href="/css/style.css" rel="stylesheet">
-    <link href="/css/style/teacher.css" rel="stylesheet">
+    <link href="../css/animate.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+    <link href="../css/style/teacher.css" rel="stylesheet">
+    <!-- confirm -->
+    <link href="../css/plugins/jquery-confirm/jquery-confirm.min.css" rel="stylesheet">
 
 </head>
 
@@ -32,8 +40,7 @@
             <ul class="nav metismenu" id="side-menu">
                 <li class="nav-header">
                     <div class="dropdown profile-element"> <span>
-                                <img alt="image" class="img-circle" width="55px" height="57px"
-                                     src="/img/536d8973e432e325.jpg!200x200.jpg"/>
+                                <img alt="image" class="img-circle" width="55px" height="57px" src="img/536d8973e432e325.jpg!200x200.jpg" />
                             </span>
                         <a data-toggle="dropdown" class="dropdown-toggle" href="profile.html#">
                                 <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">管理员</strong>
@@ -52,21 +59,12 @@
                     </div>
                 </li>
                 <li class="active">
-                    <a href="profile.html"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboards</span>
+                    <a href="edit.html"><i class="fa fa-th-large"></i> <span class="nav-label">课程管理</span>
                         <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li class="active"><a href="profile.html">教师管理</a></li>
-                        <li><a href="#">Dashboard v.2</a></li>
-                        <li><a href="#">Dashboard v.3</a></li>
-                        <li><a href="#">Dashboard v.4</a></li>
-                        <li><a href="#">Dashboard v.5 </a></li>
+                        <li><a href="/course/find">课程信息</a></li>
+                        <li><a href="/course/add">添加单个课程</a></li>
                     </ul>
-                </li>
-                <li>
-                    <a href="#"><i class="fa fa-diamond"></i> <span class="nav-label">Layouts</span></a>
-                </li>
-                <li class="special_link">
-                    <a href="#"><i class="fa fa-database"></i> <span class="nav-label">Package</span></a>
                 </li>
             </ul>
 
@@ -78,13 +76,11 @@
         <div class="row border-bottom">
             <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
                 <div class="navbar-header">
-                    <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="profile.html#"><i
-                            class="fa fa-bars"></i>
+                    <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="profile.html#"><i class="fa fa-bars"></i>
                     </a>
                     <form role="search" class="navbar-form-custom" action="search_results.html">
                         <div class="form-group">
-                            <input type="text" placeholder="Search for something..." class="form-control"
-                                   name="top-search"
+                            <input type="text" placeholder="Search for something..." class="form-control" name="top-search"
                                    id="top-search">
                         </div>
                     </form>
@@ -142,18 +138,19 @@
                 </ul>
             </nav>
         </div>
+        <!-- catelog -->
         <div class="row wrapper border-bottom white-bg page-heading">
             <div class="col-lg-10">
-                <h2>教师管理</h2>
+                <h2>课程管理</h2>
                 <ol class="breadcrumb">
                     <li>
                         <a href="edit.html">主页</a>
                     </li>
                     <li>
-                        <a>教师管理</a>
+                        <a>课程管理</a>
                     </li>
                     <li class="active">
-                        <strong>教师信息</strong>
+                        <strong>课程资源</strong>
                     </li>
                 </ol>
             </div>
@@ -161,127 +158,64 @@
 
             </div>
         </div>
-
-
         <!-- content  -->
-        <div class="wrapper wrapper-content white-bg animated fadeInRight">
-            <div class="row m-b-lg m-t-lg">
-                <div class="col-md-5">
-
-                    <div class="profile-image">
-                        <img src="../img/536d8973e432e325.jpg!200x200.jpg" class="img-circle circle-border m-b-md" alt="profile">
-                    </div>
-                    <div class="profile-info">
-                        <div class="">
-                            <div>
-                                <h2 class="no-margins">
-                                    [[${teacher?.teacherName}]]
-                                </h2>
-                                <h4>[[${teacher?.teacherId}]]</h4>
-                                <small>
-                                    [[${teacher?.teacherCareer}]]
-                                </small>
-                            </div>
+        <div class="white-bg content-info">
+            <table class="table table-bordered" vertical-align="middle" style="vertical-align:middle;color:#000">
+                <tr>
+                    <th>编号</th>
+                    <th>资源名</th>
+                    <th>类别</th>
+                    <th>资源地址</th>
+                    <th>描述信息</th>
+                    <th>操作</th>
+                </tr>
+                <tr th:each="courseResource: ${courseResources}">
+                    <form method="get" action="/course/resource/edit">
+                        <input type="hidden" th:value="${courseResource?.resId}" name="resId">
+                        <input type="hidden" name="courseId" th:value="${courseId}">
+                    <td th:text="${courseResource?.resId}"></td>
+                    <td><input type="text" name="resName" th:value="${courseResource?.resName}"></td>
+                    <td>
+                        <select name="resAttribute">
+                            <option value="0" th:if="${courseResource?.resAttribute==0}">PPT</option>
+                            <option value="1" th:if="${courseResource?.resAttribute==1}">WORD</option>
+                            <option value="2" th:if="${courseResource?.resAttribute==2}">视频</option>
+                            <option value="3" th:if="${courseResource?.resAttribute==3}">PDF</option>
+                            <option value="0">PPT</option>
+                            <option value="1">WORD</option>
+                            <option value="2">视频</option>
+                            <option value="3">PDF</option>
+                        </select>
+                    </td>
+                        <td><a th:href="${courseResource?.resAddr}">资源地址</a></td>
+                    <td>
+                        <textarea name="resDescription" rows="1">[[${courseResource?.resDescription}]]</textarea>
+                    </td>
+                    <td class="text-left">
+                        <div class="btn-group">
+                            <input type="submit" name="修改" class="btn-white btn btn-xs">
+                            <a th:data-id="${courseResource?.resId}" onclick="deleteResource(this.dataset.id)" class="btn-white btn btn-xs">删除</a>
                         </div>
-                    </div>
+                    </td>
+                    </form>
+                </tr>
+
+                </tbody>
+
+
+            </table>
+            <div class="form-group" style="margin-top:20px;">
+                <div class="col-sm-offset-3 col-sm-10">
+                    <a class="btn btn-success btn-sm"  th:href="@{'/course/resource/add?courseId='+${courseId}}"
+                       role="button" style="margin-right:20px;">添加</a>
                 </div>
-                <div class="col-md-4">
-                    <table class="table small m-b-xs">
-
-                        <tbody>
-                        <tr>
-                            <td>
-                                <strong>性别</strong> [[${teacher?.teacherGender}]]
-                            </td>
-                            <td>
-                                <strong>联系方式</strong> [[${teacher?.teacherTel}]]
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">
-                                <strong>身份证</strong> [[${teacher?.teacherIcard}]]
-                            </td>
-
-                        </tr>
-                        <tr>
-                            <td colspan="2">
-                                <strong>职位</strong> [[${teacher?.teacherPosition}]]
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">
-                                <strong>地址</strong> [[${teacher?.teacherAddr}]]
-                            </td>
-                        </tr>
-
-                        </tbody>
-                    </table>
+            </div>
+            <div class="form-group" style="margin-top:20px;">
+                <div class="col-sm-offset-3 col-sm-10">
+                    <a href="/course/find" class="btn btn-danger" style="margin-right:30px;">返回</a>
                 </div>
-                <div class="col-md-3">
-                    <small>Sales in last 24h</small>
-                    <h2 class="no-margins">206 480</h2>
-                    <div id="sparkline1"></div>
-                </div>
-                <div class="col-lg-12">
-                    <div class="ibox float-e-margins">
-                        <div class="ibox-title">
-                            <h5>课程信息</h5>
-
-                            <div class="ibox-tools">
-                                <a class="collapse-link">
-                                    <i class="fa fa-chevron-up"></i>
-                                </a>
-                                <a class="close-link">
-                                    <i class="fa fa-times"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="ibox-content">
-                            <input type="text" class="form-control input-sm m-b-xs" id="filter"
-                                   placeholder="Search in table">
-
-                            <table class="footable table table-stripped" data-page-size="8" data-filter=#filter>
-                                <thead>
-                                <tr>
-                                    <th>编号</th>
-                                    <th>课程名</th>
-                                    <th data-hide="phone,tablet">课时</th>
-                                    <th data-hide="phone,tablet">学分</th>
-                                    <th data-hide="phone,tablet">课程总人数</th>
-                                    <th data-hide="phone,tablet">开始周</th>
-                                    <th data-hide="phone,tablet">结束周</th>
-                                    <th data-hide="phone,tablet">学年</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr class="gradeX" th:each="course,courseStat:${courseList}">
-                                    <td th:text="${courseStat?.index}">Trident</td>
-                                    <td th:text="${course?.subjectName}">Internet</td>
-                                    <td th:text="${course?.courseTime}">Internet</td>
-                                    <td th:text="${course?.courseScore}">Internet</td>
-                                    <td th:text="${course?.courseNum}">Internet</td>
-                                    <td th:text="${course?.courseBegin}">Internet</td>
-                                    <td th:text="${course?.courseEnd}">Internet</td>
-                                    <td th:text="${course?.scheduleSemester}">Internet</td>
-
-                                </tr>
-
-                                </tbody>
-                                <tfoot>
-                                <tr>
-                                    <td colspan="5">
-                                        <ul class="pagination pull-right"></ul>
-                                    </td>
-                                </tr>
-                                </tfoot>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
             </div>
         </div>
-
 
 
         <!-- foot -->
@@ -326,7 +260,7 @@
                 <div id="tab-1" class="tab-pane active">
 
                     <div class="sidebar-title">
-                        <h3><i class="fa fa-comments-o"></i> Latest Notes</h3>
+                        <h3> <i class="fa fa-comments-o"></i> Latest Notes</h3>
                         <small><i class="fa fa-tim"></i> You have 10 new message.</small>
                     </div>
 
@@ -358,23 +292,51 @@
         </div>
 
 
+
     </div>
 </div>
 
 
 <!-- Mainly scripts -->
-<script src="/js/jquery-3.1.1.min.js"></script>
-<script src="/js/bootstrap.min.js"></script>
-<script src="/js/plugins/metisMenu/jquery.metisMenu.js"></script>
-<script src="/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+<script src="../js/jquery-3.1.1.min.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+<script src="../js/plugins/metisMenu/jquery.metisMenu.js"></script>
+<script src="../js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
 
 <!-- Custom and plugin javascript -->
-<script src="/js/inspinia.js"></script>
-<script src="/js/plugins/pace/pace.min.js"></script>
+<script src="../js/inspinia.js"></script>
+<script src="../js/plugins/pace/pace.min.js"></script>
 
 <!-- jQuery UI -->
-<script src="/js/plugins/jquery-ui/jquery-ui.min.js"></script>
-
+<script src="../js/plugins/jquery-ui/jquery-ui.min.js"></script>
+<!-- confirm  -->
+<script src="/js/plugins/confirm/confirm.js"></script>
+<script>
+    function confirm_alert(msg) {
+        $.confirm({
+            title: '删除',
+            content: '是否要刪除该文档',
+            type: 'green',
+            icon: 'glyphicon glyphicon-question-sign',
+            buttons: {
+                ok: {
+                    text: '是(yes)',
+                    btnClass: 'btn-primary',
+                    action: function () {
+                        location.href = "/course/resource/delete?resId="+msg; //指向下载资源（此处为目标文件的输出数据流）
+                    }
+                },
+                cancel: {
+                    text: '否(no)',
+                    btnClass: 'btn-primary'
+                }
+            }
+        });
+    }
+    function deleteResource(s) {
+        confirm_alert(s)
+    }
+</script>
 
 </body>
 

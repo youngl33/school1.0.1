@@ -42,7 +42,7 @@ public class CourseServiceTest {
 
     @Test
     public void findOne() {
-        Course course=courseService.findOne("1548812829711427589");
+        Course course=courseService.findOne("1549002199247310478");
         Assert.assertNotNull(course);
     }
 
@@ -118,5 +118,11 @@ public class CourseServiceTest {
         PageRequest request= PageRequest.of(0,10);
         Page<Course> coursePage=courseService.findAll(request);
         Assert.assertNotEquals(0,coursePage.getTotalElements());
+    }
+
+    @Test
+    public void findByTeacherIdList(){
+        List<Course> courseList = courseService.findByTeacherId("201002001");
+        Assert.assertNotEquals(0,courseList);
     }
 }

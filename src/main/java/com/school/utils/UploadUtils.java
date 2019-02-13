@@ -8,9 +8,11 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
-public class UploadImgUtils {
+public class UploadUtils {
 
     public static String uploadImg(MultipartFile file, String realPathLast) throws Exception{
         String fileName = file.getOriginalFilename();
@@ -41,5 +43,26 @@ public class UploadImgUtils {
             outputStream.close();
         }
         return path;
+    }
+
+    public static void deleteFile(String path){
+        String realPath = "e:/xampp/htdocs";
+        String s[] = path.split("/");
+        for(int i=3;i<s.length;i++){
+            realPath= realPath+"/"+s[i];
+        }
+        File file = new File(realPath);
+        if(!file.exists()){
+            return;
+        }
+        file.delete();
+    }
+
+    public static void main(String[] args) {
+        String path="http://127.0.0.1/img/video/1549101047109847805.pdf";
+        String s [] = path.split("/");
+        for(int i=0;i<s.length;i++){
+            System.out.println(s[i]);
+        }
     }
 }

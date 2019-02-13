@@ -159,7 +159,7 @@
             </div>
         </div>
             <!-- type search-->
-            <div class="white-bg">
+            <div class="white-bg wrapper-content">
                 <form class="form-horizontal" action="/course/find" >
                     <div class="form-group" >
                         <label  class="col-sm-2 control-label">学期</label>
@@ -213,14 +213,17 @@
                         <td th:text="${course?.courseTotalnum}"></td>
                         <td th:text="${course?.courseBegin}"></td>
                         <td th:text="${course?.courseEnd}"></td>
-                        <td style="text-align: center;">
-                            <a class="btn btn-success btn-sm"  th:href="@{'/course/edit?courseId='+${course?.courseId}}"
-                               role="button" style="margin-right:20px;">修改</a>
-                            <a class="btn btn-success btn-sm"  th:href="@{'/course/courseDetail?courseId='+${course?.courseId}}"
-                               role="button" style="margin-right:20px;">上课时间信息</a>
-                            <a class="btn btn-success btn-sm"  th:href="@{'/course/studentCourse?courseId='+${course.courseId}}"
-                               role="button" style="margin-right:20px;">选课情况</a>
-
+                        <td class="text-center">
+                            <div class="btn-group">
+                            <a class="btn-white btn btn-xs"  th:href="@{'/course/edit?courseId='+${course?.courseId}}"
+                               role="button">修改</a>
+                            <a class="btn-white btn btn-xs"  th:href="@{'/course/courseDetail?courseId='+${course?.courseId}}"
+                               role="button">上课时间</a>
+                            <a class="btn-white btn btn-xs"  th:href="@{'/course/studentCourse?courseId='+${course.courseId}}"
+                               role="button">选课情况</a>
+                            <a class="btn-white btn btn-xs"  th:href="@{'/course/resource?courseId='+${course?.courseId}}"
+                               role="button">课程资源</a>
+                            </div>
                         </td>
                     </tr>
 
