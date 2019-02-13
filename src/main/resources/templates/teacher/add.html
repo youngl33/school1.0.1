@@ -75,7 +75,7 @@
                 <div class="navbar-header">
                     <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="profile.html#"><i class="fa fa-bars"></i>
                     </a>
-                    <form role="search" class="navbar-form-custom" action="search_results.html">
+                    <form role="search" class="navbar-form-custom"  enctype="multipart/form-data"  action="search_results.html">
                         <div class="form-group">
                             <input type="text" placeholder="Search for something..." class="form-control" name="top-search"
                                    id="top-search">
@@ -160,7 +160,7 @@
 
         <!-- content  -->
         <div class="content white-bg" style="padding:40px 0;">
-            <form class="form-horizontal" action="/teacher/add/save" method="post" onsubmit="return doSubmit()">
+            <form class="form-horizontal" action="/teacher/add/save" method="post" enctype="multipart/form-data"  onsubmit="return doSubmit()">
                 <div style="display: flex;flex-direction: row;">
                     <div style="margin-left:220px;" class="col-sm-offset-3">
                         <div class="form-group">
@@ -225,18 +225,11 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label  class="col-sm-3 control-label">年龄</label>
-                                <div class="col-sm-9">
-                                    <input name="teacherAge" id="teacherAge" th:value="${teacherDTO?.teacherAge}" type="text" class="form-control">
-                                </div>
-                            </div>
-
                         </div>
                     </div>
                     <div style="margin-left:280px;">
                         <img th:src="${teacherDTO?.teacherAvater}" width="100px;">
-                        <input  type="file" th:value="${teacherDTO?.teacherAvater}" name="teacherAvater" >
+                        <input  type="file" th:value="${teacherDTO?.teacherAvater}" name="teacherNewAvater" >
                     </div>
                 </div>
                 <div class="form-group">

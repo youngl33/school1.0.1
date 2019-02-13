@@ -22,6 +22,8 @@
     <link href="../css/animate.css" rel="stylesheet">
     <link href="../css/style.css" rel="stylesheet">
     <link href="../css/style/teacher.css" rel="stylesheet">
+    <!-- confirm -->
+    <link href="../css/plugins/jquery-confirm/jquery-confirm.min.css" rel="stylesheet">
 
 </head>
 
@@ -51,12 +53,12 @@
                     </div>
                 </li>
                 <li class="active">
-                    <a href="edit.html"><i class="fa fa-th-large"></i> <span class="nav-label">教师管理</span>
+                    <a href="edit.html"><i class="fa fa-th-large"></i> <span class="nav-label">科目管理</span>
                         <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li><a href="/teacher/find">教师信息</a></li>
-                        <li><a href="/teacher/add">添加教师</a></li>
-                        <li><a href="/teacher/import">导入</a></li>
+                        <li><a href="/subject/index">科目信息</a></li>
+                        <li><a href="/subject/add">添加科目</a></li>
+                        <li><a href="/subject/import">导入</a></li>
                     </ul>
                 </li>
                 <li>
@@ -140,16 +142,16 @@
         <!-- catelog -->
         <div class="row wrapper border-bottom white-bg page-heading">
             <div class="col-lg-10">
-                <h2>教师管理</h2>
+                <h2>科目管理</h2>
                 <ol class="breadcrumb">
                     <li>
                         <a href="edit.html">主页</a>
                     </li>
                     <li>
-                        <a>教师管理</a>
+                        <a href="/subject/index">科目管理</a>
                     </li>
                     <li class="active">
-                        <strong>教师信息</strong>
+                        <strong>导入科目</strong>
                     </li>
                 </ol>
             </div>
@@ -157,113 +159,21 @@
 
             </div>
         </div>
-        <!-- type search-->
-        <div class="white-bg" style="margin-bottom:0px;">
-            <form class="form-horizontal" action="/teacher/index" >
-                <div class="form-group">
-                    <label  class="col-sm-2 control-label">教师姓名：</label>
-                    <div class="col-sm-3">
-                        <input name="teacherName" id="teacherName" th:value="${teacherName}" type="text" class="form-control">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label  class="col-sm-2 control-label">教师状态：</label>
-                    <div class="col-sm-10">
-                        <label class="radio-inline">
-                            <input type="radio" th:if="${teacherStatus!='在职'}" name="teacherStatus" value="在职" >
-                            <input type="radio" th:if="${teacherStatus=='在职'}" checked name="teacherStatus" value="在职" >在职
-                        </label>
-                        <label class="radio-inline">
-                            <input type="radio" th:if="${teacherStatus!='离职'}" name="teacherStatus" value="离职">
-                            <input type="radio" th:if="${teacherStatus=='离职'}" checked name="teacherStatus" value="离职">离职
-                        </label>
-                        <label class="radio-inline">
-                            <input type="radio"  th:if="${teacherStatus!='退休'}"  name="teacherStatus" value="退休">
-                            <input type="radio"  th:if="${teacherStatus=='退休'}" checked name="teacherStatus" value="退休">退休
-                        </label>
-                    </div>
-                </div>
-                <div class="form-group" >
-                    <label  class="col-sm-2 control-label">所在学院：</label>
-                    <div class="col-sm-3">
-                        <select class="form-control" name="ainfoId">
-                            <option th:if="${ainfoId}==''" value="">请选择</option>
-                            <option th:if="${ainfoId}!=''" th:value="${ainfoId}" th:text="${academySearch.ainfoName}"></option>
-                            <option th:each="academyInfo:${academyInfos}" th:value="${academyInfo?.ainfoId}" th:text="${academyInfo?.ainfoName}"></option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-default">查询</button>
-                    </div>
-                </div>
-            </form>
-        </div>
         <!-- content  -->
-        <div class="white-bg content-info">
-            <div class="col-md-offset-1 teacher-info" th:each="teacherDTO:${teacherDTOs}">
-                <div class="teacher-info-personal">
-                    <img th:src="${teacherDTO?.teacherAvater}" width="105px" height="123px" >
-                </div>
-                <div class="teacher-info-detail">
-                    <span th:text="姓名：+${teacherDTO?.teacherName}"></span>
-                    <span th:text="Id：+${teacherDTO?.teacherId}"></span>
-                    <span th:text="性别：+${teacherDTO?.teacherGender}"></span>
-                    <span th:text="TEL：+${teacherDTO?.teacherTel}"></span>
-                    <span th:text="出生日期：+${teacherDTO?.teacherBorndate}"></span>
-                    <span th:text="职位：+${teacherDTO?.teacherPosition}"></span>
-                    <span th:text="学院：+${teacherDTO?.AinfoName}" title="软件学院东华理工大学"></span>
-                </div>
-            </div>
+        <div class="white-bg" style="height:100%;padding:40px 0 0 40px;">
+            <ul class="pagination pull-left">
+                <form action="import/save" method="post" enctype="multipart/form-data">
+                    <input name="file" value="请选择excel文件" type="file">
+                    <input type="submit" class="btn btn-success save" value="上传"><span>格式如下图:</span>
+                </form>
+            </ul>
+            <img width="100%" alt="科目导入Excel导入格式" src="\img\sample\subject-import-template.png">
+
         </div>
-        <div >
-            <table align="center" >
-                <tfoot>
-                <tr>
-                    <td colspan="5">
-                        <ul class="pagination pull-right">
-                            <li><span>当前第&nbsp;[[${teacherPage?.getNumber()+1}]]/[[${teacherPage?.getTotalPages()}]]&nbsp;页</span></li>
-                            <li th:switch="${teacherPage?.getNumber()}">
-                                <a th:case="0"
-                                   th:href="@{'find?teacherStatus='+${teacherStatus}+'&ainfoId='+'${ainfoId}'+'&teacherName='+'${teacherName}'+'&page=0'}"
-                                   aria-label="Previous">
-                                    <span aria-hidden="true">&laquo;</span>
-                                </a>
-                                <a th:case="*"
-                                   th:href="@{'find?teacherStatus='+${teacherStatus}+'&ainfoId='+'${ainfoId}'+'&teacherName='+'${teacherName}'+'&page='+${teacherPage?.getNumber()-1}}"
-                                   aria-label="Previous">
-                                    <span aria-hidden="false">&laquo;</span>
-                                </a>
-
-                            </li>
-                            <li th:each="page:${#numbers.sequence(0, teacherPage?.getTotalPages() - 1)}">
-                                <a th:href="@{'find?teacherStatus='+${teacherStatus}+'&ainfoId='+'${ainfoId}'+'&teacherName='+'${teacherName}'+'&page='+${page}}"
-                                   th:text="${page+1}">1</a></li>
-                            <li th:switch="${teacherPage?.getNumber()}">
-                                <a th:case="${teacherPage?.getTotalPages()-1}"
-                                   th:href="@{'find?teacherStatus='+${teacherStatus}+'&ainfoId='+'${ainfoId}'+'&teacherName='+'${teacherName}'+'&page='+${teacherPage?.getTotalPages()-1}}"
-                                   aria-label="Next">
-                                    <span aria-hidden="true">&raquo;</span>
-                                </a>
-                                <a th:case="*"
-                                   th:href="@{'find?teacherStatus='+${teacherStatus}+'&ainfoId='+'${ainfoId}'+'&teacherName='+'${teacherName}'+'&page='+${teacherPage?.getNumber()+1}}"
-                                   aria-label="Next">
-                                    <span aria-hidden="false">&raquo;</span>
-                                </a>
-
-                            </li>
-                        </ul>
-                    </td>
-                </tr>
-                </tfoot>
-            </table>
-        </div>
-
 
 
         <!-- foot -->
-        <div class="row">
+        <div class="row" style="padding-top:40px;">
             <div class="col-lg-12">
                 <div class="footer">
                     <div class="pull-right">
@@ -311,7 +221,7 @@
                     <div>
 
                         <div class="sidebar-message">
-                            <a href="profile.html#">
+                            <a href="../course/edit.html#">
                                 <div class="pull-left text-center">
                                     <img alt="image" class="img-circle message-avatar" src="img/a1.jpg">
 
@@ -353,7 +263,6 @@
 
 <!-- jQuery UI -->
 <script src="../js/plugins/jquery-ui/jquery-ui.min.js"></script>
-
 
 </body>
 

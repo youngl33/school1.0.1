@@ -34,7 +34,6 @@ public class TeacherRepositoryTest {
         Teacher teacher = new Teacher();
         teacher.setTeacherAddr("翰林世家");
         teacher.setAinfoId("1040501");
-        teacher.setTeacherAge(42);
         teacher.setTeacherAvater("null");
         teacher.setTeacherBorndate(DateFormatUtils.dateConverter("1978-01-01"));
         teacher.setTeacherCareer("无");

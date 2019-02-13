@@ -30,7 +30,6 @@ public class TeacherServiceImplTest {
         Teacher teacher = new Teacher();
         teacher.setTeacherAddr("江西省南昌市经济技术开发区蓝天花园");
         teacher.setAinfoId("1040503");
-        teacher.setTeacherAge(45);
         teacher.setTeacherAvater("null");
         teacher.setTeacherBorndate(DateFormatUtils.dateConverter("1974-01-11"));
         teacher.setTeacherCareer("职业记录良好");

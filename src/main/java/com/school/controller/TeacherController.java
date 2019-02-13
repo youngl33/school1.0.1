@@ -3,9 +3,12 @@ package com.school.controller;
 import com.school.dto.TeacherDTO;
 import com.school.dtoObject.AcademyInfo;
 import com.school.dtoObject.Teacher;
+import com.school.exception.AdminException;
 import com.school.service.AcademyInfoService;
 import com.school.service.TeacherService;
 import com.school.utils.DateFormatUtils;
+import com.school.utils.ImgSaveUtil;
+import com.school.utils.UploadImgUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +17,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.util.StringUtils;
 
 import javax.validation.Valid;
@@ -33,7 +37,7 @@ public class TeacherController {
     private AcademyInfoService academyInfoService;
 
 
-    @GetMapping("/find")
+    @GetMapping("/index")
     public String findAll(@RequestParam(value = "page", defaultValue = "0") Integer page,
                           @RequestParam(value = "teacherStatus", defaultValue = "在职") String teacherStatus,
                           @RequestParam(value = "ainfoId",defaultValue = "") String ainfoId,
@@ -108,8 +112,14 @@ public class TeacherController {
 
     @PostMapping("edit/save")
     public String teacherEditSave(@Valid TeacherDTO teacherDTO,
-                                  Model model) throws ParseException {
+                                  @RequestParam("teacherNewAvater") MultipartFile file,
+                                  Model model) throws Exception {
         log.info("resutl={}",teacherDTO);
+        String path=teacherDTO.getTeacherAvater();
+        if (!file.isEmpty()) {
+            path = ImgSaveUtil.saveImg(file);
+        }
+        teacherDTO.setTeacherAvater(path);
         Teacher teacher = teacherService.findOne(teacherDTO.getTeacherId());
         BeanUtils.copyProperties(teacherDTO,teacher);
         teacher.setTeacherBorndate(DateFormatUtils.dateConverter(teacherDTO.getTeacherBorndate()));
@@ -134,8 +144,14 @@ public class TeacherController {
 
     @PostMapping("/add/save")
     public String addSave(@Valid TeacherDTO teacherDTO,
-                          Model model) throws ParseException {
+                          @RequestParam("teacherNewAvater") MultipartFile file,
+                          Model model) throws Exception {
         Teacher teacher=new Teacher();
+        String path=teacherDTO.getTeacherAvater();
+        if (!file.isEmpty()) {
+            path = ImgSaveUtil.saveImg(file);
+        }
+        teacherDTO.setTeacherAvater(path);
         BeanUtils.copyProperties(teacherDTO,teacher);
         Teacher result=teacherService.findOne(teacher.getTeacherId());
         log.info("【查找结果】:result={}",result);
@@ -146,5 +162,23 @@ public class TeacherController {
         return "common/success";
     }
 
+    @GetMapping("/import")
+    public String ImportFile(){return "/teacher/import";}
+
+    @PostMapping("/import/save")
+    public String importSave(MultipartFile file,Model model) throws Exception{
+        String fileName=file.getOriginalFilename();
+        try{
+            teacherService.importTeacher(fileName,file);
+        }catch(AdminException e)
+        {
+            model.addAttribute("url","/teacher/index");
+            model.addAttribute("msg",e.getMessage());
+            return "/common/error";
+        }
+        model.addAttribute("url","/teacher/index");
+        model.addAttribute("msg","导入成功！");
+        return "/common/success";
+    }
 
 }

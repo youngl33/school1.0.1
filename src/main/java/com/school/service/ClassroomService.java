@@ -3,6 +3,7 @@ package com.school.service;
 import com.school.dtoObject.Classroom;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -49,4 +50,8 @@ public interface ClassroomService {
 
     /**封装了一个查找功能*/
     Page<Classroom> search(Pageable pageable,String classroomLocation,Integer buildingId,String classroomType);
+
+    /**上传教室*/
+    void importClassroom(String fileName,MultipartFile file) throws Exception;
+
 }

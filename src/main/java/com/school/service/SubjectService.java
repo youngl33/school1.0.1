@@ -4,6 +4,7 @@ import com.school.dtoObject.Subject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface SubjectService {
 
@@ -30,6 +31,10 @@ public interface SubjectService {
 
     /** 删除*/
     void delete(String subjectId);
+
+    /**导入科目*/
+    void importSubject(String fileName, MultipartFile file) throws Exception;
+
 
 
 }

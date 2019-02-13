@@ -15,9 +15,6 @@ public class TeacherDTO {
     /** 教师姓名     */
     private String teacherName;
 
-    /** 教师年龄     */
-    private Integer teacherAge;
-
     /** 教师头像     */
     private String teacherAvater;
 

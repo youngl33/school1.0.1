@@ -3,6 +3,7 @@ import com.school.dtoObject.Teacher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -43,4 +44,6 @@ public interface TeacherService {
     /** 通过教师所在学院ID和教师职称和教师状态查找教师信息*/
     Page<Teacher> findByAinfoIdAndTeacherPositionAndTeacherStatus(Pageable pageable,String ainfoId,String teacherPosition,String teacherStatus);
 
+    /**导入教室信息*/
+    void importTeacher(String fileName,MultipartFile file) throws Exception;
 }

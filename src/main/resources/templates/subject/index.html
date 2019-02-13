@@ -56,7 +56,7 @@
                     <a href="edit.html"><i class="fa fa-th-large"></i> <span class="nav-label">科目管理</span>
                         <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li><a href="/subject/find">科目信息</a></li>
+                        <li><a href="/subject/index">科目信息</a></li>
                         <li><a href="/subject/add">添加科目</a></li>
                         <li><a href="/subject/import">导入</a></li>
                     </ul>
@@ -161,12 +161,12 @@
         </div>
             <!-- type search-->
             <div class="white-bg">
-                <form class="form-horizontal" action="/subject/find" >
+                <form class="form-horizontal" action="/subject/index" >
                     <div class="form-group" >
                         <label  class="col-sm-2 control-label">开课学院</label>
                         <div class="col-sm-3">
                             <select class="form-control" name="ainfoId">
-                                <option th:if="${ainfoId==''}" value="">请选择</option>
+                                <option th:if="${ainfoId==''}" value="">全部</option>
                                 <option th:if="${ainfoId!=''}" th:value="${ainfoId}" th:text="${ainfoSearch.ainfoName}"></option>
                                 <option th:each="academy:${academys}" th:value="${academy?.ainfoId}" th:text="${academy?.ainfoName}"></option>
                             </select>
@@ -225,28 +225,28 @@
                                 <li><span>当前第&nbsp;[[${subjectPage?.getNumber()+1}]]/[[${subjectPage?.getTotalPages()}]]&nbsp;页</span></li>
                                 <li th:switch="${subjectPage?.getNumber()}">
                                     <a th:case="0"
-                                       th:href="@{'find?ainfoId='+${ainfoId}+'&subjectName='+${subjectName}+'&page=0'}"
+                                       th:href="@{'index?ainfoId='+${ainfoId}+'&subjectName='+${subjectName}+'&page=0'}"
                                        aria-label="Previous">
                                         <span aria-hidden="true">&laquo;</span>
                                     </a>
                                     <a th:case="*"
-                                       th:href="@{'find?ainfoId='+${ainfoId}+'&subjectName='+${subjectName}+'&page='+${subjectPage?.getNumber()-1}}"
+                                       th:href="@{'index?ainfoId='+${ainfoId}+'&subjectName='+${subjectName}+'&page='+${subjectPage?.getNumber()-1}}"
                                        aria-label="Previous">
                                         <span aria-hidden="false">&laquo;</span>
                                     </a>
 
                                 </li>
                                 <li th:each="page:${#numbers.sequence(0, subjectPage?.getTotalPages() - 1)}">
-                                    <a th:href="@{'find?ainfoId='+${ainfoId}+'&subjectName='+${subjectName}+'&page='+${page}}"
+                                    <a th:href="@{'index?ainfoId='+${ainfoId}+'&subjectName='+${subjectName}+'&page='+${page}}"
                                        th:text="${page+1}">1</a></li>
                                 <li th:switch="${subjectPage?.getNumber()}">
                                     <a th:case="${subjectPage?.getTotalPages()-1}"
-                                       th:href="@{'find?ainfoId='+${ainfoId}+'&subjectName='+${subjectName}+'&page='+${subjectPage?.getTotalPages()-1}}"
+                                       th:href="@{'index?ainfoId='+${ainfoId}+'&subjectName='+${subjectName}+'&page='+${subjectPage?.getTotalPages()-1}}"
                                        aria-label="Next">
                                         <span aria-hidden="true">&raquo;</span>
                                     </a>
                                     <a th:case="*"
-                                       th:href="@{'find?ainfoId='+${ainfoId}+'&subjectName='+${subjectName}+'&page='+${subjectPage?.getNumber()+1}}"
+                                       th:href="@{'index?ainfoId='+${ainfoId}+'&subjectName='+${subjectName}+'&page='+${subjectPage?.getNumber()+1}}"
                                        aria-label="Next">
                                         <span aria-hidden="false">&raquo;</span>
                                     </a>

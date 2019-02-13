@@ -6,6 +6,7 @@ import com.school.dtoObject.Subject;
 import com.school.exception.AdminException;
 import com.school.service.AcademyInfoService;
 import com.school.service.SubjectService;
+import com.school.utils.KeyUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.util.StringUtils;
 
 import javax.validation.Valid;
@@ -36,7 +38,7 @@ public class SubjectController {
     @Autowired
     private AcademyInfoService academyInfoService;
 
-    @GetMapping("/find")
+    @GetMapping("/index")
     public String findSubject(@RequestParam(value = "page",defaultValue = "0")Integer page,
                               @RequestParam(value="ainfoId",defaultValue ="") String ainfoId,
                               @RequestParam(value = "subjectName",defaultValue ="") String subjectName,
@@ -103,7 +105,7 @@ public class SubjectController {
         BeanUtils.copyProperties(subjectDTO,subject);
         subjectService.save(subject);
         model.addAttribute("msg","保存成功");
-        model.addAttribute("url","/subject/find");
+        model.addAttribute("url","/subject/index");
         return "/common/success";
     }
 
@@ -123,7 +125,7 @@ public class SubjectController {
         }
         subjectService.save(subject);
         model.addAttribute("msg","保存成功");
-        model.addAttribute("url","/subject/find");
+        model.addAttribute("url","/subject/index");
         return "/common/success";
     }
 
@@ -133,14 +135,36 @@ public class SubjectController {
         try{
             subjectService.delete(subjectId);
         }catch(AdminException e){
-            model.addAttribute("url","/subject/find");
+            model.addAttribute("url","/subject/index");
             model.addAttribute("msg",e.getMessage());
             return"/common/error";
         }
-        model.addAttribute("url","/subject/find");
+        model.addAttribute("url","/subject/index");
         model.addAttribute("msg","删除成功");
         return "/common/success";
     }
 
+    @GetMapping("/import")
+    public String importFile(){
+        return "/subject/import";
+    }
+
+    @PostMapping("/import/save")
+    public String importSave(MultipartFile file,Model model) throws Exception{
+        String fileName=file.getOriginalFilename();
+        try{
+            subjectService.importSubject(fileName,file);
+        }catch (AdminException e){
+            model.addAttribute("url","/subject/index");
+            model.addAttribute("msg",e.getMessage());
+            return "/common/error";
+        }
+        model.addAttribute("url","/subject/index");
+        model.addAttribute("msg","导入成功！");
+        return "/common/success";
+
+    }
+
 
 }
+

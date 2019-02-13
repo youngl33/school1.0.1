@@ -1,6 +1,5 @@
-
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
 
 <head>
 
@@ -13,6 +12,8 @@
     <link href="../css/bootstrap.min.css" rel="stylesheet">
     <link href="../font-awesome/css/font-awesome.css" rel="stylesheet">
 
+    <!-- Toastr style -->
+    <link href="../css/plugins/toastr/toastr.min.css" rel="stylesheet">
 
     <!-- Gritter -->
     <link href="../js/plugins/gritter/jquery.gritter.css" rel="stylesheet">
@@ -20,6 +21,8 @@
     <link href="../css/animate.css" rel="stylesheet">
     <link href="../css/style.css" rel="stylesheet">
     <link href="../css/style/teacher.css" rel="stylesheet">
+    <!-- confirm -->
+    <link href="../css/plugins/jquery-confirm/jquery-confirm.min.css" rel="stylesheet">
 
 </head>
 
@@ -52,7 +55,7 @@
                     <a href="edit.html"><i class="fa fa-th-large"></i> <span class="nav-label">科目管理</span>
                         <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li><a href="/subject/find">科目信息</a></li>
+                        <li><a href="/subject/index">科目信息</a></li>
                         <li><a href="/subject/add">添加科目</a></li>
                         <li><a href="/subject/import">导入</a></li>
                     </ul>
@@ -146,6 +149,9 @@
                     <li>
                         <a>科目管理</a>
                     </li>
+                    <li>
+                        <a href="/subject/index">科目信息</a>
+                    </li>
                     <li class="active">
                         <strong>修改科目信息</strong>
                     </li>
@@ -154,8 +160,7 @@
             <div class="col-lg-2">
 
             </div>
-        </div>
-        <!-- search   -->
+        </div>        <!-- search   -->
 
 
         <!-- content  -->
